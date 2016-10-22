@@ -18,4 +18,5 @@ public interface Groupable {
     public int getStartTick();
     public int getEndTick();
     public int getMaxPitch();
+    public int getMinPitch();
 }

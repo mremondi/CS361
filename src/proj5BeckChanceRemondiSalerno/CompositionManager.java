@@ -152,7 +152,7 @@ public class CompositionManager {
     public NoteGroupRectangle createNoteGroupPane(Groupable groupable) {
         NoteGroupRectangle groupRect = new NoteGroupRectangle();
         groupRect.setMinWidth(groupable.getEndTick() - groupable.getStartTick());
-        groupRect.setMinHeight(10);
+        groupRect.setMinHeight(groupable.getMaxPitch() - groupable.getMinPitch() + 10);
         int x = groupable.getStartTick();
         int y = (127-groupable.getMaxPitch()) * 10;
         System.out.format("adding notegroup pane at (%d, %d)\n", x,y);

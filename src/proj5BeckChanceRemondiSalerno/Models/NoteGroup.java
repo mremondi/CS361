@@ -81,6 +81,18 @@ public class NoteGroup implements Groupable {
         return maxPitch;
     }
 
+    @Override
+    public int getMinPitch() {
+        if (getNotes().isEmpty()) { return 0; }
+        int minPitch = groups.get(0).getMinPitch();
+        for (Groupable groupable : groups) {
+            if (groupable.getMinPitch() < minPitch) {
+                minPitch = groupable.getMinPitch();
+            }
+        }
+        return minPitch;
+    }
+
     public ArrayList<Groupable> getGroups() {
         return groups;
     }
