@@ -19,10 +19,7 @@ import proj5BeckChanceRemondiSalerno.Models.TempoLine;
 import proj5BeckChanceRemondiSalerno.Views.NoteRectangle;
 
 import javax.sound.midi.ShortMessage;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * This class models a composition sheet manager.
@@ -270,6 +267,21 @@ public class CompositionManager {
         this.midiPlayer.stop();
         this.tempoLine.stopAnimation();
         this.tempoLine.hideTempoLine();
+    }
+
+    public void deleteSelectedNotes() {
+        ArrayList<Note> notesToDelete = new ArrayList<>();
+        for (Note note : noteRectangleMap.keySet()) {
+            if (note.isSelected()) {
+                NoteRectangle noteRectangle = noteRectangleMap.get(note);
+                composition.getChildren().remove(noteRectangle.getNoteBox());
+                notesToDelete.add(note);
+            }
+        }
+
+        for (Note note : notesToDelete) {
+            noteRectangleMap.remove(note);
+        }
     }
 
     /**

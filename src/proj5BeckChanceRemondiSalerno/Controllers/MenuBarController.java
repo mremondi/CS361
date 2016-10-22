@@ -43,17 +43,7 @@ public class MenuBarController {
      * Deletes all the selected notes from the composition pane
      */
     public void deleteNotes() {
-        ArrayList<Note> notesToDelete = new ArrayList<>();
-        for (Note note : CompositionManager.getInstance().getNotes()) {
-            if (note.isSelected()) {
-                NoteRectangle noteRectangle = CompositionManager.getInstance().getNoteRectangleMap().get(note);
-                CompositionManager.getInstance().getComposition().getChildren().remove(noteRectangle.getNoteBox());
-                notesToDelete.add(note);
-            }
-        }
-        for (Note note: notesToDelete){
-            CompositionManager.getInstance().getNoteRectangleMap().remove(note);
-        }
+        CompositionManager.getInstance().deleteSelectedNotes();
     }
 
 
