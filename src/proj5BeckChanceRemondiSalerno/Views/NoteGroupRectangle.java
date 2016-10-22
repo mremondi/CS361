@@ -13,6 +13,11 @@ public class NoteGroupRectangle extends Pane {
     private boolean selected = false;
 
     public void setSelected(boolean selected) {
+        if (selected) {
+            setStyle("-fx-border-color: red; -fx-border-width: 2");
+        } else {
+            setStyle("-fx-border-color: gray; -fx-border-width: 2");
+        }
         this.selected = selected;
     }
 

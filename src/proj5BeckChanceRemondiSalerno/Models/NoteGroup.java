@@ -80,4 +80,8 @@ public class NoteGroup implements Groupable {
         }
         return maxPitch;
     }
+
+    public ArrayList<Groupable> getGroups() {
+        return groups;
+    }
 }

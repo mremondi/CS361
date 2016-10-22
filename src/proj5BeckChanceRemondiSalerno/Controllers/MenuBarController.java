@@ -76,12 +76,12 @@ public class MenuBarController {
 
     @FXML
     protected void handleGroup(ActionEvent event) {
-        System.exit(0);
+        CompositionManager.getInstance().createNoteGroup();
     }
 
     @FXML
     protected void handleUngroup(ActionEvent event) {
-        System.exit(0);
+        CompositionManager.getInstance().ungroupSelectedGroups();
     }
 
 }

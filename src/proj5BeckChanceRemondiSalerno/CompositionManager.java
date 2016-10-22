@@ -112,16 +112,21 @@ public class CompositionManager {
     public Groupable addNoteToComposition(double xPos, double yPos) {
         if (yPos >= 0 && yPos < 1280) {
             Note note = new Note(xPos, yPos, 100, getChannelNumber(this.instrumentColor));
-            NoteGroupRectangle groupPane = createNoteGroupPane(note);
-            groupablesRectMap.put(note, groupPane);
-            composition.getChildren().add(groupPane);
+            addGroupable(note);
             selectGroupable(note);
             return note;
         }
         return null;
     }
 
+    public void addGroupable(Groupable groupable) {
+        NoteGroupRectangle groupPane = createNoteGroupPane(groupable);
+        groupablesRectMap.put(groupable, groupPane);
+        composition.getChildren().add(groupPane);
+    }
+
     public NoteGroup createNoteGroup() {
+        System.out.println("grouping");
         ArrayList<Groupable> notesToGroup = new ArrayList<>();
         for (Note note : getNotes()) {
             if (note.isSelected()) {
@@ -129,29 +134,60 @@ public class CompositionManager {
             }
         }
 
+        for (Groupable groupable : notesToGroup) {
+            composition.getChildren().remove(groupablesRectMap.get(groupable));
+            groupablesRectMap.remove(groupable);
+        }
+
         NoteGroup group = new NoteGroup(notesToGroup);
         NoteGroupRectangle rect = createNoteGroupPane(group);
         groupablesRectMap.put(group, rect);
         composition.getChildren().add(rect);
+        selectGroupable(group);
 
         return group;
     }
 
-    public NoteGroupRectangle createNoteGroupPane(Groupable group) {
+    public NoteGroupRectangle createNoteGroupPane(Groupable groupable) {
         NoteGroupRectangle groupRect = new NoteGroupRectangle();
-        groupRect.setMinWidth(group.getEndTick() - group.getStartTick());
+        groupRect.setMinWidth(groupable.getEndTick() - groupable.getStartTick());
         groupRect.setMinHeight(10);
-        groupRect.setLayoutX(group.getStartTick());
-        groupRect.setLayoutY(group.getMaxPitch());
-        if (group.getNotes().size() == 1) {
+        groupRect.setLayoutX(groupable.getStartTick());
+        groupRect.setLayoutY(groupable.getMaxPitch());
+
+        if (groupable instanceof Note) {
             groupRect.getChildren().add(createSingleNoteRectangle(0,0).getNoteBox());
             return groupRect;
+        } else {
+            NoteGroup group = (NoteGroup)groupable;
+            for (Groupable subGroupable : group.getGroups()) {
+                NoteGroupRectangle subGroupRect = createNoteGroupPane(subGroupable);
+                subGroupRect.setLayoutX(subGroupRect.getLayoutX()-groupRect.getLayoutX());
+                subGroupRect.setLayoutY(subGroupRect.getLayoutY()-groupRect.getLayoutY());
+                groupRect.getChildren().add(subGroupRect);
+            }
+            //groupRect.setStyle("-fx-background-color: blue");
+            return groupRect;
         }
+
+    }
+
+    public void ungroupSelectedGroups() {
+        ArrayList<Groupable> groupsToUnGroup = new ArrayList<>();
         for (Groupable groupable : groupablesRectMap.keySet()) {
-            NoteGroupRectangle subGroupRect = createNoteGroupPane(groupable);
-            groupRect.getChildren().add(subGroupRect);
+            if (groupable.isSelected() && groupable instanceof NoteGroup) {
+                groupsToUnGroup.add(groupable);
+            }
         }
-        return groupRect;
+
+        for (Groupable groupable : groupsToUnGroup) {
+            ArrayList<Groupable> subGroupables = ((NoteGroup)groupable).getGroups();
+            for (Groupable subGroupable : subGroupables) {
+                addGroupable(subGroupable);
+            }
+            composition.getChildren().remove(groupablesRectMap.get(groupable));
+            groupablesRectMap.remove(groupable);
+        }
     }
 
     private NoteRectangle createSingleNoteRectangle(double x, double y){
