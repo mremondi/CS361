@@ -83,4 +83,14 @@ public class MenuBarController {
         System.exit(0);
     }
 
+    @FXML
+    protected void handleGroup(ActionEvent event) {
+        System.exit(0);
+    }
+
+    @FXML
+    protected void handleUngroup(ActionEvent event) {
+        System.exit(0);
+    }
+
 }

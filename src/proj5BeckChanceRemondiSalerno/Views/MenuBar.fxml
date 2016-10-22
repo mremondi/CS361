@@ -8,6 +8,8 @@
     <Menu text="Edit">
         <MenuItem accelerator="Shortcut+A" onAction="#handleSelectAll" text="Select All"/>
         <MenuItem accelerator="Shortcut+Delete" onAction="#handleDelete" text="Delete"/>
+        <MenuItem accelerator="Shortcut+G" onAction="#handleGroup" text="Group"/>
+        <MenuItem accelerator="Shortcut+U" onAction="#handleUngroup" text="Ungroup"/>
     </Menu>
     <Menu text="Actions">
         <MenuItem accelerator="Shortcut+P" onAction="#handlePlayMidi" text="Play"/>
