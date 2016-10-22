@@ -26,7 +26,7 @@ public class MenuBarController {
      */
     public void selectAllNotes() {
         CompositionManager.getInstance().clearSelectedNotes();
-        for (Groupable groupable : CompositionManager.getInstance().getNotes()) {
+        for (Groupable groupable : CompositionManager.getInstance().getGroupables()) {
             CompositionManager.getInstance().selectGroupable(groupable);
         }
     }

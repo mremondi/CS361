@@ -3,6 +3,7 @@ package proj5BeckChanceRemondiSalerno.Views;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+import proj5BeckChanceRemondiSalerno.Models.NoteGroup;
 
 /**
  * Created by Graham on 10/22/16.
@@ -16,7 +17,7 @@ public class NoteGroupRectangle extends Pane {
         if (containsSingleNote) {
             setStyle("-fx-border-color: transparent; -fx-border-width: 0");
         } else if (selected) {
-            setStyle("-fx-border-color: red; -fx-border-width: 2");
+            setStyle("-fx-border-color: red; -fx-border-width: 2; -fx-border-style: dashed");
         } else {
             setStyle("-fx-border-color: gray; -fx-border-width: 2");
         }
@@ -24,6 +25,8 @@ public class NoteGroupRectangle extends Pane {
         for (Node node : getChildren()) {
             if (node instanceof NoteRectangle) {
                 ((NoteRectangle)node).setSelected(selected);
+            } else if (node instanceof NoteGroupRectangle) {
+                ((NoteGroupRectangle)node).setSelected(selected);
             }
         }
     }
@@ -68,6 +71,7 @@ public class NoteGroupRectangle extends Pane {
      */
     public boolean getIsOnEdge(double x, double y) {
         Bounds bounds = getBoundsInParent();
+
         return y < bounds.getMaxY() &&
                 y > bounds.getMinY() &&
                 ((x >= bounds.getMaxX() - 5) && x < bounds.getMaxX());

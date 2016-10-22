@@ -120,20 +120,21 @@ public class CompositionManager {
 
     public void addGroupable(Groupable groupable) {
         NoteGroupRectangle groupPane = createNoteGroupPane(groupable);
-        groupPane.setContainsSingleNote(groupable.getNotes().size() == 1);
         groupablesRectMap.put(groupable, groupPane);
         composition.getChildren().add(groupPane);
     }
 
-    public NoteGroup createNoteGroup() {
+    public Optional<NoteGroup> createNoteGroup() {
         System.out.println("grouping");
         ArrayList<Groupable> notesToGroup = new ArrayList<>();
-        for (Note note : getNotes()) {
+        for (Groupable note : getGroupables()) {
             if (note.isSelected()) {
                 notesToGroup.add(note);
             }
         }
-
+        if (notesToGroup.size() < 2) {
+             return Optional.empty();
+        }
         for (Groupable groupable : notesToGroup) {
             composition.getChildren().remove(groupablesRectMap.get(groupable));
             groupablesRectMap.remove(groupable);
@@ -145,7 +146,7 @@ public class CompositionManager {
         composition.getChildren().add(rect);
         selectGroupable(group);
 
-        return group;
+        return Optional.of(group);
     }
 
     public NoteGroupRectangle createNoteGroupPane(Groupable groupable) {
@@ -160,6 +161,7 @@ public class CompositionManager {
 
         if (groupable instanceof Note) {
             groupRect.getChildren().add(createSingleNoteRectangle(0,0));
+            groupRect.setContainsSingleNote(true);
             return groupRect;
         } else {
             NoteGroup group = (NoteGroup)groupable;
@@ -185,6 +187,7 @@ public class CompositionManager {
 
         for (Groupable groupable : groupsToUnGroup) {
             ArrayList<Groupable> subGroupables = ((NoteGroup)groupable).getGroups();
+
             for (Groupable subGroupable : subGroupables) {
                 addGroupable(subGroupable);
             }
