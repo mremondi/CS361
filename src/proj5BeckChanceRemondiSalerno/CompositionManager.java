@@ -9,11 +9,9 @@
 package proj5BeckChanceRemondiSalerno;
 
 import javafx.geometry.Bounds;
-import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 import proj5BeckChanceRemondiSalerno.Models.*;
 import proj5BeckChanceRemondiSalerno.Views.NoteGroupRectangle;
 import proj5BeckChanceRemondiSalerno.Views.NoteRectangle;
@@ -210,6 +208,7 @@ public class CompositionManager {
         addProgramChanges(midiPlayer);
         double stopTime = 0.0;
         for (Note note : this.getNotes()) {
+            System.out.format("p: %d, st: %d\n", note.getPitch(), note.getStartTick());
             midiPlayer.addNote(note.getPitch(), note.getVolume(), note.getStartTick(), note.getDuration(),
                                 note.getChannel(), note.getTrackIndex());
         }

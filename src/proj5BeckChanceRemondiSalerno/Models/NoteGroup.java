@@ -96,4 +96,18 @@ public class NoteGroup implements Groupable {
     public ArrayList<Groupable> getGroups() {
         return groups;
     }
+
+    @Override
+    public void changeStartTick(double dx) {
+        for (Groupable groupable : groups) {
+            groupable.changeStartTick(dx);
+        }
+    }
+
+    @Override
+    public void changePitch(double dy) {
+        for (Groupable groupable : groups) {
+            groupable.changePitch(dy);
+        }
+    }
 }

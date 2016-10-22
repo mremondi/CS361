@@ -19,6 +19,7 @@ public class CompositionController {
 
     private final CompositionManager managerInstance = CompositionManager.getInstance();
     private Point2D.Double lastDragLocation = new Point2D.Double();
+    private Point2D.Double dragStartLocation = new Point2D.Double();
     private boolean isDragging;
     private boolean isMovingNotes;
     private boolean isResizing;
@@ -33,6 +34,7 @@ public class CompositionController {
     public void handleMousePressed(MouseEvent mouseEvent) {
         lastDragLocation.x = mouseEvent.getX();
         lastDragLocation.y = mouseEvent.getY();
+        dragStartLocation = (Point2D.Double)lastDragLocation.clone();
         handleDragStartedAtLocation(mouseEvent.getX(), mouseEvent.getY(), mouseEvent.isControlDown());
     }
 
@@ -65,6 +67,8 @@ public class CompositionController {
                 handleClickAt(mouseEvent.getX(), mouseEvent.getY());
             }
         }
+        lastDragLocation.x = mouseEvent.getX();
+        lastDragLocation.y = mouseEvent.getY();
         isDragging = false;
     }
 
@@ -103,7 +107,7 @@ public class CompositionController {
      * @param dx the change in the mouse's x coordinate
      */
     public void resizeSelectedNotes(double dx) {
-        for (Groupable groupable : managerInstance.getNotes()) {
+        for (Groupable groupable : managerInstance.getGroupables()) {
             if (groupable.isSelected()){
                 groupable.changeNoteDurations(dx);
                 managerInstance.getGroupPane(groupable).setMinWidth(groupable.getDuration());
@@ -168,6 +172,8 @@ public class CompositionController {
         }
     }
 
+
+
     /**
      * Handles the release of the drag motion of the mouse.
      *
@@ -189,10 +195,11 @@ public class CompositionController {
     public void releaseMovedNotes() {
         for (Note note : managerInstance.getNotes()) {
             if(note.isSelected()) {
-               // NoteRectangle noteRectangle = managerInstance.getNoteRectangle(note);
-//                noteRectangle.roundToNearestYLocation();
-//                note.setPitch((int)noteRectangle.getY());
-//                note.setStartTick((int)noteRectangle.getX());
+                double pitchdy = (dragStartLocation.getY() - lastDragLocation.getY())/10;
+                double startTickdy = lastDragLocation.getX() - dragStartLocation.getX();
+                System.out.format("pitch dy: %f, start tick dx: %f\n", pitchdy, startTickdy);
+                note.changePitch(pitchdy);
+                note.changeStartTick(startTickdy);
             }
         }
     }

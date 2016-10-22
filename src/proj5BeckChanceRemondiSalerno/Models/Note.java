@@ -179,4 +179,14 @@ public class Note implements Groupable {
     public int getMinPitch() {
         return pitch;
     }
+
+    @Override
+    public void changePitch(double dy) {
+        pitch += dy;
+    }
+
+    @Override
+    public void changeStartTick(double dx) {
+        startTick += dx;
+    }
 }
