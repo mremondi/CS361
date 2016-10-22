@@ -106,7 +106,7 @@ public class CompositionController {
         for (Groupable groupable : managerInstance.getNotes()) {
             if (groupable.isSelected()){
                 groupable.changeNoteDurations(dx);
-                managerInstance.getGroupPane(groupable).setWidth(groupable.getDuration());
+                managerInstance.getGroupPane(groupable).setMinWidth(groupable.getDuration());
             }
         }
     }
@@ -162,8 +162,8 @@ public class CompositionController {
         for (Groupable note : managerInstance.getNotes()) {
             if (note.isSelected()){
                 NoteGroupRectangle noteRectangle = managerInstance.getGroupPane(note);
-                noteRectangle.setX(noteRectangle.getX() + dx);
-                noteRectangle.setY(noteRectangle.getY() + dy);
+                noteRectangle.setTranslateX(noteRectangle.getTranslateX() + dx);
+                noteRectangle.setTranslateY(noteRectangle.getTranslateY() + dy);
             }
         }
     }

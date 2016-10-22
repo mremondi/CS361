@@ -170,4 +170,8 @@ public class Note implements Groupable {
     }
 
 
+    @Override
+    public int getMaxPitch() {
+        return pitch;
+    }
 }

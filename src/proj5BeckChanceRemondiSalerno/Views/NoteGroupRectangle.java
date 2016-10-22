@@ -1,13 +1,14 @@
 package proj5BeckChanceRemondiSalerno.Views;
 
 import javafx.geometry.Bounds;
+import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
 /**
  * Created by Graham on 10/22/16.
  */
-public class NoteGroupRectangle extends Rectangle {
+public class NoteGroupRectangle extends Pane {
 
     private boolean selected = false;
 

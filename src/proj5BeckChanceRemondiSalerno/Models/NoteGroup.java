@@ -43,10 +43,10 @@ public class NoteGroup implements Groupable {
     @Override
     public int getStartTick() {
         if (getNotes().isEmpty()) { return 0; }
-        int minStartTick = getNotes().get(0).getStartTick();
-        for (Note note : getNotes()) {
-            if (note.getStartTick() < minStartTick) {
-                minStartTick = note.getStartTick();
+        int minStartTick = groups.get(0).getStartTick();
+        for (Groupable groupable : groups) {
+            if (groupable.getStartTick() < minStartTick) {
+                minStartTick = groupable.getStartTick();
             }
         }
         return minStartTick;
@@ -55,10 +55,10 @@ public class NoteGroup implements Groupable {
     @Override
     public int getEndTick() {
         if (getNotes().isEmpty()) { return 0; }
-        int maxEndTick = getNotes().get(0).getEndTick();
-        for (Note note : getNotes()) {
-            if (note.getEndTick() > maxEndTick) {
-                maxEndTick = note.getEndTick();
+        int maxEndTick = groups.get(0).getEndTick();
+        for (Groupable groupable : groups) {
+            if (groupable.getEndTick() > maxEndTick) {
+                maxEndTick = groupable.getEndTick();
             }
         }
         return maxEndTick;
@@ -67,5 +67,17 @@ public class NoteGroup implements Groupable {
     @Override
     public void changeNoteDurations(double dx) {
 
+    }
+
+    @Override
+    public int getMaxPitch() {
+        if (getNotes().isEmpty()) { return 0; }
+        int maxPitch = groups.get(0).getMaxPitch();
+        for (Groupable groupable : groups) {
+            if (groupable.getMaxPitch() > maxPitch) {
+                maxPitch = groupable.getMaxPitch();
+            }
+        }
+        return maxPitch;
     }
 }
