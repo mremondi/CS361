@@ -8,6 +8,12 @@
 
 package proj5BeckChanceRemondiSalerno.Models;
 
+import javafx.geometry.BoundingBox;
+import javafx.geometry.Bounds;
+
+import java.util.ArrayList;
+import java.util.Set;
+
 /**
  * This class models a musical note
  *
@@ -16,7 +22,7 @@ package proj5BeckChanceRemondiSalerno.Models;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
-public class Note implements Groupable{
+public class Note implements Groupable {
 
     /**
      * The minimum width a note can be.
@@ -157,4 +163,12 @@ public class Note implements Groupable{
     public void unselect(){
         this.selected = false;
     }
+
+    @Override
+    public ArrayList<Note> getNotes() {
+        ArrayList<Note> notes = new ArrayList<>();
+        notes.add(this);
+        return notes;
+    }
+
 }
