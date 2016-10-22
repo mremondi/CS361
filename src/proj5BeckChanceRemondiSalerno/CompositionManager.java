@@ -122,6 +122,7 @@ public class CompositionManager {
 
     public void addGroupable(Groupable groupable) {
         NoteGroupRectangle groupPane = createNoteGroupPane(groupable);
+        groupPane.setContainsSingleNote(groupable.getNotes().size() == 1);
         groupablesRectMap.put(groupable, groupPane);
         composition.getChildren().add(groupPane);
     }
@@ -160,7 +161,7 @@ public class CompositionManager {
         groupRect.setLayoutY(y);
 
         if (groupable instanceof Note) {
-            groupRect.getChildren().add(createSingleNoteRectangle(0,0).getNoteBox());
+            groupRect.getChildren().add(createSingleNoteRectangle(0,0));
             return groupRect;
         } else {
             NoteGroup group = (NoteGroup)groupable;
@@ -170,7 +171,7 @@ public class CompositionManager {
                 subGroupRect.setLayoutY(subGroupRect.getLayoutY()-groupRect.getLayoutY());
                 groupRect.getChildren().add(subGroupRect);
             }
-            //groupRect.setStyle("-fx-background-color: blue");
+
             return groupRect;
         }
 
@@ -195,14 +196,9 @@ public class CompositionManager {
     }
 
     private NoteRectangle createSingleNoteRectangle(double x, double y){
-        Rectangle noteBox = new Rectangle(100.0, 10.0);
-        noteBox.getStyleClass().add("note");
-        noteBox.setX(x);
-        noteBox.setY(y);
-        noteBox.setFill(this.instrumentColor);
-        NoteRectangle noteRectangle = new NoteRectangle(noteBox);
-
-        return noteRectangle;
+        NoteRectangle noteBox = new NoteRectangle(x,y);
+        noteBox.setFill(instrumentColor);
+        return noteBox;
     }
 
     /**
@@ -311,9 +307,9 @@ public class CompositionManager {
      * Clears the list of selected notes
      */
     public void clearSelectedNotes() {
-        for (Note note : this.getNotes()) {
-            if (note.isSelected()){
-                this.unselectNote(note);
+        for (Groupable groupable : groupablesRectMap.keySet()) {
+            if (groupable.isSelected()){
+                this.unselectNote(groupable);
             }
         }
     }

@@ -1,9 +1,8 @@
 package proj5BeckChanceRemondiSalerno.Views;
 
 import javafx.geometry.Bounds;
-import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 
 /**
  * Created by Graham on 10/22/16.
@@ -11,14 +10,22 @@ import javafx.scene.shape.Rectangle;
 public class NoteGroupRectangle extends Pane {
 
     private boolean selected = false;
+    private boolean containsSingleNote = false;
 
     public void setSelected(boolean selected) {
-        if (selected) {
+        if (containsSingleNote) {
+            setStyle("-fx-border-color: transparent; -fx-border-width: 0");
+        } else if (selected) {
             setStyle("-fx-border-color: red; -fx-border-width: 2");
         } else {
             setStyle("-fx-border-color: gray; -fx-border-width: 2");
         }
         this.selected = selected;
+        for (Node node : getChildren()) {
+            if (node instanceof NoteRectangle) {
+                ((NoteRectangle)node).setSelected(selected);
+            }
+        }
     }
 
     public boolean getIsInBounds(double x, double y) {
@@ -66,6 +73,9 @@ public class NoteGroupRectangle extends Pane {
                 ((x >= bounds.getMaxX() - 5) && x < bounds.getMaxX());
     }
 
+    public void setContainsSingleNote(boolean containsSingleNote) {
+        this.containsSingleNote = containsSingleNote;
+    }
 }
 
 

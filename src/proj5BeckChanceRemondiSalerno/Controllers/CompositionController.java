@@ -159,7 +159,7 @@ public class CompositionController {
      * @param dy the change in the mouse's y coordinate
      */
     public void moveSelectedNotes(double dx, double dy) {
-        for (Groupable note : managerInstance.getNotes()) {
+        for (Groupable note : managerInstance.getGroupables()) {
             if (note.isSelected()){
                 NoteGroupRectangle noteRectangle = managerInstance.getGroupPane(note);
                 noteRectangle.setTranslateX(noteRectangle.getTranslateX() + dx);
