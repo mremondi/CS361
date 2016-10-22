@@ -8,11 +8,7 @@
 
 package proj5BeckChanceRemondiSalerno.Models;
 
-import javafx.geometry.BoundingBox;
-import javafx.geometry.Bounds;
-
 import java.util.ArrayList;
-import java.util.Set;
 
 /**
  * This class models a musical note
@@ -94,6 +90,7 @@ public class Note implements Groupable {
      *
      * @return Starting tick of the note
      */
+    @Override
     public int getStartTick() {
         return this.startTick;
     }
@@ -129,7 +126,7 @@ public class Note implements Groupable {
      *
      * @param dx the distance to move the right edge
      */
-    public void changeDuration(double dx) {
+    public void changeNoteDurations(double dx) {
         if (this.getDuration() < MINIMUM_DURATION) {
             this.setDuration(MINIMUM_DURATION);
         } else {
@@ -156,12 +153,8 @@ public class Note implements Groupable {
         return this.selected;
     }
 
-    public void select() {
-        this.selected = true;
-    }
-
-    public void unselect(){
-        this.selected = false;
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     @Override
@@ -170,5 +163,11 @@ public class Note implements Groupable {
         notes.add(this);
         return notes;
     }
+
+    @Override
+    public int getEndTick() {
+        return startTick + (int)duration;
+    }
+
 
 }

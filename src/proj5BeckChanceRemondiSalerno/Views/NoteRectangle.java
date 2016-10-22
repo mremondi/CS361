@@ -45,25 +45,7 @@ public class NoteRectangle {
                 y >= bounds.getMinY());
     }
 
-    /**
-     * Checks to see if the note is within the given bounds of a rectangle.
-     *
-     * @param rectXMin the smallest x coordinate of the rectangle
-     * @param rectYMin the smallest y coordinate of the rectangle
-     * @param rectXMax the biggest x coordinate of the rectangle
-     * @param rectYMax the bigget y coordinate of the rectangle
-     *
-     * @return a boolean value indicating whether this note is within the rectangle.
-     */
-    public boolean getIsInRectangleBounds(double rectXMin, double rectYMin,
-                                          double rectXMax, double rectYMax) {
-        Bounds bounds = getBounds();
-        boolean xInBounds = (bounds.getMinX() < rectXMax && bounds.getMinX() > rectXMin) ||
-                (bounds.getMaxX() >rectXMin && bounds.getMaxX() < rectXMax);
-        boolean yInBounds = (bounds.getMinY() > rectYMin && bounds.getMinY() < rectYMax ) ||
-                (bounds.getMaxY() > rectYMin && bounds.getMaxY() < rectYMax);
-        return xInBounds && yInBounds;
-    }
+
 
     /**
      * Checks whether the coordinates of a mouse click are within 5 pixels

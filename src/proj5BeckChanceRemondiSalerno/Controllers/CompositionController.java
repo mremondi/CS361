@@ -5,8 +5,9 @@ import javafx.geometry.Bounds;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import proj5BeckChanceRemondiSalerno.CompositionManager;
+import proj5BeckChanceRemondiSalerno.Models.Groupable;
 import proj5BeckChanceRemondiSalerno.Models.Note;
-import proj5BeckChanceRemondiSalerno.Views.NoteRectangle;
+import proj5BeckChanceRemondiSalerno.Views.NoteGroupRectangle;
 
 import java.awt.geom.Point2D;
 import java.util.Optional;
@@ -102,10 +103,10 @@ public class CompositionController {
      * @param dx the change in the mouse's x coordinate
      */
     public void resizeSelectedNotes(double dx) {
-        for (Note note : managerInstance.getNotes()) {
-            if (note.isSelected()){
-                note.changeDuration(dx);
-                managerInstance.getNoteRectangle(note).setWidth(note.getDuration());
+        for (Groupable groupable : managerInstance.getNotes()) {
+            if (groupable.isSelected()){
+                groupable.changeNoteDurations(dx);
+                managerInstance.getGroupPane(groupable).setWidth(groupable.getDuration());
             }
         }
     }
@@ -124,21 +125,21 @@ public class CompositionController {
         if (controlDrag) { return; }
         isResizing = false;
         isMovingNotes = false;
-        Optional<Note> optionalNote = managerInstance.getNoteAtPoint(x, y);
+        Optional<Groupable> optionalNote = managerInstance.getGroupableAtPoint(x, y);
         // if the click is on a note
         if (optionalNote.isPresent()) {
-            Note note = optionalNote.get();
-            NoteRectangle noteRectangle = managerInstance.getNoteRectangle(note);
+            Groupable note = optionalNote.get();
+            NoteGroupRectangle groupPane = managerInstance.getGroupPane(note);
             boolean onNoteEdge = false;
             // if it is on the edge of a note
-            if (noteRectangle.getIsOnEdge(x, y)) {
+            if (groupPane.getIsOnEdge(x, y)) {
                 onNoteEdge = true;
                 isResizing = true;
             }
 
             if (!note.isSelected()) {
                 managerInstance.clearSelectedNotes();
-                managerInstance.selectNote(note);
+                managerInstance.selectGroupable(note);
             }
 
             if (!onNoteEdge) {
@@ -158,11 +159,11 @@ public class CompositionController {
      * @param dy the change in the mouse's y coordinate
      */
     public void moveSelectedNotes(double dx, double dy) {
-        for (Note note : managerInstance.getNotes()) {
+        for (Groupable note : managerInstance.getNotes()) {
             if (note.isSelected()){
-                NoteRectangle noteRectangle = managerInstance.getNoteRectangle(note);
-                Rectangle noteBox = noteRectangle.getNoteBox();
-                noteRectangle.setPosition(noteBox.getX() + dx, noteBox.getY() + dy);
+                NoteGroupRectangle noteRectangle = managerInstance.getGroupPane(note);
+                noteRectangle.setX(noteRectangle.getX() + dx);
+                noteRectangle.setY(noteRectangle.getY() + dy);
             }
         }
     }
@@ -188,10 +189,10 @@ public class CompositionController {
     public void releaseMovedNotes() {
         for (Note note : managerInstance.getNotes()) {
             if(note.isSelected()) {
-                NoteRectangle noteRectangle = managerInstance.getNoteRectangle(note);
-                noteRectangle.roundToNearestYLocation();
-                note.setPitch((int)noteRectangle.getY());
-                note.setStartTick((int)noteRectangle.getX());
+               // NoteRectangle noteRectangle = managerInstance.getNoteRectangle(note);
+//                noteRectangle.roundToNearestYLocation();
+//                note.setPitch((int)noteRectangle.getY());
+//                note.setStartTick((int)noteRectangle.getX());
             }
         }
     }
@@ -206,7 +207,7 @@ public class CompositionController {
      * @param y the y location of the mouse click on the pane
      */
     public void handleControlClickAt(double x, double y) {
-        Optional<Note> noteAtClickLocation = managerInstance.getNoteAtPoint(x, y);
+        Optional<Groupable> noteAtClickLocation = managerInstance.getGroupableAtPoint(x, y);
         // if there is a note at the click location
         if (noteAtClickLocation.isPresent()) {
             // if this note is already selected, unselect it
@@ -215,13 +216,13 @@ public class CompositionController {
             }
             // if it is not selected, select it
             else {
-                managerInstance.selectNote(noteAtClickLocation.get());
+                managerInstance.selectGroupable(noteAtClickLocation.get());
             }
         }
         // add a new note and select it
         else{
-            Note note = managerInstance.addNoteToComposition(x, y);
-            managerInstance.selectNote(note);
+            Groupable note = managerInstance.addNoteToComposition(x, y);
+            managerInstance.selectGroupable(note);
         }
     }
 
@@ -235,11 +236,11 @@ public class CompositionController {
      */
     public void handleClickAt(double x, double y) {
         managerInstance.stop();
-        Optional<Note> noteAtClickLocation = managerInstance.getNoteAtPoint(x, y);
+        Optional<Groupable> noteAtClickLocation = managerInstance.getGroupableAtPoint(x, y);
         managerInstance.clearSelectedNotes();
         if (noteAtClickLocation.isPresent()) {
             if (!noteAtClickLocation.get().isSelected()){
-                managerInstance.selectNote(noteAtClickLocation.get());
+                managerInstance.selectGroupable(noteAtClickLocation.get());
             }
         } else {
             managerInstance.addNoteToComposition(x, y);

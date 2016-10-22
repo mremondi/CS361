@@ -13,9 +13,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
-import proj5BeckChanceRemondiSalerno.Models.MidiPlayer;
-import proj5BeckChanceRemondiSalerno.Models.Note;
-import proj5BeckChanceRemondiSalerno.Models.TempoLine;
+import proj5BeckChanceRemondiSalerno.Models.*;
+import proj5BeckChanceRemondiSalerno.Views.NoteGroupRectangle;
 import proj5BeckChanceRemondiSalerno.Views.NoteRectangle;
 
 import javax.sound.midi.ShortMessage;
@@ -36,15 +35,13 @@ public class CompositionManager {
     private static CompositionManager instance = null;
 
     private MidiPlayer midiPlayer = new MidiPlayer(100, 60);
-    private HashMap<Note, NoteRectangle> noteRectangleMap;
+    private HashMap<Groupable, NoteGroupRectangle> groupsPaneMap = new HashMap<>();
     private TempoLine tempoLine;
     private Pane composition;
     private Paint instrumentColor;
-    private Hashtable<Paint, Integer> channelMapping;
+    private Hashtable<Paint, Integer> channelMapping  = new Hashtable<>();
 
     private CompositionManager() {
-        this.noteRectangleMap = new HashMap<>();
-        this.channelMapping = new Hashtable<>();
         setChannelMapping();
     }
 
@@ -61,10 +58,6 @@ public class CompositionManager {
 
     public void setComposition(Pane composition){
         this.composition = composition;
-    }
-
-    public HashMap<Note, NoteRectangle> getNoteRectangleMap(){
-        return this.noteRectangleMap;
     }
 
     public Pane getComposition(){
@@ -114,15 +107,37 @@ public class CompositionManager {
      *
      * @return the note added
      */
-    public Note addNoteToComposition(double xPos, double yPos) {
+    public Groupable addNoteToComposition(double xPos, double yPos) {
         if (yPos >= 0 && yPos < 1280) {
-            NoteRectangle noteRectangle = createNoteRectangle(xPos, yPos);
-            Note note = new Note(xPos, yPos, 100, getChannelNumber(noteRectangle.getFill()));
-            this.noteRectangleMap.put(note, noteRectangle);
-            selectNote(note); // TODO:
+            Note note = new Note(xPos, yPos, 100, getChannelNumber(this.instrumentColor));
+            NoteGroupRectangle groupPane = createNoteGroupPane(note);
+            groupsPaneMap.put(note, groupPane);
+            selectGroupable(note);
             return note;
         }
         return null;
+    }
+
+    public NoteGroup createNoteGroup() {
+        ArrayList<Groupable> notesToGroup = new ArrayList<>();
+        for (Note note : getNotes()) {
+            if (note.isSelected()) {
+                notesToGroup.add(note);
+            }
+        }
+
+        NoteGroup group = new NoteGroup(notesToGroup);
+        groupsPaneMap.put(group, createNoteGroupPane(group));
+        return group;
+    }
+
+    public NoteGroupRectangle createNoteGroupPane(Groupable group) {
+        ArrayList<Note> notes = group.getNotes();
+        NoteGroupRectangle groupPane = new NoteGroupRectangle();
+//        for (Groupable group : groupsPaneMap) {
+//
+//        }
+        return groupPane;
     }
 
     public NoteRectangle createNoteRectangle(double x, double y){
@@ -170,9 +185,9 @@ public class CompositionManager {
      *
      * @return true or false in composition
      */
-    private boolean noteExistsAtCoordinates(double x, double y) {
-        for (Note note : this.getNotes()) {
-            if (getNoteRectangle(note).getIsInBounds(x, y)) {
+    private boolean groupableExistsAtCoordinates(double x, double y) {
+        for (Groupable groupable : this.getGroupables()) {
+            if (getGroupPane(groupable).getIsInBounds(x, y)) {
                 return true;
             }
         }
@@ -184,8 +199,14 @@ public class CompositionManager {
      *
      * @return ArrayList of MusicalNotes
      */
-    public Set<Note> getNotes() {
-        return this.noteRectangleMap.keySet();
+    public ArrayList<Note> getNotes() {
+        ArrayList<Note> notes = new ArrayList<>();
+        for (Groupable group : groupsPaneMap.keySet()) {
+            for (Note note : group.getNotes()) {
+                notes.add(note);
+            }
+        }
+        return notes;
     }
 
     /**
@@ -195,44 +216,39 @@ public class CompositionManager {
      * @param x MouseEvent x coordinate
      * @param y MouseEvent y coordinate
      */
-    public Optional<Note> getNoteAtPoint(double x, double y) {
-        for (Note note : this.getNotes()) {
-            if (getNoteRectangle(note).getIsInBounds(x, y)) {
-                return Optional.of(note);
+    public Optional<Groupable> getGroupableAtPoint(double x, double y) {
+        for (Groupable groupable : this.getGroupables()) {
+            if (getGroupPane(groupable).getIsInBounds(x, y)) {
+                return Optional.of(groupable);
             }
         }
         return Optional.empty();
     }
 
-    /**
-     * Sets the given note to selected and adds it to the selectedNotes list.
-     *
-     * @param note A Note to be selected
-     */
-    public void selectNote(Note note) {
-        note.select();
-        this.noteRectangleMap.get(note).select();
+    public Set<Groupable> getGroupables() {
+        return groupsPaneMap.keySet();
     }
 
-    /**
-     * Sets the given note to unselected and removes it from the selectedNotes list.
-     *
-     * @param note
-     */
-    public void unselectNote(Note note){
-        note.unselect();
-        this.noteRectangleMap.get(note).unselect();
+
+    public void selectGroupable(Groupable groupable) {
+        groupable.setSelected(true);
+        groupsPaneMap.get(groupable).setSelected(true);
     }
 
-    public NoteRectangle getNoteRectangle(Note note){
-        return this.noteRectangleMap.get(note);
+    public void unselectNote(Groupable groupable){
+        groupable.setSelected(false);
+        groupsPaneMap.get(groupable).setSelected(false);
+    }
+
+    public NoteGroupRectangle getGroupPane(Groupable groupable){
+        return groupsPaneMap.get(groupable);
     }
 
     public void selectNotesIntersectingRectangle(Bounds bounds) {
-        for (Note note : this.getNotes()) {
-            if (getNoteRectangle(note).getIsInRectangleBounds(bounds.getMinX(), bounds.getMinY(),
+        for (Groupable groupable : getGroupables()) {
+            if (getGroupPane(groupable).getIsInRectangleBounds(bounds.getMinX(), bounds.getMinY(),
                     bounds.getMaxX(), bounds.getMaxY())) {
-                selectNote(note);
+                selectGroupable(groupable);
             }
         }
     }
@@ -269,18 +285,18 @@ public class CompositionManager {
         this.tempoLine.hideTempoLine();
     }
 
-    public void deleteSelectedNotes() {
-        ArrayList<Note> notesToDelete = new ArrayList<>();
-        for (Note note : noteRectangleMap.keySet()) {
-            if (note.isSelected()) {
-                NoteRectangle noteRectangle = noteRectangleMap.get(note);
-                composition.getChildren().remove(noteRectangle.getNoteBox());
-                notesToDelete.add(note);
+    public void deleteSelectedGroups() {
+        ArrayList<Groupable> groupablesToDelete = new ArrayList<>();
+        for (Groupable groupable : getGroupables()) {
+            if (groupable.isSelected()) {
+                NoteGroupRectangle groupPane = groupsPaneMap.get(groupable);
+                composition.getChildren().remove(groupPane);
+                groupablesToDelete.add(groupable);
             }
         }
 
-        for (Note note : notesToDelete) {
-            noteRectangleMap.remove(note);
+        for (Groupable groupable : groupablesToDelete) {
+            groupsPaneMap.remove(groupable);
         }
     }
 
@@ -308,10 +324,4 @@ public class CompositionManager {
         midiPlayer.addMidiEvent(ShortMessage.PROGRAM_CHANGE + 7, 60, 0, 0, 0);
     }
 
-    /**
-     * The possible set of directions to resize a note.
-     */
-    private enum ResizeDirection {
-        RIGHT, NONE;
-    }
 }

@@ -3,6 +3,7 @@ package proj5BeckChanceRemondiSalerno.Controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import proj5BeckChanceRemondiSalerno.CompositionManager;
+import proj5BeckChanceRemondiSalerno.Models.Groupable;
 import proj5BeckChanceRemondiSalerno.Models.Note;
 import proj5BeckChanceRemondiSalerno.Views.NoteRectangle;
 
@@ -25,8 +26,8 @@ public class MenuBarController {
      */
     public void selectAllNotes() {
         CompositionManager.getInstance().clearSelectedNotes();
-        for (Note note : CompositionManager.getInstance().getNotes()) {
-            CompositionManager.getInstance().selectNote(note);
+        for (Groupable groupable : CompositionManager.getInstance().getNotes()) {
+            CompositionManager.getInstance().selectGroupable(groupable);
         }
     }
 
@@ -43,7 +44,7 @@ public class MenuBarController {
      * Deletes all the selected notes from the composition pane
      */
     public void deleteNotes() {
-        CompositionManager.getInstance().deleteSelectedNotes();
+        CompositionManager.getInstance().deleteSelectedGroups();
     }
 
 

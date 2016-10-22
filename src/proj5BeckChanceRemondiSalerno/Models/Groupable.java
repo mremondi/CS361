@@ -11,4 +11,10 @@ import java.util.Set;
 public interface Groupable {
 
     public ArrayList<Note> getNotes();
+    public boolean isSelected();
+    public void setSelected(boolean selected);
+    public void changeNoteDurations(double dx);
+    public double getDuration();
+    public int getStartTick();
+    public int getEndTick();
 }
