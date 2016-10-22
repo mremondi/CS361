@@ -110,6 +110,7 @@ public class CompositionManager {
      * @return the note added
      */
     public Groupable addNoteToComposition(double xPos, double yPos) {
+        System.out.format("adding note at location (%f, %f)\n", xPos, yPos);
         if (yPos >= 0 && yPos < 1280) {
             Note note = new Note(xPos, yPos, 100, getChannelNumber(this.instrumentColor));
             addGroupable(note);
@@ -152,8 +153,11 @@ public class CompositionManager {
         NoteGroupRectangle groupRect = new NoteGroupRectangle();
         groupRect.setMinWidth(groupable.getEndTick() - groupable.getStartTick());
         groupRect.setMinHeight(10);
-        groupRect.setLayoutX(groupable.getStartTick());
-        groupRect.setLayoutY(groupable.getMaxPitch());
+        int x = groupable.getStartTick();
+        int y = (127-groupable.getMaxPitch()) * 10;
+        System.out.format("adding notegroup pane at (%d, %d)\n", x,y);
+        groupRect.setLayoutX(x);
+        groupRect.setLayoutY(y);
 
         if (groupable instanceof Note) {
             groupRect.getChildren().add(createSingleNoteRectangle(0,0).getNoteBox());
