@@ -37,7 +37,6 @@ public class CompositionManager {
     private Pane composition;
     private int currentSelectedInstrumentIndex;
     private CompositionPlayer compositionPlayer = new CompositionPlayer();
-    private Hashtable<Integer, Paint> channelMapping  = new Hashtable<>();
 
     private CompositionManager() {}
 
@@ -193,7 +192,6 @@ public class CompositionManager {
 
 
 
-
     /**
      * Calculates the stop time for the composition created
      *
@@ -209,19 +207,6 @@ public class CompositionManager {
         return stopTime;
     }
 
-    /**
-     * Checks if note is in composition at the given location
-     *
-     * @return true or false in composition
-     */
-    private boolean groupableExistsAtCoordinates(double x, double y) {
-        for (Groupable groupable : this.getGroupables()) {
-            if (getGroupPane(groupable).getIsInBounds(x, y)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     /**
      * Gets the list of notes.

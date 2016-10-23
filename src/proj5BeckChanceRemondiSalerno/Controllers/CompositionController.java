@@ -6,7 +6,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import proj5BeckChanceRemondiSalerno.CompositionManager;
 import proj5BeckChanceRemondiSalerno.Models.Groupable;
-import proj5BeckChanceRemondiSalerno.Models.Note;
 import proj5BeckChanceRemondiSalerno.Views.NoteGroupablePane;
 
 import java.awt.geom.Point2D;

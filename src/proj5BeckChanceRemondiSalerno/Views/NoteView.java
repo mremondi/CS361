@@ -5,7 +5,7 @@ package proj5BeckChanceRemondiSalerno.Views;
  */
 public interface NoteView {
 
-    public void setSelected(boolean selected);
-    public void changeWidth(double dx);
+    void setSelected(boolean selected);
+    void changeWidth(double dx);
 
 }

@@ -1,8 +1,6 @@
 package proj5BeckChanceRemondiSalerno.Views;
 
-import javafx.geometry.Bounds;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 /**
