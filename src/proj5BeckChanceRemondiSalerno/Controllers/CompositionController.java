@@ -122,7 +122,7 @@ public class CompositionController {
      * @param dx
      * @param dy
      */
-    public void handleDragMoved(double dx, double dy, boolean controlDrag) {
+    private void handleDragMoved(double dx, double dy, boolean controlDrag) {
         if (isMovingNotes) {
             moveSelectedNotes(dx, dy);
         } else if (isResizing) {
@@ -145,7 +145,7 @@ public class CompositionController {
      *
      * @param dx the change in the mouse's x coordinate
      */
-    public void resizeSelectedNotes(double dx) {
+    private void resizeSelectedNotes(double dx) {
         for (NoteGroupable noteGroupable : managerInstance.getGroupables()) {
             if (noteGroupable.isSelected()){
                 noteGroupable.changeNoteDurations(dx);
@@ -164,7 +164,7 @@ public class CompositionController {
      * @param x
      * @param y
      */
-    public void handleDragStartedAtLocation(double x, double y, boolean controlDrag) {
+    private void handleDragStartedAtLocation(double x, double y, boolean controlDrag) {
         if (controlDrag) { return; }
         isResizing = false;
         isMovingNotes = false;
@@ -201,7 +201,7 @@ public class CompositionController {
      * @param dx the change in the mouse's x coordinate
      * @param dy the change in the mouse's y coordinate
      */
-    public void moveSelectedNotes(double dx, double dy) {
+    private void moveSelectedNotes(double dx, double dy) {
         for (NoteGroupable note : managerInstance.getGroupables()) {
             if (note.isSelected()){
                 NoteGroupablePane noteRectangle = managerInstance.getGroupPane(note);
@@ -220,7 +220,7 @@ public class CompositionController {
      * the moving/resizing notes if there are any and sets all of our
      * corresponding pieces back to their resting state.
      */
-    public void handleDragEnded() {
+    private void handleDragEnded() {
         if(isMovingNotes) { releaseMovedNotes(); };
         isResizing = false;
         isMovingNotes = false;
@@ -231,7 +231,7 @@ public class CompositionController {
      * Releases the notes that were being moved and drops them in
      * the nearest horizontal bar.
      */
-    public void releaseMovedNotes() {
+    private void releaseMovedNotes() {
         for (NoteGroupable note : managerInstance.getGroupables()) {
             if(note.isSelected()) {
                 double pitchdy = (dragStartLocation.getY() - lastDragLocation.getY())/10;
@@ -252,7 +252,7 @@ public class CompositionController {
      * @param x the x location of the mouse click on the pane
      * @param y the y location of the mouse click on the pane
      */
-    public void handleControlClickAt(double x, double y) {
+    private void handleControlClickAt(double x, double y) {
         Optional<NoteGroupable> noteAtClickLocation = managerInstance.getGroupableAtPoint(x, y);
         // if there is a note at the click location
         if (noteAtClickLocation.isPresent()) {
@@ -280,7 +280,7 @@ public class CompositionController {
      * @param x the x location of the mouse click on the pane
      * @param y the y location of the mouse click on the pane
      */
-    public void handleClickAt(double x, double y) {
+    private void handleClickAt(double x, double y) {
         managerInstance.stop();
         Optional<NoteGroupable> noteAtClickLocation = managerInstance.getGroupableAtPoint(x, y);
         managerInstance.clearSelectedNotes();
@@ -298,7 +298,7 @@ public class CompositionController {
      * @param x X location of the box.
      * @param y Y location of the box.
      */
-    public void createDragBox(double x, double y){
+    private void createDragBox(double x, double y){
         this.dragBox = new Rectangle(0, 0);
         this.dragBox.setX(x);
         this.dragBox.setY(y);

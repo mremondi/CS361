@@ -38,7 +38,7 @@ public class CompositionPlayer {
     }
 
 
-    public void buildSong(ArrayList<Note> notes) {
+    private void buildSong(ArrayList<Note> notes) {
         addProgramChanges(midiPlayer);
         for (Note note : notes) {
             System.out.format("p: %d, st: %d\n", note.getPitch(), note.getStartTick());

@@ -57,7 +57,7 @@ public class Controller {
      * Creates a visual representation of a composition panel
      * similar to a staff lined workbook
      */
-    public void createLinePane() {
+    private void createLinePane() {
         Line staffLine;
         for (int i = 0; i < 127; i++) {
             staffLine = new Line(0, i * 10, 2000, i * 10);

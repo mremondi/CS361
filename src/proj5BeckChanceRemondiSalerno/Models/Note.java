@@ -72,7 +72,7 @@ public class Note implements NoteGroupable {
      * Setter for pitch
      * @param y the new pitch
      */
-    public void setPitch(int y){
+    private void setPitch(int y){
         this.pitch = 127 - ((int) y / 10);
     }
 
@@ -100,7 +100,7 @@ public class Note implements NoteGroupable {
      * Setter for start tick
      * @param x the new start tick
      */
-    public void setStartTick(int x){
+    private void setStartTick(int x){
         this.startTick = x;
     }
 
@@ -113,7 +113,7 @@ public class Note implements NoteGroupable {
         return duration;
     }
 
-    public void setDuration(double duration){
+    private void setDuration(double duration){
         this.duration = duration;
     }
 

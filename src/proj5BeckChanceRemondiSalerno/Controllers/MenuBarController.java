@@ -28,7 +28,7 @@ public class MenuBarController {
     /**
      * Selects all of the notes and adds them to the selected arraylist.
      */
-    public void selectAllNotes() {
+    private void selectAllNotes() {
         CompositionManager.getInstance().clearSelectedNotes();
         for (NoteGroupable noteGroupable : CompositionManager.getInstance().getGroupables()) {
             CompositionManager.getInstance().selectGroupable(noteGroupable);
@@ -47,7 +47,7 @@ public class MenuBarController {
     /**
      * Deletes all the selected notes from the composition pane
      */
-    public void deleteNotes() {
+    private void deleteNotes() {
         CompositionManager.getInstance().deleteSelectedGroupables();
     }
 

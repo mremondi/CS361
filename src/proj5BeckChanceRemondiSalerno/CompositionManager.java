@@ -372,8 +372,8 @@ public class CompositionManager {
 
     /**
      * Creates a new NoteGroupablePane based on a group
-     * @param noteGroupable
-     * @return
+     * @param noteGroupable The groupable to create a pane for
+     * @return the new groupable pane
      */
     private NoteGroupablePane createNoteGroupablePane(NoteGroupable noteGroupable) {
         NoteGroupablePane groupablePane = new NoteGroupablePane();
