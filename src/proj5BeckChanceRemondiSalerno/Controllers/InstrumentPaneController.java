@@ -22,7 +22,6 @@ public class InstrumentPaneController {
      */
     @FXML
     public void handleInstrumentChange() {
-        RadioButton instrument = (RadioButton) instrumentGroup.getSelectedToggle();
-        CompositionManager.getInstance().changeInstrument(instrument.getTextFill());
+        CompositionManager.getInstance().changeInstrument(instrumentGroup.getToggles().indexOf(instrumentGroup.getSelectedToggle()));
     }
 }

@@ -37,12 +37,10 @@ public class CompositionManager {
     private HashMap<Groupable, NoteGroupablePane> noteGroupableRectsMap = new HashMap<>();
     private TempoLine tempoLine;
     private Pane composition;
-    private Paint instrumentColor;
-    private Hashtable<Paint, Integer> channelMapping  = new Hashtable<>();
+    private int currentSelectedInstrumentIndex;
+    private Hashtable<Integer, Paint> channelMapping  = new Hashtable<>();
 
-    private CompositionManager() {
-        setChannelMapping();
-    }
+    private CompositionManager() {}
 
     public static synchronized CompositionManager getInstance(){
         if (instance == null){
@@ -65,36 +63,31 @@ public class CompositionManager {
     /**
      * Maps channel numbers to specific instrument color association
      */
-    public void setChannelMapping() {
-        this.channelMapping.put(Color.GRAY, 0);
-        this.channelMapping.put(Color.GREEN, 1);
-        this.channelMapping.put(Color.BLUE, 2);
-        this.channelMapping.put(Color.GOLDENROD, 3);
-        this.channelMapping.put(Color.MAGENTA, 4);
-        this.channelMapping.put(Color.DEEPSKYBLUE, 5);
-        this.channelMapping.put(Color.BLACK, 6);
-        this.channelMapping.put(Color.BROWN, 7);
+    public Paint getInstrumentColor(int instrumentIndex) {
+        switch (instrumentIndex) {
+            case 0:
+                return Color.GRAY;
+            case 1:
+                return Color.GREEN;
+            case 2:
+                return Color.BLUE;
+            case 3:
+                return Color.GOLDENROD;
+            case 4:
+                return Color.MAGENTA;
+            case 5:
+                return Color.DEEPSKYBLUE;
+            case 6:
+                return Color.BLACK;
+            case 7:
+                return Color.BROWN;
+        }
+        return null;
     }
 
 
-    /**
-     * Updates the current color associated with an instrument
-     *
-     * @param newInstrumentColor new color associated with new instrument
-     */
-    public void changeInstrument(Paint newInstrumentColor) {
-        this.instrumentColor = newInstrumentColor;
-    }
-
-    /**
-     * Retrieves the channel number associated with the color of
-     * the current instrument
-     *
-     * @param instrumentColor Text color of the instrument
-     * @return Channel number which corresponds to the insturment color
-     */
-    public int getChannelNumber(Paint instrumentColor) {
-        return this.channelMapping.get(instrumentColor);
+    public void changeInstrument(int newInstrumentIndex) {
+        currentSelectedInstrumentIndex = newInstrumentIndex;
     }
 
 
@@ -110,7 +103,7 @@ public class CompositionManager {
     public Groupable addNoteToComposition(double xPos, double yPos) {
         System.out.format("adding note at location (%f, %f)\n", xPos, yPos);
         if (yPos >= 0 && yPos < 1280) {
-            Note note = new Note(xPos, yPos, 100, getChannelNumber(this.instrumentColor));
+            Note note = new Note(xPos, yPos, 100, currentSelectedInstrumentIndex);
             addGroupable(note);
             selectGroupable(note);
             return note;
@@ -160,8 +153,9 @@ public class CompositionManager {
         groupRect.setLayoutY(y);
 
         if (groupable instanceof Note) {
+            Note note = (Note)groupable;
             NoteRectangle noteBox = new NoteRectangle(groupable.getDuration(),0,0);
-            noteBox.setFill(instrumentColor);
+            noteBox.setFill(getInstrumentColor(note.getChannel()));
             groupRect.getChildren().add(noteBox);
             groupRect.setContainsSingleNote(true);
             return groupRect;
