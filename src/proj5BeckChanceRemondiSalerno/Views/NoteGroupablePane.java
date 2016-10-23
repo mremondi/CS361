@@ -34,7 +34,7 @@ public class NoteGroupablePane extends Pane implements NoteView {
         } else if (selected) {
             setStyle("-fx-border-color: red; -fx-border-width: 2; -fx-border-style: dashed");
         } else {
-            setStyle("-fx-border-color: gray; -fx-border-width: 2");
+            setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-border-style: dashed");
         }
         this.selected = selected;
         for (Node node : getChildren()) {
