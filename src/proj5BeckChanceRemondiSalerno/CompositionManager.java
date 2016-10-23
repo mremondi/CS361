@@ -33,11 +33,11 @@ public class CompositionManager {
 
     private static CompositionManager instance = null;
 
-    private MidiPlayer midiPlayer = new MidiPlayer(100, 60);
     private HashMap<Groupable, NoteGroupablePane> noteGroupableRectsMap = new HashMap<>();
     private TempoLineController tempoLineController;
     private Pane composition;
     private int currentSelectedInstrumentIndex;
+    private CompositionPlayer compositionPlayer = new CompositionPlayer();
     private Hashtable<Integer, Paint> channelMapping  = new Hashtable<>();
 
     private CompositionManager() {}
@@ -193,20 +193,7 @@ public class CompositionManager {
     }
 
 
-    /**
-     * Adds the note to the sound player
-     *
-     * @param midiPlayer MIDI sound player
-     */
-    public void buildSong(MidiPlayer midiPlayer) {
-        addProgramChanges(midiPlayer);
-        double stopTime = 0.0;
-        for (Note note : this.getNotes()) {
-            System.out.format("p: %d, st: %d\n", note.getPitch(), note.getStartTick());
-            midiPlayer.addNote(note.getPitch(), note.getVolume(), note.getStartTick(), note.getDuration(),
-                                note.getChannel(), note.getTrackIndex());
-        }
-    }
+
 
     /**
      * Calculates the stop time for the composition created
@@ -311,19 +298,17 @@ public class CompositionManager {
      * Plays the sequence of notes and animates the TempoLine.
      */
     public void play(){
-        this.midiPlayer.stop();
-        this.midiPlayer.clear();
-        this.buildSong(this.midiPlayer);
+        compositionPlayer.play(getNotes());
         double stopTime = this.calculateStopTime();
         this.tempoLineController.updateTempoLine(stopTime);
-        playMusicAndAnimation();
+        this.tempoLineController.playAnimation();
     }
 
     /**
      * Stops the midiPlayer and hides the tempoLine.
      */
     public void stop(){
-        this.midiPlayer.stop();
+        compositionPlayer.stop();
         this.tempoLineController.stopAnimation();
         this.tempoLineController.hideTempoLine();
     }
@@ -343,28 +328,5 @@ public class CompositionManager {
         }
     }
 
-    /**
-     * starts the reproduction  of the composition
-     */
-    private void playMusicAndAnimation() {
-        this.tempoLineController.playAnimation();
-        this.midiPlayer.play();
-    }
-
-    /**
-     * Maps instruments to a given channel in the MIDI sounds player
-     *f
-     * @param midiPlayer MIDI sounds player
-     */
-    private void addProgramChanges(MidiPlayer midiPlayer) {
-        midiPlayer.addMidiEvent(ShortMessage.PROGRAM_CHANGE, 0, 0, 0, 0);
-        midiPlayer.addMidiEvent(ShortMessage.PROGRAM_CHANGE + 1, 6, 0, 0, 0);
-        midiPlayer.addMidiEvent(ShortMessage.PROGRAM_CHANGE + 2, 12, 0, 0, 0);
-        midiPlayer.addMidiEvent(ShortMessage.PROGRAM_CHANGE + 3, 19, 0, 0, 0);
-        midiPlayer.addMidiEvent(ShortMessage.PROGRAM_CHANGE + 4, 21, 0, 0, 0);
-        midiPlayer.addMidiEvent(ShortMessage.PROGRAM_CHANGE + 5, 25, 0, 0, 0);
-        midiPlayer.addMidiEvent(ShortMessage.PROGRAM_CHANGE + 6, 40, 0, 0, 0);
-        midiPlayer.addMidiEvent(ShortMessage.PROGRAM_CHANGE + 7, 60, 0, 0, 0);
-    }
 
 }
