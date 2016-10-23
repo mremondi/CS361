@@ -10,6 +10,8 @@ package proj5BeckChanceRemondiSalerno.Controllers;
 
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 
@@ -23,16 +25,15 @@ import javafx.util.Duration;
  */
 
 public class TempoLineController {
+
     private Line tempoLine;
     private TranslateTransition tempoAnimation = new TranslateTransition();
+    private Pane tempoLineContainerPane;
 
-    /**
-     * Constructor
-     *
-     * @param tempoLine graphic representation of reproduction time
-     */
-    public TempoLineController(Line tempoLine) {
-        this.tempoLine = tempoLine;
+
+    public TempoLineController(Pane tempoLineContainerPane) {
+        this.tempoLineContainerPane = tempoLineContainerPane;
+        this.tempoLine = createTempoLine();
         this.tempoAnimation.setNode(this.tempoLine);
         this.tempoAnimation.setInterpolator(Interpolator.LINEAR); // Don't ease
         this.tempoAnimation.setOnFinished(event -> hideTempoLine());
@@ -81,5 +82,21 @@ public class TempoLineController {
      */
     public void stopAnimation() {
         this.tempoAnimation.stop();
+    }
+
+
+    private Line createTempoLine() {
+        Line tempoLine = new Line();
+        tempoLineContainerPane.heightProperty().addListener((obs, oldVal, newVal) -> {
+            tempoLine.setEndY(tempoLineContainerPane.getHeight());
+        });
+        tempoLine.setVisible(false);
+        tempoLine.setStartY(0);
+        tempoLine.setStartX(0);
+        tempoLine.setEndX(5);
+        tempoLine.setStrokeWidth(5);
+        tempoLineContainerPane.getChildren().add(tempoLine);
+        tempoLine.setFill(Color.BLUE);
+        return tempoLine;
     }
 }

@@ -44,7 +44,7 @@ public class Controller {
         this.compositionManager = CompositionManager.getInstance();
         this.compositionManager.setComposition(this.fxCompositionSheet);
         createLinePane();
-        compositionManager.setTempoLineController(new TempoLineController(createTempoLine()));
+        compositionManager.setTempoLineController(new TempoLineController(fxTempoLineContainerPane));
 
     }
 
@@ -61,18 +61,5 @@ public class Controller {
         }
     }
 
-    public Line createTempoLine() {
-        Line tempoLine = new Line();
-        fxTempoLineContainerPane.heightProperty().addListener((obs, oldVal, newVal) -> {
-            tempoLine.setEndY(fxTempoLineContainerPane.getHeight());
-        });
-        tempoLine.setVisible(false);
-        tempoLine.setStartY(0);
-        tempoLine.setStartX(0);
-        tempoLine.setEndX(5);
-        tempoLine.setStrokeWidth(5);
-        fxTempoLineContainerPane.getChildren().add(tempoLine);
-        tempoLine.setFill(Color.BLUE);
-        return tempoLine;
-    }
+
 }
