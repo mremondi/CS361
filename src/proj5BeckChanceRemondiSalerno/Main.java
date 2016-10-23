@@ -1,9 +1,9 @@
 /*
  * File: Main.java
- * Names: Graham Chance, Jenny Lin, Ana Sofia Solis Canales, Mike Remondi
+ * Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
  * Class: CS361
- * Project: 4
- * Due Date: October 11, 2016
+ * Project: 5
+ * Due Date: October 23, 2016
  */
 
 package proj5BeckChanceRemondiSalerno;

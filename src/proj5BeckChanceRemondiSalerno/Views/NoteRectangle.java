@@ -1,3 +1,11 @@
+/*
+ * File: NoteRectangle.java
+ * Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
+ * Class: CS361
+ * Project: 5
+ * Due Date: October 23, 2016
+ */
+
 package proj5BeckChanceRemondiSalerno.Views;
 
 import javafx.scene.paint.Color;

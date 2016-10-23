@@ -2,8 +2,8 @@
  * File: MidiPlayer.java
  * Names: Graham Chance, Ryan Salerno, Charlie Beck, Mike Remondi, Dale Skrien
  * Class: CS361 
- * Project: 4
- * Date: October 11, 2016
+ * Project: 5
+ * Date: October 23, 2016
  */
 
 package proj5BeckChanceRemondiSalerno.Models;
