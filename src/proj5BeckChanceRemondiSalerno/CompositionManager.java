@@ -203,11 +203,12 @@ public class CompositionManager {
 
         ArrayList<NoteGroupable> subNoteGroupables = ((NoteGroup) groupsToUnGroup.get(0)).getNoteGroupables();
 
+        composition.getChildren().remove(noteGroupableRectsMap.get(groupsToUnGroup.get(0)));
+        noteGroupableRectsMap.remove(groupsToUnGroup.get(0));
+
         for (NoteGroupable subNoteGroupable : subNoteGroupables) {
             addGroupable(subNoteGroupable);
         }
-        composition.getChildren().remove(noteGroupableRectsMap.get(groupsToUnGroup.get(0)));
-        noteGroupableRectsMap.remove(groupsToUnGroup.get(0));
     }
 
 
@@ -334,6 +335,7 @@ public class CompositionManager {
         NoteGroupablePane groupPane = createNoteGroupablePane(noteGroupable);
         noteGroupableRectsMap.put(noteGroupable, groupPane);
         composition.getChildren().add(groupPane);
+        selectGroupable(noteGroupable);
     }
 
 
