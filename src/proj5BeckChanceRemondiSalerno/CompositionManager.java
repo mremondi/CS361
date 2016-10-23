@@ -374,32 +374,32 @@ public class CompositionManager {
      * @return
      */
     private NoteGroupablePane createNoteGroupablePane(NoteGroupable noteGroupable) {
-        NoteGroupablePane groupRect = new NoteGroupablePane();
-        groupRect.setMinWidth(noteGroupable.getEndTick() - noteGroupable.getStartTick());
-        groupRect.setMinHeight(noteGroupable.getMaxPitch() - noteGroupable.getMinPitch() + 10);
+        NoteGroupablePane groupablePane = new NoteGroupablePane();
+        groupablePane.setMinWidth(noteGroupable.getEndTick() - noteGroupable.getStartTick());
+        groupablePane.setMinHeight(noteGroupable.getMaxPitch() - noteGroupable.getMinPitch() + 10);
         int x = noteGroupable.getStartTick();
         int y = (127- noteGroupable.getMaxPitch()) * 10;
         System.out.format("adding notegroup pane at (%d, %d)\n", x,y);
-        groupRect.setLayoutX(x);
-        groupRect.setLayoutY(y);
+        groupablePane.setLayoutX(x);
+        groupablePane.setLayoutY(y);
 
         if (noteGroupable instanceof Note) {
             Note note = (Note) noteGroupable;
             NoteRectangle noteBox = new NoteRectangle(noteGroupable.getDuration(),0,0);
             noteBox.setFill(getInstrumentColor(note.getChannel()));
-            groupRect.getChildren().add(noteBox);
-            groupRect.setContainsSingleNote(true);
-            return groupRect;
+            groupablePane.getChildren().add(noteBox);
+            groupablePane.setContainsSingleNote(true);
+            return groupablePane;
         } else {
             NoteGroup group = (NoteGroup) noteGroupable;
             for (NoteGroupable subNoteGroupable : group.getNoteGroupables()) {
                 NoteGroupablePane subGroupRect = createNoteGroupablePane(subNoteGroupable);
-                subGroupRect.setLayoutX(subGroupRect.getLayoutX()-groupRect.getLayoutX());
-                subGroupRect.setLayoutY(subGroupRect.getLayoutY()-groupRect.getLayoutY());
-                groupRect.getChildren().add(subGroupRect);
+                subGroupRect.setLayoutX(subGroupRect.getLayoutX()-groupablePane.getLayoutX() + 5);
+                subGroupRect.setLayoutY(subGroupRect.getLayoutY()-groupablePane.getLayoutY() + 5);
+                groupablePane.getChildren().add(subGroupRect);
             }
 
-            return groupRect;
+            return groupablePane;
         }
     }
 
