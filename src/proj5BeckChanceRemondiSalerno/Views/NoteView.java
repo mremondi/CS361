@@ -9,8 +9,14 @@
 package proj5BeckChanceRemondiSalerno.Views;
 
 /**
- * Created by Graham on 10/22/16.
+ * This interface models a view that represents a note view on a composition
+ *
+ * @author Graham Chance
+ * @author Charlie Beck
+ * @author Ryan Salerno
+ * @author Mike Remondi
  */
+
 public interface NoteView {
 
     void setSelected(boolean selected);

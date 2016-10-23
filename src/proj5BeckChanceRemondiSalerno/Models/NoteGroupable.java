@@ -12,10 +12,16 @@ package proj5BeckChanceRemondiSalerno.Models;
 import java.util.ArrayList;
 
 /**
- * Created by mremondi on 10/20/16.
+ * This interface models something that can be grouped with other groupables on a composition
+ *
+ * @author Graham Chance
+ * @author Charlie Beck
+ * @author Ryan Salerno
+ * @author Mike Remondi
  */
 public interface NoteGroupable {
 
+    
     ArrayList<Note> getNotes();
     boolean isSelected();
     void setSelected(boolean selected);

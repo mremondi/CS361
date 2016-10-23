@@ -13,13 +13,30 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 /**
- * Created by Graham on 10/22/16.
+ *
+ * This class models a pane containing notes
+ *
+ * @author Graham Chance
+ * @author Charlie Beck
+ * @author Ryan Salerno
+ * @author Mike Remondi
  */
 public class NoteGroupablePane extends Pane implements NoteView {
 
+    /**
+     * current selected state
+     */
     private boolean selected = false;
+
+    /**
+     * Whether the pane represents a single note.
+     */
     private boolean containsSingleNote = false;
 
+    /**
+     * Changes the width of the pane
+     * @param dx How much to change the width by
+     */
     public void changeWidth(double dx) {
         for (Node node : getChildren()) {
             if (node instanceof NoteView) {
@@ -28,6 +45,10 @@ public class NoteGroupablePane extends Pane implements NoteView {
         }
     }
 
+    /**
+     * Setter for selected state
+     * @param selected new selected state
+     */
     public void setSelected(boolean selected) {
         if (containsSingleNote) {
             setStyle("-fx-border-color: transparent; -fx-border-width: 0");
@@ -44,6 +65,12 @@ public class NoteGroupablePane extends Pane implements NoteView {
         }
     }
 
+    /**
+     * Determines whether a location is in the bounds
+     * @param x x location to test
+     * @param y y locatino to test
+     * @return Wether the location is inside the bounds of the pane
+     */
     public boolean getIsInBounds(double x, double y) {
         Bounds bounds = getBoundsInParent();
         return (x <= bounds.getMaxX() &&
@@ -90,6 +117,10 @@ public class NoteGroupablePane extends Pane implements NoteView {
                 ((x >= bounds.getMaxX() - 5) && x < bounds.getMaxX());
     }
 
+    /**
+     * Setter for containsSingleNote
+     * @param containsSingleNote New containsSingleNote value
+     */
     public void setContainsSingleNote(boolean containsSingleNote) {
         this.containsSingleNote = containsSingleNote;
     }

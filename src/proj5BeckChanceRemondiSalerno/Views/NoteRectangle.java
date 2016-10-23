@@ -12,20 +12,38 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /**
- * Created by mremondi on 10/20/16.
+ * This class models a single note view
+ *
+ * @author Graham Chance
+ * @author Charlie Beck
+ * @author Ryan Salerno
+ * @author Mike Remondi
  */
+
 public class NoteRectangle extends Rectangle implements NoteView {
 
 
+    /**
+     * current selected state
+     */
     private boolean selected = false;
 
+    /**
+     * Constructor
+     * @param width width of the note
+     * @param x x location
+     * @param y y location
+     */
     public NoteRectangle(double width, double x, double y) {
         super(width, 10);
         setX(x);
         setY(y);
     }
 
-
+    /**
+     * Setter for selected state
+     * @param selected new selected state
+     */
     public void setSelected(boolean selected) {
 
         if (selected) {
@@ -38,6 +56,10 @@ public class NoteRectangle extends Rectangle implements NoteView {
         this.selected = selected;
     }
 
+    /**
+     * Changes the width of the pane
+     * @param dx How much to change the width by
+     */
     public void changeWidth(double dx) {
         setWidth(getWidth() + dx);
     }
