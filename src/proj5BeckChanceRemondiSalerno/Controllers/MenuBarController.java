@@ -93,7 +93,7 @@ public class MenuBarController {
      */
     @FXML
     protected void handleUngroup(ActionEvent event) {
-        CompositionManager.getInstance().ungroupSelectedGroups();
+        CompositionManager.getInstance().ungroupSelectedGroup();
     }
 
 }

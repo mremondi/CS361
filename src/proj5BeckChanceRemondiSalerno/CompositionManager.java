@@ -191,7 +191,7 @@ public class CompositionManager {
     /**
      * Ungroups all current selected groups
      */
-    public void ungroupSelectedGroups() {
+    public void ungroupSelectedGroup() {
         ArrayList<NoteGroupable> groupsToUnGroup = new ArrayList<>();
         for (NoteGroupable noteGroupable : noteGroupableRectsMap.keySet()) {
             if (noteGroupable.isSelected() && noteGroupable instanceof NoteGroup) {
@@ -199,15 +199,15 @@ public class CompositionManager {
             }
         }
 
-        for (NoteGroupable noteGroupable : groupsToUnGroup) {
-            ArrayList<NoteGroupable> subNoteGroupables = ((NoteGroup) noteGroupable).getNoteGroupables();
+        if (groupsToUnGroup.size() != 1) { return; }
 
-            for (NoteGroupable subNoteGroupable : subNoteGroupables) {
-                addGroupable(subNoteGroupable);
-            }
-            composition.getChildren().remove(noteGroupableRectsMap.get(noteGroupable));
-            noteGroupableRectsMap.remove(noteGroupable);
+        ArrayList<NoteGroupable> subNoteGroupables = ((NoteGroup) groupsToUnGroup.get(0)).getNoteGroupables();
+
+        for (NoteGroupable subNoteGroupable : subNoteGroupables) {
+            addGroupable(subNoteGroupable);
         }
+        composition.getChildren().remove(noteGroupableRectsMap.get(groupsToUnGroup.get(0)));
+        noteGroupableRectsMap.remove(groupsToUnGroup.get(0));
     }
 
 
