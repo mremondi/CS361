@@ -8,7 +8,7 @@ import javafx.scene.shape.Rectangle;
 /**
  * Created by mremondi on 10/20/16.
  */
-public class NoteRectangle extends Rectangle {
+public class NoteRectangle extends Rectangle implements NoteView {
 
 
     private boolean selected = false;

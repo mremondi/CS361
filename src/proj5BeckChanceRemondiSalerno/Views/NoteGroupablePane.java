@@ -7,17 +7,15 @@ import javafx.scene.layout.Pane;
 /**
  * Created by Graham on 10/22/16.
  */
-public class NoteGroupablePane extends Pane {
+public class NoteGroupablePane extends Pane implements NoteView {
 
     private boolean selected = false;
     private boolean containsSingleNote = false;
 
     public void changeWidth(double dx) {
         for (Node node : getChildren()) {
-            if (node instanceof NoteRectangle) {
-                ((NoteRectangle)node).changeWidth(dx);
-            } else if (node instanceof NoteGroupablePane) {
-                ((NoteGroupablePane)node).changeWidth(dx);
+            if (node instanceof NoteView) {
+                ((NoteView)node).changeWidth(dx);
             }
         }
     }
@@ -32,10 +30,8 @@ public class NoteGroupablePane extends Pane {
         }
         this.selected = selected;
         for (Node node : getChildren()) {
-            if (node instanceof NoteRectangle) {
-                ((NoteRectangle)node).setSelected(selected);
-            } else if (node instanceof NoteGroupablePane) {
-                ((NoteGroupablePane)node).setSelected(selected);
+            if (node instanceof NoteView) {
+                ((NoteView)node).setSelected(selected);
             }
         }
     }
