@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * Created by mremondi on 10/20/16.
  */
-public interface Groupable {
+public interface NoteGroupable {
 
     ArrayList<Note> getNotes();
     boolean isSelected();

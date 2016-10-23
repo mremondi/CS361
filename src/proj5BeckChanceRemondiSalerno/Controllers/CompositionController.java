@@ -5,7 +5,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import proj5BeckChanceRemondiSalerno.CompositionManager;
-import proj5BeckChanceRemondiSalerno.Models.Groupable;
+import proj5BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj5BeckChanceRemondiSalerno.Views.NoteGroupablePane;
 
 import java.awt.geom.Point2D;
@@ -112,10 +112,10 @@ public class CompositionController {
      * @param dx the change in the mouse's x coordinate
      */
     public void resizeSelectedNotes(double dx) {
-        for (Groupable groupable : managerInstance.getGroupables()) {
-            if (groupable.isSelected()){
-                groupable.changeNoteDurations(dx);
-                managerInstance.getGroupPane(groupable).changeWidth(dx);
+        for (NoteGroupable noteGroupable : managerInstance.getGroupables()) {
+            if (noteGroupable.isSelected()){
+                noteGroupable.changeNoteDurations(dx);
+                managerInstance.getGroupPane(noteGroupable).changeWidth(dx);
             }
         }
     }
@@ -134,10 +134,10 @@ public class CompositionController {
         if (controlDrag) { return; }
         isResizing = false;
         isMovingNotes = false;
-        Optional<Groupable> optionalNote = managerInstance.getGroupableAtPoint(x, y);
+        Optional<NoteGroupable> optionalNote = managerInstance.getGroupableAtPoint(x, y);
         // if the click is on a note
         if (optionalNote.isPresent()) {
-            Groupable note = optionalNote.get();
+            NoteGroupable note = optionalNote.get();
             NoteGroupablePane groupPane = managerInstance.getGroupPane(note);
             boolean onNoteEdge = false;
             // if it is on the edge of a note
@@ -168,7 +168,7 @@ public class CompositionController {
      * @param dy the change in the mouse's y coordinate
      */
     public void moveSelectedNotes(double dx, double dy) {
-        for (Groupable note : managerInstance.getGroupables()) {
+        for (NoteGroupable note : managerInstance.getGroupables()) {
             if (note.isSelected()){
                 NoteGroupablePane noteRectangle = managerInstance.getGroupPane(note);
                 noteRectangle.setTranslateX(noteRectangle.getTranslateX() + dx);
@@ -198,7 +198,7 @@ public class CompositionController {
      * the nearest horizontal bar.
      */
     public void releaseMovedNotes() {
-        for (Groupable note : managerInstance.getGroupables()) {
+        for (NoteGroupable note : managerInstance.getGroupables()) {
             if(note.isSelected()) {
                 double pitchdy = (dragStartLocation.getY() - lastDragLocation.getY())/10;
                 double startTickdy = lastDragLocation.getX() - dragStartLocation.getX();
@@ -219,7 +219,7 @@ public class CompositionController {
      * @param y the y location of the mouse click on the pane
      */
     public void handleControlClickAt(double x, double y) {
-        Optional<Groupable> noteAtClickLocation = managerInstance.getGroupableAtPoint(x, y);
+        Optional<NoteGroupable> noteAtClickLocation = managerInstance.getGroupableAtPoint(x, y);
         // if there is a note at the click location
         if (noteAtClickLocation.isPresent()) {
             // if this note is already selected, unselect it
@@ -233,7 +233,7 @@ public class CompositionController {
         }
         // add a new note and select it
         else{
-            Groupable note = managerInstance.addNoteToComposition(x, y);
+            NoteGroupable note = managerInstance.addNoteToComposition(x, y);
             managerInstance.selectGroupable(note);
         }
     }
@@ -248,7 +248,7 @@ public class CompositionController {
      */
     public void handleClickAt(double x, double y) {
         managerInstance.stop();
-        Optional<Groupable> noteAtClickLocation = managerInstance.getGroupableAtPoint(x, y);
+        Optional<NoteGroupable> noteAtClickLocation = managerInstance.getGroupableAtPoint(x, y);
         managerInstance.clearSelectedNotes();
         if (noteAtClickLocation.isPresent()) {
             if (!noteAtClickLocation.get().isSelected()){

@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
-public class Note implements Groupable {
+public class Note implements NoteGroupable {
 
     /**
      * The minimum width a note can be.

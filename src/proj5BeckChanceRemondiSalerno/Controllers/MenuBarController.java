@@ -3,11 +3,7 @@ package proj5BeckChanceRemondiSalerno.Controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import proj5BeckChanceRemondiSalerno.CompositionManager;
-import proj5BeckChanceRemondiSalerno.Models.Groupable;
-import proj5BeckChanceRemondiSalerno.Models.Note;
-import proj5BeckChanceRemondiSalerno.Views.NoteRectangle;
-
-import java.util.ArrayList;
+import proj5BeckChanceRemondiSalerno.Models.NoteGroupable;
 
 /**
  * Created by mremondi on 10/21/16.
@@ -26,8 +22,8 @@ public class MenuBarController {
      */
     public void selectAllNotes() {
         CompositionManager.getInstance().clearSelectedNotes();
-        for (Groupable groupable : CompositionManager.getInstance().getGroupables()) {
-            CompositionManager.getInstance().selectGroupable(groupable);
+        for (NoteGroupable noteGroupable : CompositionManager.getInstance().getGroupables()) {
+            CompositionManager.getInstance().selectGroupable(noteGroupable);
         }
     }
 
