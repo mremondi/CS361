@@ -199,7 +199,7 @@ public class CompositionController {
      * the nearest horizontal bar.
      */
     public void releaseMovedNotes() {
-        for (Note note : managerInstance.getNotes()) {
+        for (Groupable note : managerInstance.getGroupables()) {
             if(note.isSelected()) {
                 double pitchdy = (dragStartLocation.getY() - lastDragLocation.getY())/10;
                 double startTickdy = lastDragLocation.getX() - dragStartLocation.getX();
