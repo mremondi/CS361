@@ -5,8 +5,14 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import proj5BeckChanceRemondiSalerno.CompositionManager;
 
+
 /**
- * Created by mremondi on 10/21/16.
+ * This class models a controller for the instrument pane.
+ *
+ * @author Graham Chance
+ * @author Charlie Beck
+ * @author Ryan Salerno
+ * @author Mike Remondi
  */
 public class InstrumentPaneController {
 

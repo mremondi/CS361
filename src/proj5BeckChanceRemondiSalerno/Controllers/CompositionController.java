@@ -12,8 +12,14 @@ import proj5BeckChanceRemondiSalerno.Views.NoteGroupablePane;
 import java.awt.geom.Point2D;
 import java.util.Optional;
 
+
 /**
- * Created by mremondi on 10/21/16.
+ * This models a controller for the composition view.
+ *
+ * @author Graham Chance
+ * @author Charlie Beck
+ * @author Ryan Salerno
+ * @author Mike Remondi
  */
 public class CompositionController {
 

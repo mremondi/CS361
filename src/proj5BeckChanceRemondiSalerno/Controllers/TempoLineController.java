@@ -14,7 +14,7 @@ import javafx.scene.shape.Line;
 import javafx.util.Duration;
 
 /**
- * This class is a syncable vertical progress line.
+ * This class models a controller for the a tempo line pane.
  *
  * @author Graham Chance
  * @author Charlie Beck

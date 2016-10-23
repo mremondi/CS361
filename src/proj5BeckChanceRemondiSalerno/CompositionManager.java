@@ -16,7 +16,6 @@ import proj5BeckChanceRemondiSalerno.Controllers.TempoLineController;
 import proj5BeckChanceRemondiSalerno.Models.*;
 import proj5BeckChanceRemondiSalerno.Views.NoteGroupablePane;
 import proj5BeckChanceRemondiSalerno.Views.NoteRectangle;
-import javax.sound.midi.ShortMessage;
 import java.util.*;
 
 /**
