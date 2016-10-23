@@ -7,7 +7,7 @@ import javafx.scene.shape.Rectangle;
 import proj5BeckChanceRemondiSalerno.CompositionManager;
 import proj5BeckChanceRemondiSalerno.Models.Groupable;
 import proj5BeckChanceRemondiSalerno.Models.Note;
-import proj5BeckChanceRemondiSalerno.Views.NoteGroupRectangle;
+import proj5BeckChanceRemondiSalerno.Views.NoteGroupablePane;
 
 import java.awt.geom.Point2D;
 import java.util.Optional;
@@ -133,7 +133,7 @@ public class CompositionController {
         // if the click is on a note
         if (optionalNote.isPresent()) {
             Groupable note = optionalNote.get();
-            NoteGroupRectangle groupPane = managerInstance.getGroupPane(note);
+            NoteGroupablePane groupPane = managerInstance.getGroupPane(note);
             boolean onNoteEdge = false;
             // if it is on the edge of a note
             if (groupPane.getIsOnEdge(x, y)) {
@@ -165,7 +165,7 @@ public class CompositionController {
     public void moveSelectedNotes(double dx, double dy) {
         for (Groupable note : managerInstance.getGroupables()) {
             if (note.isSelected()){
-                NoteGroupRectangle noteRectangle = managerInstance.getGroupPane(note);
+                NoteGroupablePane noteRectangle = managerInstance.getGroupPane(note);
                 noteRectangle.setTranslateX(noteRectangle.getTranslateX() + dx);
                 noteRectangle.setTranslateY(noteRectangle.getTranslateY() + dy);
             }

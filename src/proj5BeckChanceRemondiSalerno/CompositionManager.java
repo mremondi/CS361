@@ -13,7 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import proj5BeckChanceRemondiSalerno.Models.*;
-import proj5BeckChanceRemondiSalerno.Views.NoteGroupRectangle;
+import proj5BeckChanceRemondiSalerno.Views.NoteGroupablePane;
 import proj5BeckChanceRemondiSalerno.Views.NoteRectangle;
 
 import javax.sound.midi.ShortMessage;
@@ -34,7 +34,7 @@ public class CompositionManager {
     private static CompositionManager instance = null;
 
     private MidiPlayer midiPlayer = new MidiPlayer(100, 60);
-    private HashMap<Groupable, NoteGroupRectangle> groupablesRectMap = new HashMap<>();
+    private HashMap<Groupable, NoteGroupablePane> noteGroupableRectsMap = new HashMap<>();
     private TempoLine tempoLine;
     private Pane composition;
     private Paint instrumentColor;
@@ -119,8 +119,8 @@ public class CompositionManager {
     }
 
     public void addGroupable(Groupable groupable) {
-        NoteGroupRectangle groupPane = createNoteGroupPane(groupable);
-        groupablesRectMap.put(groupable, groupPane);
+        NoteGroupablePane groupPane = createNoteGroupablePane(groupable);
+        noteGroupableRectsMap.put(groupable, groupPane);
         composition.getChildren().add(groupPane);
     }
 
@@ -136,21 +136,21 @@ public class CompositionManager {
              return Optional.empty();
         }
         for (Groupable groupable : notesToGroup) {
-            composition.getChildren().remove(groupablesRectMap.get(groupable));
-            groupablesRectMap.remove(groupable);
+            composition.getChildren().remove(noteGroupableRectsMap.get(groupable));
+            noteGroupableRectsMap.remove(groupable);
         }
 
         NoteGroup group = new NoteGroup(notesToGroup);
-        NoteGroupRectangle rect = createNoteGroupPane(group);
-        groupablesRectMap.put(group, rect);
+        NoteGroupablePane rect = createNoteGroupablePane(group);
+        noteGroupableRectsMap.put(group, rect);
         composition.getChildren().add(rect);
         selectGroupable(group);
 
         return Optional.of(group);
     }
 
-    public NoteGroupRectangle createNoteGroupPane(Groupable groupable) {
-        NoteGroupRectangle groupRect = new NoteGroupRectangle();
+    public NoteGroupablePane createNoteGroupablePane(Groupable groupable) {
+        NoteGroupablePane groupRect = new NoteGroupablePane();
         groupRect.setMinWidth(groupable.getEndTick() - groupable.getStartTick());
         groupRect.setMinHeight(groupable.getMaxPitch() - groupable.getMinPitch() + 10);
         int x = groupable.getStartTick();
@@ -160,14 +160,15 @@ public class CompositionManager {
         groupRect.setLayoutY(y);
 
         if (groupable instanceof Note) {
-            groupRect.getChildren().add(createSingleNoteRectangle(
-                    groupable.getDuration(),0,0));
+            NoteRectangle noteBox = new NoteRectangle(groupable.getDuration(),0,0);
+            noteBox.setFill(instrumentColor);
+            groupRect.getChildren().add(noteBox);
             groupRect.setContainsSingleNote(true);
             return groupRect;
         } else {
             NoteGroup group = (NoteGroup)groupable;
-            for (Groupable subGroupable : group.getGroups()) {
-                NoteGroupRectangle subGroupRect = createNoteGroupPane(subGroupable);
+            for (Groupable subGroupable : group.getGroupables()) {
+                NoteGroupablePane subGroupRect = createNoteGroupablePane(subGroupable);
                 subGroupRect.setLayoutX(subGroupRect.getLayoutX()-groupRect.getLayoutX());
                 subGroupRect.setLayoutY(subGroupRect.getLayoutY()-groupRect.getLayoutY());
                 groupRect.getChildren().add(subGroupRect);
@@ -180,28 +181,23 @@ public class CompositionManager {
 
     public void ungroupSelectedGroups() {
         ArrayList<Groupable> groupsToUnGroup = new ArrayList<>();
-        for (Groupable groupable : groupablesRectMap.keySet()) {
+        for (Groupable groupable : noteGroupableRectsMap.keySet()) {
             if (groupable.isSelected() && groupable instanceof NoteGroup) {
                 groupsToUnGroup.add(groupable);
             }
         }
 
         for (Groupable groupable : groupsToUnGroup) {
-            ArrayList<Groupable> subGroupables = ((NoteGroup)groupable).getGroups();
+            ArrayList<Groupable> subGroupables = ((NoteGroup)groupable).getGroupables();
 
             for (Groupable subGroupable : subGroupables) {
                 addGroupable(subGroupable);
             }
-            composition.getChildren().remove(groupablesRectMap.get(groupable));
-            groupablesRectMap.remove(groupable);
+            composition.getChildren().remove(noteGroupableRectsMap.get(groupable));
+            noteGroupableRectsMap.remove(groupable);
         }
     }
 
-    private NoteRectangle createSingleNoteRectangle(double width, double x, double y){
-        NoteRectangle noteBox = new NoteRectangle(width, x,y);
-        noteBox.setFill(instrumentColor);
-        return noteBox;
-    }
 
     /**
      * Adds the note to the sound player
@@ -254,7 +250,7 @@ public class CompositionManager {
      */
     public ArrayList<Note> getNotes() {
         ArrayList<Note> notes = new ArrayList<>();
-        for (Groupable group : groupablesRectMap.keySet()) {
+        for (Groupable group : noteGroupableRectsMap.keySet()) {
             for (Note note : group.getNotes()) {
                 notes.add(note);
             }
@@ -279,22 +275,22 @@ public class CompositionManager {
     }
 
     public Set<Groupable> getGroupables() {
-        return groupablesRectMap.keySet();
+        return noteGroupableRectsMap.keySet();
     }
 
 
     public void selectGroupable(Groupable groupable) {
         groupable.setSelected(true);
-        groupablesRectMap.get(groupable).setSelected(true);
+        noteGroupableRectsMap.get(groupable).setSelected(true);
     }
 
     public void unselectNote(Groupable groupable){
         groupable.setSelected(false);
-        groupablesRectMap.get(groupable).setSelected(false);
+        noteGroupableRectsMap.get(groupable).setSelected(false);
     }
 
-    public NoteGroupRectangle getGroupPane(Groupable groupable){
-        return groupablesRectMap.get(groupable);
+    public NoteGroupablePane getGroupPane(Groupable groupable){
+        return noteGroupableRectsMap.get(groupable);
     }
 
     public void selectNotesIntersectingRectangle(Bounds bounds) {
@@ -310,7 +306,7 @@ public class CompositionManager {
      * Clears the list of selected notes
      */
     public void clearSelectedNotes() {
-        for (Groupable groupable : groupablesRectMap.keySet()) {
+        for (Groupable groupable : noteGroupableRectsMap.keySet()) {
             if (groupable.isSelected()){
                 this.unselectNote(groupable);
             }
@@ -342,14 +338,14 @@ public class CompositionManager {
         ArrayList<Groupable> groupablesToDelete = new ArrayList<>();
         for (Groupable groupable : getGroupables()) {
             if (groupable.isSelected()) {
-                NoteGroupRectangle groupPane = groupablesRectMap.get(groupable);
+                NoteGroupablePane groupPane = noteGroupableRectsMap.get(groupable);
                 composition.getChildren().remove(groupPane);
                 groupablesToDelete.add(groupable);
             }
         }
 
         for (Groupable groupable : groupablesToDelete) {
-            groupablesRectMap.remove(groupable);
+            noteGroupableRectsMap.remove(groupable);
         }
     }
 

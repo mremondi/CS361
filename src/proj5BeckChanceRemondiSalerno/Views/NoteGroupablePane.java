@@ -3,12 +3,11 @@ package proj5BeckChanceRemondiSalerno.Views;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-import proj5BeckChanceRemondiSalerno.Models.NoteGroup;
 
 /**
  * Created by Graham on 10/22/16.
  */
-public class NoteGroupRectangle extends Pane {
+public class NoteGroupablePane extends Pane {
 
     private boolean selected = false;
     private boolean containsSingleNote = false;
@@ -17,8 +16,8 @@ public class NoteGroupRectangle extends Pane {
         for (Node node : getChildren()) {
             if (node instanceof NoteRectangle) {
                 ((NoteRectangle)node).changeWidth(dx);
-            } else if (node instanceof NoteGroupRectangle) {
-                ((NoteGroupRectangle)node).changeWidth(dx);
+            } else if (node instanceof NoteGroupablePane) {
+                ((NoteGroupablePane)node).changeWidth(dx);
             }
         }
     }
@@ -35,8 +34,8 @@ public class NoteGroupRectangle extends Pane {
         for (Node node : getChildren()) {
             if (node instanceof NoteRectangle) {
                 ((NoteRectangle)node).setSelected(selected);
-            } else if (node instanceof NoteGroupRectangle) {
-                ((NoteGroupRectangle)node).setSelected(selected);
+            } else if (node instanceof NoteGroupablePane) {
+                ((NoteGroupablePane)node).setSelected(selected);
             }
         }
     }

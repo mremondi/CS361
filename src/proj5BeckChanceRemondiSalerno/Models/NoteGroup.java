@@ -7,17 +7,17 @@ import java.util.ArrayList;
  */
 public class NoteGroup implements Groupable {
 
-    ArrayList<Groupable> groups;
+    ArrayList<Groupable> groupables;
     private boolean isSelected = false;
 
-    public NoteGroup(ArrayList<Groupable> groups) {
-        this.groups = groups;
+    public NoteGroup(ArrayList<Groupable> groupables) {
+        this.groupables = groupables;
     }
 
     @Override
     public ArrayList<Note> getNotes() {
         ArrayList<Note> notes = new ArrayList<>();
-        for (Groupable group : groups) {
+        for (Groupable group : groupables) {
             for (Note note : group.getNotes()) {
                 notes.add(note);
             }
@@ -43,8 +43,8 @@ public class NoteGroup implements Groupable {
     @Override
     public int getStartTick() {
         if (getNotes().isEmpty()) { return 0; }
-        int minStartTick = groups.get(0).getStartTick();
-        for (Groupable groupable : groups) {
+        int minStartTick = groupables.get(0).getStartTick();
+        for (Groupable groupable : groupables) {
             if (groupable.getStartTick() < minStartTick) {
                 minStartTick = groupable.getStartTick();
             }
@@ -55,8 +55,8 @@ public class NoteGroup implements Groupable {
     @Override
     public int getEndTick() {
         if (getNotes().isEmpty()) { return 0; }
-        int maxEndTick = groups.get(0).getEndTick();
-        for (Groupable groupable : groups) {
+        int maxEndTick = groupables.get(0).getEndTick();
+        for (Groupable groupable : groupables) {
             if (groupable.getEndTick() > maxEndTick) {
                 maxEndTick = groupable.getEndTick();
             }
@@ -66,7 +66,7 @@ public class NoteGroup implements Groupable {
 
     @Override
     public void changeNoteDurations(double dx) {
-        for (Groupable groupable : groups) {
+        for (Groupable groupable : groupables) {
             groupable.changeNoteDurations(dx);
         }
     }
@@ -74,8 +74,8 @@ public class NoteGroup implements Groupable {
     @Override
     public int getMaxPitch() {
         if (getNotes().isEmpty()) { return 0; }
-        int maxPitch = groups.get(0).getMaxPitch();
-        for (Groupable groupable : groups) {
+        int maxPitch = groupables.get(0).getMaxPitch();
+        for (Groupable groupable : groupables) {
             if (groupable.getMaxPitch() > maxPitch) {
                 maxPitch = groupable.getMaxPitch();
             }
@@ -86,8 +86,8 @@ public class NoteGroup implements Groupable {
     @Override
     public int getMinPitch() {
         if (getNotes().isEmpty()) { return 0; }
-        int minPitch = groups.get(0).getMinPitch();
-        for (Groupable groupable : groups) {
+        int minPitch = groupables.get(0).getMinPitch();
+        for (Groupable groupable : groupables) {
             if (groupable.getMinPitch() < minPitch) {
                 minPitch = groupable.getMinPitch();
             }
@@ -95,20 +95,20 @@ public class NoteGroup implements Groupable {
         return minPitch;
     }
 
-    public ArrayList<Groupable> getGroups() {
-        return groups;
+    public ArrayList<Groupable> getGroupables() {
+        return groupables;
     }
 
     @Override
     public void changeStartTick(double dx) {
-        for (Groupable groupable : groups) {
+        for (Groupable groupable : groupables) {
             groupable.changeStartTick(dx);
         }
     }
 
     @Override
     public void changePitch(double dy) {
-        for (Groupable groupable : groups) {
+        for (Groupable groupable : groupables) {
             groupable.changePitch(dy);
         }
     }
