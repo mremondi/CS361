@@ -13,8 +13,8 @@ public class NoteRectangle extends Rectangle {
 
     private boolean selected = false;
 
-    public NoteRectangle(double x, double y) {
-        super(100, 10);
+    public NoteRectangle(double width, double x, double y) {
+        super(width, 10);
         setX(x);
         setY(y);
     }
@@ -30,6 +30,10 @@ public class NoteRectangle extends Rectangle {
             setStrokeWidth(1);
         }
         this.selected = selected;
+    }
+
+    public void changeWidth(double dx) {
+        setWidth(getWidth() + dx);
     }
 
 }

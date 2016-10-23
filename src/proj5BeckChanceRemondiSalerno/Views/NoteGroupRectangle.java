@@ -13,6 +13,16 @@ public class NoteGroupRectangle extends Pane {
     private boolean selected = false;
     private boolean containsSingleNote = false;
 
+    public void changeWidth(double dx) {
+        for (Node node : getChildren()) {
+            if (node instanceof NoteRectangle) {
+                ((NoteRectangle)node).changeWidth(dx);
+            } else if (node instanceof NoteGroupRectangle) {
+                ((NoteGroupRectangle)node).changeWidth(dx);
+            }
+        }
+    }
+
     public void setSelected(boolean selected) {
         if (containsSingleNote) {
             setStyle("-fx-border-color: transparent; -fx-border-width: 0");

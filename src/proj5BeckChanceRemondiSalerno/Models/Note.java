@@ -127,10 +127,11 @@ public class Note implements Groupable {
      * @param dx the distance to move the right edge
      */
     public void changeNoteDurations(double dx) {
-        if (this.getDuration() < MINIMUM_DURATION) {
+        double newDuration = this.getDuration() + dx;
+        if (newDuration < MINIMUM_DURATION) {
             this.setDuration(MINIMUM_DURATION);
         } else {
-            this.setDuration(this.getDuration() + dx);
+            this.setDuration(newDuration);
         }
     }
 

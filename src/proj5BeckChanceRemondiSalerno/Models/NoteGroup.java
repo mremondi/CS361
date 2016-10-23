@@ -37,7 +37,7 @@ public class NoteGroup implements Groupable {
 
     @Override
     public double getDuration() {
-        return 0;
+        return getEndTick() - getStartTick();
     }
 
     @Override
@@ -66,7 +66,9 @@ public class NoteGroup implements Groupable {
 
     @Override
     public void changeNoteDurations(double dx) {
-
+        for (Groupable groupable : groups) {
+            groupable.changeNoteDurations(dx);
+        }
     }
 
     @Override

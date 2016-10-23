@@ -110,7 +110,7 @@ public class CompositionController {
         for (Groupable groupable : managerInstance.getGroupables()) {
             if (groupable.isSelected()){
                 groupable.changeNoteDurations(dx);
-                managerInstance.getGroupPane(groupable).setMinWidth(groupable.getDuration());
+                managerInstance.getGroupPane(groupable).changeWidth(dx);
             }
         }
     }
@@ -182,7 +182,7 @@ public class CompositionController {
      * corresponding pieces back to their resting state.
      */
     public void handleDragEnded() {
-        releaseMovedNotes();
+        if(isMovingNotes) { releaseMovedNotes(); };
         isResizing = false;
         isMovingNotes = false;
         managerInstance.getComposition().getChildren().remove(this.dragBox);

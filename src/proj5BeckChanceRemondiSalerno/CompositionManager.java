@@ -160,7 +160,8 @@ public class CompositionManager {
         groupRect.setLayoutY(y);
 
         if (groupable instanceof Note) {
-            groupRect.getChildren().add(createSingleNoteRectangle(0,0));
+            groupRect.getChildren().add(createSingleNoteRectangle(
+                    groupable.getDuration(),0,0));
             groupRect.setContainsSingleNote(true);
             return groupRect;
         } else {
@@ -196,8 +197,8 @@ public class CompositionManager {
         }
     }
 
-    private NoteRectangle createSingleNoteRectangle(double x, double y){
-        NoteRectangle noteBox = new NoteRectangle(x,y);
+    private NoteRectangle createSingleNoteRectangle(double width, double x, double y){
+        NoteRectangle noteBox = new NoteRectangle(width, x,y);
         noteBox.setFill(instrumentColor);
         return noteBox;
     }
