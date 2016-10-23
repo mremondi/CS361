@@ -6,7 +6,7 @@
  * Due Date: October 11, 2016
  */
 
-package proj5BeckChanceRemondiSalerno.Models;
+package proj5BeckChanceRemondiSalerno.Controllers;
 
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
@@ -22,7 +22,7 @@ import javafx.util.Duration;
  * @author Mike Remondi
  */
 
-public class TempoLine {
+public class TempoLineController {
     private Line tempoLine;
     private TranslateTransition tempoAnimation = new TranslateTransition();
 
@@ -31,7 +31,7 @@ public class TempoLine {
      *
      * @param tempoLine graphic representation of reproduction time
      */
-    public TempoLine(Line tempoLine) {
+    public TempoLineController(Line tempoLine) {
         this.tempoLine = tempoLine;
         this.tempoAnimation.setNode(this.tempoLine);
         this.tempoAnimation.setInterpolator(Interpolator.LINEAR); // Don't ease

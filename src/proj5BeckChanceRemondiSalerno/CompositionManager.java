@@ -12,10 +12,10 @@ import javafx.geometry.Bounds;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import proj5BeckChanceRemondiSalerno.Controllers.TempoLineController;
 import proj5BeckChanceRemondiSalerno.Models.*;
 import proj5BeckChanceRemondiSalerno.Views.NoteGroupablePane;
 import proj5BeckChanceRemondiSalerno.Views.NoteRectangle;
-
 import javax.sound.midi.ShortMessage;
 import java.util.*;
 
@@ -35,7 +35,7 @@ public class CompositionManager {
 
     private MidiPlayer midiPlayer = new MidiPlayer(100, 60);
     private HashMap<Groupable, NoteGroupablePane> noteGroupableRectsMap = new HashMap<>();
-    private TempoLine tempoLine;
+    private TempoLineController tempoLineController;
     private Pane composition;
     private int currentSelectedInstrumentIndex;
     private Hashtable<Integer, Paint> channelMapping  = new Hashtable<>();
@@ -49,8 +49,8 @@ public class CompositionManager {
         return instance;
     }
 
-    public void setTempoLine(TempoLine line){
-        this.tempoLine = line;
+    public void setTempoLineController(TempoLineController line){
+        this.tempoLineController = line;
     }
 
     public void setComposition(Pane composition){
@@ -315,7 +315,7 @@ public class CompositionManager {
         this.midiPlayer.clear();
         this.buildSong(this.midiPlayer);
         double stopTime = this.calculateStopTime();
-        this.tempoLine.updateTempoLine(stopTime);
+        this.tempoLineController.updateTempoLine(stopTime);
         playMusicAndAnimation();
     }
 
@@ -324,8 +324,8 @@ public class CompositionManager {
      */
     public void stop(){
         this.midiPlayer.stop();
-        this.tempoLine.stopAnimation();
-        this.tempoLine.hideTempoLine();
+        this.tempoLineController.stopAnimation();
+        this.tempoLineController.hideTempoLine();
     }
 
     public void deleteSelectedGroups() {
@@ -347,13 +347,13 @@ public class CompositionManager {
      * starts the reproduction  of the composition
      */
     private void playMusicAndAnimation() {
-        this.tempoLine.playAnimation();
+        this.tempoLineController.playAnimation();
         this.midiPlayer.play();
     }
 
     /**
      * Maps instruments to a given channel in the MIDI sounds player
-     *
+     *f
      * @param midiPlayer MIDI sounds player
      */
     private void addProgramChanges(MidiPlayer midiPlayer) {

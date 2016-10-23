@@ -8,11 +8,12 @@
 
 package proj5BeckChanceRemondiSalerno.Controllers;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import proj5BeckChanceRemondiSalerno.CompositionManager;
-import proj5BeckChanceRemondiSalerno.Models.TempoLine;
 
 /**
  * This class handles all user GUI interactions
@@ -23,12 +24,15 @@ import proj5BeckChanceRemondiSalerno.Models.TempoLine;
  * @author Mike Remondi
  */
 public class Controller {
+
     @FXML
     private Pane fxCompositionSheet;
-    @FXML
-    private Line fxTempoLine;
+
     @FXML
     private Pane fxLinePane;
+
+    @FXML
+    private Pane fxTempoLineContainerPane;
 
     private CompositionManager compositionManager;
 
@@ -39,8 +43,9 @@ public class Controller {
     public void initialize() {
         this.compositionManager = CompositionManager.getInstance();
         this.compositionManager.setComposition(this.fxCompositionSheet);
-        this.compositionManager.setTempoLine(new TempoLine(fxTempoLine));
         createLinePane();
+        compositionManager.setTempoLineController(new TempoLineController(createTempoLine()));
+
     }
 
     /**
@@ -54,5 +59,20 @@ public class Controller {
             staffLine.getStyleClass().add("staffLine");
             fxLinePane.getChildren().add(staffLine);
         }
+    }
+
+    public Line createTempoLine() {
+        Line tempoLine = new Line();
+        fxTempoLineContainerPane.heightProperty().addListener((obs, oldVal, newVal) -> {
+            tempoLine.setEndY(fxTempoLineContainerPane.getHeight());
+        });
+        tempoLine.setVisible(false);
+        tempoLine.setStartY(0);
+        tempoLine.setStartX(0);
+        tempoLine.setEndX(5);
+        tempoLine.setStrokeWidth(5);
+        fxTempoLineContainerPane.getChildren().add(tempoLine);
+        tempoLine.setFill(Color.BLUE);
+        return tempoLine;
     }
 }

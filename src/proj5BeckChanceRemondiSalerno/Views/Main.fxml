@@ -8,28 +8,23 @@
 
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
-
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
-<BorderPane
-        prefHeight="300.0"
-        prefWidth="400.0"
-        stylesheets="@Main.css"
-        xmlns="http://javafx.com/javafx/8.0.65"
-        xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="proj5BeckChanceRemondiSalerno.Controllers.Controller">
+
+<BorderPane prefHeight="300.0" prefWidth="400.0" stylesheets="@Main.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proj5BeckChanceRemondiSalerno.Controllers.Controller">
     <top>
-        <fx:include source="MenuBar.fxml" BorderPane.alignment="CENTER"/>
+        <fx:include source="MenuBar.fxml" BorderPane.alignment="CENTER" />
     </top>
     <center>
         <ScrollPane>
             <StackPane BorderPane.alignment="CENTER">
-                <fx:include source="LinePane.fxml" fx:id="fxLinePane"/>
-                <fx:include source="TempoLine.fxml" fx:id="fxTempoLine"/>
-                <fx:include source="CompositionPane.fxml" fx:id="fxCompositionSheet"/>
+                <fx:include fx:id="fxLinePane" source="LinePane.fxml" />
+                <fx:include fx:id="fxCompositionSheet" source="CompositionPane.fxml" />
+            <Pane fx:id="fxTempoLineContainerPane" disable="true" StackPane.alignment="TOP_LEFT" />
             </StackPane>
         </ScrollPane>
     </center>
     <left>
-        <fx:include source="InstrumentPane.fxml"/>
+        <fx:include source="InstrumentPane.fxml" />
     </left>
 </BorderPane>
