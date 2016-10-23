@@ -48,7 +48,7 @@ public class MenuBarController {
      * Deletes all the selected notes from the composition pane
      */
     public void deleteNotes() {
-        CompositionManager.getInstance().deleteSelectedGroups();
+        CompositionManager.getInstance().deleteSelectedGroupables();
     }
 
 
@@ -78,11 +78,19 @@ public class MenuBarController {
         System.exit(0);
     }
 
+    /**
+     * Creates a new note group
+     * @param event
+     */
     @FXML
     protected void handleGroup(ActionEvent event) {
         CompositionManager.getInstance().createNoteGroup();
     }
 
+    /**
+     * Ungroups notes.
+     * @param event
+     */
     @FXML
     protected void handleUngroup(ActionEvent event) {
         CompositionManager.getInstance().ungroupSelectedGroups();

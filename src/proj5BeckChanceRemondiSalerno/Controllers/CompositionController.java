@@ -15,7 +15,6 @@ import javafx.scene.shape.Rectangle;
 import proj5BeckChanceRemondiSalerno.CompositionManager;
 import proj5BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj5BeckChanceRemondiSalerno.Views.NoteGroupablePane;
-
 import java.awt.geom.Point2D;
 import java.util.Optional;
 
@@ -30,12 +29,39 @@ import java.util.Optional;
  */
 public class CompositionController {
 
+    /**
+     * Accesses the CompositionManager shared instance.
+     */
     private final CompositionManager managerInstance = CompositionManager.getInstance();
+
+    /**
+     * The last location of the drag.
+     */
     private Point2D.Double lastDragLocation = new Point2D.Double();
+
+    /**
+     * The starting location of the current drag.
+     */
     private Point2D.Double dragStartLocation = new Point2D.Double();
+
+    /**
+     * Whether mouse is currently dragging.
+     */
     private boolean isDragging;
+
+    /**
+     * Whether notes are currently being moved.
+     */
     private boolean isMovingNotes;
+
+    /**
+     * Whether notes are currently being resized.
+     */
     private boolean isResizing;
+
+    /**
+     * Drag box for easy multiple selection.
+     */
     private Rectangle dragBox;
 
     /**
@@ -232,7 +258,7 @@ public class CompositionController {
         if (noteAtClickLocation.isPresent()) {
             // if this note is already selected, unselect it
             if (noteAtClickLocation.get().isSelected()){
-                managerInstance.unselectNote(noteAtClickLocation.get());
+                managerInstance.deselectNote(noteAtClickLocation.get());
             }
             // if it is not selected, select it
             else {
@@ -267,6 +293,11 @@ public class CompositionController {
         }
     }
 
+    /**
+     * Creates and adds the drag box to the view.
+     * @param x X location of the box.
+     * @param y Y location of the box.
+     */
     public void createDragBox(double x, double y){
         this.dragBox = new Rectangle(0, 0);
         this.dragBox.setX(x);

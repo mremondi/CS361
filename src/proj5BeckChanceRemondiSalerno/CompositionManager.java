@@ -23,6 +23,8 @@ import java.util.*;
  * Deals with adding and manipulating all the data
  * regarding the composition
  *
+ * Singleton
+ *
  * @author Graham Chance
  * @author Charlie Beck
  * @author Ryan Salerno
@@ -30,16 +32,46 @@ import java.util.*;
  */
 public class CompositionManager {
 
+    /**
+     * The shared instance of the singleton
+     */
     private static CompositionManager instance = null;
 
+    /**
+     * The map for matching note models to their views
+     */
     private HashMap<NoteGroupable, NoteGroupablePane> noteGroupableRectsMap = new HashMap<>();
+
+    /**
+     * The controller for the tempo line
+     */
     private TempoLineController tempoLineController;
+
+    /**
+     * The composition view
+     */
     private Pane composition;
+
+    /**
+     * The index of the current selected instrument
+     */
     private int currentSelectedInstrumentIndex;
+
+    /**
+     * The composition player for playing notes
+     */
     private CompositionPlayer compositionPlayer = new CompositionPlayer();
 
+    /**
+     * constructor
+     * hidden from public to enforce singleton
+     */
     private CompositionManager() {}
 
+    /**
+     * shared instance getter
+     * @return The single shared instance
+     */
     public static synchronized CompositionManager getInstance(){
         if (instance == null){
             instance = new CompositionManager();
@@ -47,17 +79,30 @@ public class CompositionManager {
         return instance;
     }
 
-    public void setTempoLineController(TempoLineController line){
-        this.tempoLineController = line;
+    /**
+     * Setter for tempo line controller
+     * @param tempoLineControllerontroller the new tempo line controller
+     */
+    public void setTempoLineController(TempoLineController tempoLineControllerontroller){
+        this.tempoLineController = tempoLineControllerontroller;
     }
 
+    /**
+     * Setter for the composition view
+     * @param composition The new composition view
+     */
     public void setComposition(Pane composition){
         this.composition = composition;
     }
 
+    /**
+     * Getter for the composition view
+     * @return The composition view
+     */
     public Pane getComposition(){
         return this.composition;
     }
+
     /**
      * Maps channel numbers to specific instrument color association
      */
@@ -83,8 +128,11 @@ public class CompositionManager {
         return null;
     }
 
-
-    public void changeInstrument(int newInstrumentIndex) {
+    /**
+     * Setter for current instrument
+     * @param newInstrumentIndex The new instrument index
+     */
+    public void setInstrumentIndex(int newInstrumentIndex) {
         currentSelectedInstrumentIndex = newInstrumentIndex;
     }
 
@@ -109,12 +157,11 @@ public class CompositionManager {
         return null;
     }
 
-    public void addGroupable(NoteGroupable noteGroupable) {
-        NoteGroupablePane groupPane = createNoteGroupablePane(noteGroupable);
-        noteGroupableRectsMap.put(noteGroupable, groupPane);
-        composition.getChildren().add(groupPane);
-    }
 
+    /**
+     * Creates a note group from current selected groupables
+     * @return
+     */
     public Optional<NoteGroup> createNoteGroup() {
         System.out.println("grouping");
         ArrayList<NoteGroupable> notesToGroup = new ArrayList<>();
@@ -140,7 +187,193 @@ public class CompositionManager {
         return Optional.of(group);
     }
 
-    public NoteGroupablePane createNoteGroupablePane(NoteGroupable noteGroupable) {
+
+    /**
+     * Ungroups all current selected groups
+     */
+    public void ungroupSelectedGroups() {
+        ArrayList<NoteGroupable> groupsToUnGroup = new ArrayList<>();
+        for (NoteGroupable noteGroupable : noteGroupableRectsMap.keySet()) {
+            if (noteGroupable.isSelected() && noteGroupable instanceof NoteGroup) {
+                groupsToUnGroup.add(noteGroupable);
+            }
+        }
+
+        for (NoteGroupable noteGroupable : groupsToUnGroup) {
+            ArrayList<NoteGroupable> subNoteGroupables = ((NoteGroup) noteGroupable).getNoteGroupables();
+
+            for (NoteGroupable subNoteGroupable : subNoteGroupables) {
+                addGroupable(subNoteGroupable);
+            }
+            composition.getChildren().remove(noteGroupableRectsMap.get(noteGroupable));
+            noteGroupableRectsMap.remove(noteGroupable);
+        }
+    }
+
+
+
+
+    /**
+     * Finds a Note, if one exists, where the mouse click is inside of
+     * its rectangle.
+     *
+     * @param x MouseEvent x coordinate
+     * @param y MouseEvent y coordinate
+     */
+    public Optional<NoteGroupable> getGroupableAtPoint(double x, double y) {
+        for (NoteGroupable noteGroupable : this.getGroupables()) {
+            if (getGroupPane(noteGroupable).getIsInBounds(x, y)) {
+                return Optional.of(noteGroupable);
+            }
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Getter for the groupable models
+     * @return All groupable models in composition
+     */
+    public Set<NoteGroupable> getGroupables() {
+        return noteGroupableRectsMap.keySet();
+    }
+
+
+    /**
+     * Selects a note groupable
+     * @param noteGroupable The groupable to select
+     */
+    public void selectGroupable(NoteGroupable noteGroupable) {
+        noteGroupable.setSelected(true);
+        noteGroupableRectsMap.get(noteGroupable).setSelected(true);
+    }
+
+    /**
+     * Deselects a note groupable
+     * @param noteGroupable The groupable to deselect
+     */
+    public void deselectNote(NoteGroupable noteGroupable){
+        noteGroupable.setSelected(false);
+        noteGroupableRectsMap.get(noteGroupable).setSelected(false);
+    }
+
+    /**
+     * Getter for group pane corresponding to a groupable
+     * @param noteGroupable The groupable to get the view for
+     * @return The view for the groupable
+     */
+    public NoteGroupablePane getGroupPane(NoteGroupable noteGroupable){
+        return noteGroupableRectsMap.get(noteGroupable);
+    }
+
+    /**
+     * Selects the groupables contained in an area
+     * @param bounds the area to select in
+     */
+    public void selectNotesIntersectingRectangle(Bounds bounds) {
+        for (NoteGroupable noteGroupable : getGroupables()) {
+            if (getGroupPane(noteGroupable).getIsInRectangleBounds(bounds.getMinX(), bounds.getMinY(),
+                    bounds.getMaxX(), bounds.getMaxY())) {
+                selectGroupable(noteGroupable);
+            }
+        }
+    }
+
+    /**
+     * Clears the list of selected notes
+     */
+    public void clearSelectedNotes() {
+        for (NoteGroupable noteGroupable : noteGroupableRectsMap.keySet()) {
+            if (noteGroupable.isSelected()){
+                this.deselectNote(noteGroupable);
+            }
+        }
+    }
+
+    /**
+     * Plays the sequence of notes and animates the TempoLine.
+     */
+    public void play(){
+        compositionPlayer.play(getNotes());
+        double stopTime = this.calculateStopTime();
+        this.tempoLineController.updateTempoLine(stopTime);
+        this.tempoLineController.playAnimation();
+    }
+
+    /**
+     * Stops the midiPlayer and hides the tempoLine.
+     */
+    public void stop(){
+        compositionPlayer.stop();
+        this.tempoLineController.stopAnimation();
+        this.tempoLineController.hideTempoLine();
+    }
+
+    /**
+     * Deletes selected groupables
+     */
+    public void deleteSelectedGroupables() {
+        ArrayList<NoteGroupable> groupablesToDelete = new ArrayList<>();
+        for (NoteGroupable noteGroupable : getGroupables()) {
+            if (noteGroupable.isSelected()) {
+                NoteGroupablePane groupPane = noteGroupableRectsMap.get(noteGroupable);
+                composition.getChildren().remove(groupPane);
+                groupablesToDelete.add(noteGroupable);
+            }
+        }
+
+        for (NoteGroupable noteGroupable : groupablesToDelete) {
+            noteGroupableRectsMap.remove(noteGroupable);
+        }
+    }
+
+    /**
+     * Adds a
+     * @param noteGroupable
+     */
+    private void addGroupable(NoteGroupable noteGroupable) {
+        NoteGroupablePane groupPane = createNoteGroupablePane(noteGroupable);
+        noteGroupableRectsMap.put(noteGroupable, groupPane);
+        composition.getChildren().add(groupPane);
+    }
+
+
+    /**
+     * Gets the list of notes.
+     *
+     * @return ArrayList of MusicalNotes
+     */
+    private ArrayList<Note> getNotes() {
+        ArrayList<Note> notes = new ArrayList<>();
+        for (NoteGroupable group : noteGroupableRectsMap.keySet()) {
+            for (Note note : group.getNotes()) {
+                notes.add(note);
+            }
+        }
+        return notes;
+    }
+
+
+    /**
+     * Calculates the stop time for the composition created
+     *
+     * @return stopTime
+     */
+    private double calculateStopTime() {
+        double stopTime = 0.0;
+        for (Note note : this.getNotes()) {
+            if (stopTime < note.getStartTick() + note.getDuration()) {
+                stopTime = note.getStartTick() + note.getDuration();
+            }
+        }
+        return stopTime;
+    }
+
+    /**
+     * Creates a new NoteGroupablePane based on a group
+     * @param noteGroupable
+     * @return
+     */
+    private NoteGroupablePane createNoteGroupablePane(NoteGroupable noteGroupable) {
         NoteGroupablePane groupRect = new NoteGroupablePane();
         groupRect.setMinWidth(noteGroupable.getEndTick() - noteGroupable.getStartTick());
         groupRect.setMinHeight(noteGroupable.getMaxPitch() - noteGroupable.getMinPitch() + 10);
@@ -168,149 +401,6 @@ public class CompositionManager {
 
             return groupRect;
         }
-
     }
-
-    public void ungroupSelectedGroups() {
-        ArrayList<NoteGroupable> groupsToUnGroup = new ArrayList<>();
-        for (NoteGroupable noteGroupable : noteGroupableRectsMap.keySet()) {
-            if (noteGroupable.isSelected() && noteGroupable instanceof NoteGroup) {
-                groupsToUnGroup.add(noteGroupable);
-            }
-        }
-
-        for (NoteGroupable noteGroupable : groupsToUnGroup) {
-            ArrayList<NoteGroupable> subNoteGroupables = ((NoteGroup) noteGroupable).getNoteGroupables();
-
-            for (NoteGroupable subNoteGroupable : subNoteGroupables) {
-                addGroupable(subNoteGroupable);
-            }
-            composition.getChildren().remove(noteGroupableRectsMap.get(noteGroupable));
-            noteGroupableRectsMap.remove(noteGroupable);
-        }
-    }
-
-
-
-    /**
-     * Calculates the stop time for the composition created
-     *
-     * @return stopTime
-     */
-    public double calculateStopTime() {
-        double stopTime = 0.0;
-        for (Note note : this.getNotes()) {
-            if (stopTime < note.getStartTick() + note.getDuration()) {
-                stopTime = note.getStartTick() + note.getDuration();
-            }
-        }
-        return stopTime;
-    }
-
-
-    /**
-     * Gets the list of notes.
-     *
-     * @return ArrayList of MusicalNotes
-     */
-    public ArrayList<Note> getNotes() {
-        ArrayList<Note> notes = new ArrayList<>();
-        for (NoteGroupable group : noteGroupableRectsMap.keySet()) {
-            for (Note note : group.getNotes()) {
-                notes.add(note);
-            }
-        }
-        return notes;
-    }
-
-    /**
-     * Finds a Note, if one exists, where the mouse click is inside of
-     * its rectangle.
-     *
-     * @param x MouseEvent x coordinate
-     * @param y MouseEvent y coordinate
-     */
-    public Optional<NoteGroupable> getGroupableAtPoint(double x, double y) {
-        for (NoteGroupable noteGroupable : this.getGroupables()) {
-            if (getGroupPane(noteGroupable).getIsInBounds(x, y)) {
-                return Optional.of(noteGroupable);
-            }
-        }
-        return Optional.empty();
-    }
-
-    public Set<NoteGroupable> getGroupables() {
-        return noteGroupableRectsMap.keySet();
-    }
-
-
-    public void selectGroupable(NoteGroupable noteGroupable) {
-        noteGroupable.setSelected(true);
-        noteGroupableRectsMap.get(noteGroupable).setSelected(true);
-    }
-
-    public void unselectNote(NoteGroupable noteGroupable){
-        noteGroupable.setSelected(false);
-        noteGroupableRectsMap.get(noteGroupable).setSelected(false);
-    }
-
-    public NoteGroupablePane getGroupPane(NoteGroupable noteGroupable){
-        return noteGroupableRectsMap.get(noteGroupable);
-    }
-
-    public void selectNotesIntersectingRectangle(Bounds bounds) {
-        for (NoteGroupable noteGroupable : getGroupables()) {
-            if (getGroupPane(noteGroupable).getIsInRectangleBounds(bounds.getMinX(), bounds.getMinY(),
-                    bounds.getMaxX(), bounds.getMaxY())) {
-                selectGroupable(noteGroupable);
-            }
-        }
-    }
-
-    /**
-     * Clears the list of selected notes
-     */
-    public void clearSelectedNotes() {
-        for (NoteGroupable noteGroupable : noteGroupableRectsMap.keySet()) {
-            if (noteGroupable.isSelected()){
-                this.unselectNote(noteGroupable);
-            }
-        }
-    }
-
-    /**
-     * Plays the sequence of notes and animates the TempoLine.
-     */
-    public void play(){
-        compositionPlayer.play(getNotes());
-        double stopTime = this.calculateStopTime();
-        this.tempoLineController.updateTempoLine(stopTime);
-        this.tempoLineController.playAnimation();
-    }
-
-    /**
-     * Stops the midiPlayer and hides the tempoLine.
-     */
-    public void stop(){
-        compositionPlayer.stop();
-        this.tempoLineController.stopAnimation();
-        this.tempoLineController.hideTempoLine();
-    }
-
-    public void deleteSelectedGroups() {
-        ArrayList<NoteGroupable> groupablesToDelete = new ArrayList<>();
-        for (NoteGroupable noteGroupable : getGroupables()) {
-            if (noteGroupable.isSelected()) {
-                NoteGroupablePane groupPane = noteGroupableRectsMap.get(noteGroupable);
-                composition.getChildren().remove(groupPane);
-                groupablesToDelete.add(noteGroupable);
-            }
-        }
-
-        for (NoteGroupable noteGroupable : groupablesToDelete) {
-            noteGroupableRectsMap.remove(noteGroupable);
-        }
-    }
-
 
 }

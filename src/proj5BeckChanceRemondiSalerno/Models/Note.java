@@ -39,9 +39,6 @@ public class Note implements NoteGroupable {
      */
     private int trackIndex;
 
-    /**
-     * Whether the note is currently selected.
-     */
 
     private int pitch;
     private int startTick;
@@ -71,6 +68,10 @@ public class Note implements NoteGroupable {
         return this.pitch;
     }
 
+    /**
+     * Setter for pitch
+     * @param y the new pitch
+     */
     public void setPitch(int y){
         this.pitch = 127 - ((int) y / 10);
     }
@@ -94,6 +95,11 @@ public class Note implements NoteGroupable {
         return this.startTick;
     }
 
+
+    /**
+     * Setter for start tick
+     * @param x the new start tick
+     */
     public void setStartTick(int x){
         this.startTick = x;
     }
@@ -153,6 +159,10 @@ public class Note implements NoteGroupable {
         return this.selected;
     }
 
+    /**
+     * Updates the selected state
+     * @param selected new selected state
+     */
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
@@ -164,27 +174,48 @@ public class Note implements NoteGroupable {
         return notes;
     }
 
+    /**
+     * Gets the end tick of the note
+     * @return the end tick
+     */
     @Override
     public int getEndTick() {
         return startTick + (int)duration;
     }
 
 
+    /**
+     * Gets the end tick of the note
+     * @return the end tick
+     */
     @Override
     public int getMaxPitch() {
         return pitch;
     }
 
+    /**
+     * Gets the min pitch of the note
+     * @return the min pitch
+     */
     @Override
     public int getMinPitch() {
         return pitch;
     }
 
+
+    /**
+     * Changes the pitch of the note
+     * @param dy how much to change the pitch by
+     */
     @Override
     public void changePitch(double dy) {
         pitch += dy;
     }
 
+    /**
+     * Changes the start tick of the note
+     * @param dx how much to change the start tick by
+     */
     @Override
     public void changeStartTick(double dx) {
         startTick += dx;

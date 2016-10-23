@@ -8,10 +8,8 @@
 
 package proj5BeckChanceRemondiSalerno.Controllers;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import proj5BeckChanceRemondiSalerno.CompositionManager;
 
@@ -25,26 +23,33 @@ import proj5BeckChanceRemondiSalerno.CompositionManager;
  */
 public class Controller {
 
+    /**
+     * The composition sheet pane containing notes.
+     */
     @FXML
     private Pane fxCompositionSheet;
 
+    /**
+     * The pane containing the composition sheet lines.
+     */
     @FXML
     private Pane fxLinePane;
 
+    /**
+     * The container pane for the tempo line
+     */
     @FXML
     private Pane fxTempoLineContainerPane;
 
-    private CompositionManager compositionManager;
 
     /**
      * Seeds our CompositionPaneManager and TempoLine objects with the
      * fields from the FXML file after the FXML has been initialized
      */
     public void initialize() {
-        this.compositionManager = CompositionManager.getInstance();
-        this.compositionManager.setComposition(this.fxCompositionSheet);
+        CompositionManager.getInstance().setComposition(this.fxCompositionSheet);
         createLinePane();
-        compositionManager.setTempoLineController(new TempoLineController(fxTempoLineContainerPane));
+        CompositionManager.getInstance().setTempoLineController(new TempoLineController(fxTempoLineContainerPane));
 
     }
 

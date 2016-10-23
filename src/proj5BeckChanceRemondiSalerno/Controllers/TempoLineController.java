@@ -25,11 +25,27 @@ import javafx.util.Duration;
 
 public class TempoLineController {
 
-    private Line tempoLine;
-    private TranslateTransition tempoAnimation = new TranslateTransition();
+
+    /**
+     * The main pane containing the tempo line.
+     */
     private Pane tempoLineContainerPane;
 
+    /**
+     * The line graphic representing the tempo line
+     */
+    private Line tempoLine;
 
+    /**
+     * The animation for animating the tempo line across the pane.
+     */
+    private TranslateTransition tempoAnimation = new TranslateTransition();
+
+
+    /**
+     * Constructor
+     * @param tempoLineContainerPane The main pane to create the tempo line in.
+     */
     public TempoLineController(Pane tempoLineContainerPane) {
         this.tempoLineContainerPane = tempoLineContainerPane;
         this.tempoLine = createTempoLine();
@@ -39,20 +55,12 @@ public class TempoLineController {
     }
 
     /**
-     * if there is a tempo line in the composition pane, remove it.
+     * Hides the tempo line
      */
     public void hideTempoLine() {
         this.tempoLine.setVisible(false);
     }
 
-    /**
-     * tells whether the tempo bar is visible
-     *
-     * @return true or false
-     */
-    public boolean isVisible() {
-        return this.tempoLine.isVisible();
-    }
 
     /**
      * Updates the information in the tempo line and animation for
@@ -84,6 +92,10 @@ public class TempoLineController {
     }
 
 
+    /**
+     * Creates the tempo line and adds it to the container pane.
+     * @return
+     */
     private Line createTempoLine() {
         Line tempoLine = new Line();
         tempoLineContainerPane.heightProperty().addListener((obs, oldVal, newVal) -> {
@@ -98,4 +110,5 @@ public class TempoLineController {
         tempoLine.setStroke(Color.BLUE);
         return tempoLine;
     }
+
 }

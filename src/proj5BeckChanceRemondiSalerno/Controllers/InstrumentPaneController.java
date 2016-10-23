@@ -9,7 +9,6 @@
 package proj5BeckChanceRemondiSalerno.Controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import proj5BeckChanceRemondiSalerno.CompositionManager;
 
@@ -24,6 +23,9 @@ import proj5BeckChanceRemondiSalerno.CompositionManager;
  */
 public class InstrumentPaneController {
 
+    /**
+     * The toggle group for the intruments.
+     */
     @FXML
     private ToggleGroup instrumentGroup;
 
@@ -36,6 +38,6 @@ public class InstrumentPaneController {
      */
     @FXML
     public void handleInstrumentChange() {
-        CompositionManager.getInstance().changeInstrument(instrumentGroup.getToggles().indexOf(instrumentGroup.getSelectedToggle()));
+        CompositionManager.getInstance().setInstrumentIndex(instrumentGroup.getToggles().indexOf(instrumentGroup.getSelectedToggle()));
     }
 }
