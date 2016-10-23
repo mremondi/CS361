@@ -96,7 +96,7 @@ public class TempoLineController {
         tempoLine.setEndX(5);
         tempoLine.setStrokeWidth(5);
         tempoLineContainerPane.getChildren().add(tempoLine);
-        tempoLine.setFill(Color.BLUE);
+        tempoLine.setStroke(Color.BLUE);
         return tempoLine;
     }
 }
