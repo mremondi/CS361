@@ -84,7 +84,7 @@ public class MenuBarController {
      */
     @FXML
     protected void handleGroup(ActionEvent event) {
-        CompositionManager.getInstance().createNoteGroup();
+        CompositionManager.getInstance().createNoteGroupWithSelectedNotes();
     }
 
     /**

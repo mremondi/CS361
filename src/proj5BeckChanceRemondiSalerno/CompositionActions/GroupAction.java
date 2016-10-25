@@ -1,5 +1,6 @@
 package proj5BeckChanceRemondiSalerno.CompositionActions;
 
+import proj5BeckChanceRemondiSalerno.CompositionManager;
 import proj5BeckChanceRemondiSalerno.Models.NoteGroup;
 
 public class GroupAction implements CompositionAction {
@@ -11,11 +12,11 @@ public class GroupAction implements CompositionAction {
     }
 
     public void redo() {
-
+        CompositionManager.getInstance().group(group.getNoteGroupables());
     }
 
     public void undo() {
-
+        CompositionManager.getInstance().ungroup(group);
     }
 
 }

@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import proj5BeckChanceRemondiSalerno.CompositionActions.CompositionAction;
 import proj5BeckChanceRemondiSalerno.CompositionActions.GroupAction;
+import proj5BeckChanceRemondiSalerno.CompositionActions.UngroupAction;
 import proj5BeckChanceRemondiSalerno.Controllers.CompositionController;
 import proj5BeckChanceRemondiSalerno.Controllers.TempoLineController;
 import proj5BeckChanceRemondiSalerno.Models.*;
@@ -155,7 +156,7 @@ public class CompositionManager {
      * Creates a note group from current selected groupables
      * @return
      */
-    public Optional<NoteGroup> createNoteGroup() {
+    public Optional<NoteGroup> createNoteGroupWithSelectedNotes() {
         System.out.println("grouping");
         ArrayList<NoteGroupable> notesToGroup = new ArrayList<>();
         for (NoteGroupable note : getGroupables()) {
@@ -163,8 +164,18 @@ public class CompositionManager {
                 notesToGroup.add(note);
             }
         }
+        Optional<NoteGroup> group = group(notesToGroup);
+        if (group.isPresent()) {
+            GroupAction groupAction = new GroupAction(group.get());
+            actionCompleted(groupAction);
+        }
+
+        return group;
+    }
+
+    public Optional<NoteGroup> group(ArrayList<NoteGroupable> notesToGroup) {
         if (notesToGroup.size() < 2) {
-             return Optional.empty();
+            return Optional.empty();
         }
         for (NoteGroupable noteGroupable : notesToGroup) {
             compositionController.removeNotePane(noteGroupableRectsMap.get(noteGroupable));
@@ -204,11 +215,17 @@ public class CompositionManager {
         }
 
         if (groupsToUnGroup.size() != 1) { return; }
+        NoteGroup group = (NoteGroup)groupsToUnGroup.get(0);
+        ungroup(group);
+        UngroupAction ungroupAction = new UngroupAction(group);
+        actionCompleted(ungroupAction);
+    }
 
-        ArrayList<NoteGroupable> subNoteGroupables = ((NoteGroup) groupsToUnGroup.get(0)).getNoteGroupables();
+    public void ungroup(NoteGroup group) {
+        ArrayList<NoteGroupable> subNoteGroupables = ((NoteGroup) group).getNoteGroupables();
 
-       compositionController.removeNotePane(noteGroupableRectsMap.get(groupsToUnGroup.get(0)));
-        noteGroupableRectsMap.remove(groupsToUnGroup.get(0));
+        compositionController.removeNotePane(noteGroupableRectsMap.get(group));
+        noteGroupableRectsMap.remove(group);
 
         for (NoteGroupable subNoteGroupable : subNoteGroupables) {
             addGroupable(subNoteGroupable);
