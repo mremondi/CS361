@@ -12,9 +12,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import proj5BeckChanceRemondiSalerno.CompositionActions.CompositionAction;
-import proj5BeckChanceRemondiSalerno.CompositionActions.GroupAction;
-import proj5BeckChanceRemondiSalerno.CompositionActions.UngroupAction;
+import proj5BeckChanceRemondiSalerno.CompositionActions.*;
 import proj5BeckChanceRemondiSalerno.Controllers.CompositionController;
 import proj5BeckChanceRemondiSalerno.Controllers.TempoLineController;
 import proj5BeckChanceRemondiSalerno.Models.*;
@@ -146,6 +144,8 @@ public class CompositionManager {
             Note note = new Note(xPos, yPos, 100, currentSelectedInstrumentIndex);
             addGroupable(note);
             selectGroupable(note);
+            AddNoteAction addNoteAction = new AddNoteAction(note);
+            actionCompleted(addNoteAction);
             return note;
         }
         return null;
@@ -183,13 +183,12 @@ public class CompositionManager {
         }
 
         NoteGroup group = new NoteGroup(notesToGroup);
-        NoteGroupablePane notePane = createNoteGroupablePane(group);
-        noteGroupableRectsMap.put(group, notePane);
-        compositionController.addNotePane(notePane);
-        selectGroupable(group);
+        addGroupable(group);
 
         return Optional.of(group);
     }
+
+
 
     public void moveNotes(ArrayList<NoteGroupable> notes, double dx, double dy) {
         for (NoteGroupable note : notes) {
@@ -352,21 +351,34 @@ public class CompositionManager {
         for (NoteGroupable noteGroupable : getGroupables()) {
             if (noteGroupable.isSelected()) {
                 NoteGroupablePane groupPane = noteGroupableRectsMap.get(noteGroupable);
-                compositionController.removeNotePane(groupPane);
                 groupablesToDelete.add(noteGroupable);
             }
         }
 
-        for (NoteGroupable noteGroupable : groupablesToDelete) {
-            noteGroupableRectsMap.remove(noteGroupable);
+        deleteGroupables(groupablesToDelete);
+
+        DeleteGroupablesAction deleteGroupableAction = new DeleteGroupablesAction(groupablesToDelete);
+        actionCompleted(deleteGroupableAction);
+    }
+
+    public void deleteGroupables(ArrayList<NoteGroupable> groupables) {
+        for (NoteGroupable noteGroupable : groupables) {
+            deleteGroupable(noteGroupable);
         }
     }
+
+    public void deleteGroupable(NoteGroupable noteGroupable) {
+        NoteGroupablePane groupPane = noteGroupableRectsMap.get(noteGroupable);
+        compositionController.removeNotePane(groupPane);
+        noteGroupableRectsMap.remove(noteGroupable);
+    }
+
 
     /**
      * Adds a
      * @param noteGroupable
      */
-    private void addGroupable(NoteGroupable noteGroupable) {
+    public void addGroupable(NoteGroupable noteGroupable) {
         NoteGroupablePane groupPane = createNoteGroupablePane(noteGroupable);
         noteGroupableRectsMap.put(noteGroupable, groupPane);
         compositionController.addNotePane(groupPane);
