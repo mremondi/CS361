@@ -16,7 +16,6 @@ import javafx.scene.shape.Rectangle;
 import proj5BeckChanceRemondiSalerno.CompositionActions.MoveAction;
 import proj5BeckChanceRemondiSalerno.CompositionActions.ResizeAction;
 import proj5BeckChanceRemondiSalerno.CompositionManager;
-import proj5BeckChanceRemondiSalerno.Models.NoteGroup;
 import proj5BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj5BeckChanceRemondiSalerno.Views.NoteGroupablePane;
 import java.awt.geom.Point2D;

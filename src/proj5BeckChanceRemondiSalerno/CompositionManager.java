@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import proj5BeckChanceRemondiSalerno.CompositionActions.*;
 import proj5BeckChanceRemondiSalerno.Controllers.CompositionController;
+import proj5BeckChanceRemondiSalerno.Controllers.MenuBarController;
 import proj5BeckChanceRemondiSalerno.Controllers.TempoLineController;
 import proj5BeckChanceRemondiSalerno.Models.*;
 import proj5BeckChanceRemondiSalerno.Views.NoteGroupablePane;
@@ -51,6 +52,9 @@ public class CompositionManager {
 
 
     private CompositionController compositionController;
+
+    private MenuBarController menuBarController;
+
 
     /**
      * The index of the current selected instrument
@@ -93,6 +97,18 @@ public class CompositionManager {
 
     public void setCompositionController(CompositionController compositionController){
         this.compositionController = compositionController;
+    }
+
+    public void setMenuBarController(MenuBarController menuBarController) {
+        this.menuBarController = menuBarController;
+    }
+
+    public Stack<CompositionAction> getRedoActions() {
+        return redoActions;
+    }
+
+    public Stack<CompositionAction> getUndoActions() {
+        return undoActions;
     }
 
     /**
@@ -236,16 +252,24 @@ public class CompositionManager {
         undoActions.push(action);
         // remove everything from redo stack
         redoActions.removeAllElements();
+        updateRedoUndoDisabled();
     }
 
     public void undoLastAction() {
         CompositionAction action = undoActions.pop();
         action.undo();
         redoActions.push(action);
+        updateRedoUndoDisabled();
     }
 
     public void redoLastUndoneAction() {
         redoActions.pop().redo();
+        updateRedoUndoDisabled();
+    }
+
+    private void updateRedoUndoDisabled() {
+        menuBarController.setRedoDisabled(redoActions.empty());
+        menuBarController.setUndoDisabled(undoActions.empty());
     }
 
         /**

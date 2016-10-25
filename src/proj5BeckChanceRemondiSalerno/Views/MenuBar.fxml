@@ -10,8 +10,8 @@
         <MenuItem accelerator="Shortcut+Delete" onAction="#handleDelete" text="Delete"/>
         <MenuItem accelerator="Shortcut+G" onAction="#handleGroup" text="Group"/>
         <MenuItem accelerator="Shortcut+U" onAction="#handleUngroup" text="Ungroup"/>
-        <MenuItem accelerator="Shortcut+U" onAction="#handleUndo" text="Undo"/>
-        <MenuItem accelerator="Shortcut+U" onAction="#handleRedo" text="Redo"/>
+        <MenuItem accelerator="Shortcut+U" onAction="#handleUndo" text="Undo" fx:id="undoItem"/>
+        <MenuItem accelerator="Shortcut+U" onAction="#handleRedo" text="Redo" fx:id="redoItem"/>
     </Menu>
     <Menu text="Actions">
         <MenuItem accelerator="Shortcut+P" onAction="#handlePlayMidi" text="Play"/>

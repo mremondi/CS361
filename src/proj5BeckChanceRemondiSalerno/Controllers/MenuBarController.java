@@ -10,6 +10,7 @@ package proj5BeckChanceRemondiSalerno.Controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.MenuItem;
 import proj5BeckChanceRemondiSalerno.CompositionManager;
 import proj5BeckChanceRemondiSalerno.Models.NoteGroupable;
 
@@ -17,6 +18,25 @@ import proj5BeckChanceRemondiSalerno.Models.NoteGroupable;
  * Created by mremondi on 10/21/16.
  */
 public class MenuBarController {
+
+    @FXML
+    private MenuItem redoItem;
+
+    @FXML
+    private MenuItem undoItem;
+
+
+    public void initialize() {
+        CompositionManager.getInstance().setMenuBarController(this);
+    }
+
+    public void setRedoDisabled(boolean disabled) {
+        redoItem.setDisable(disabled);
+    }
+
+    public void setUndoDisabled(boolean disabled) {
+        undoItem.setDisable(disabled);
+    }
 
     /**
      * Sets all of the notes to be selected and adds them to the selected list.
