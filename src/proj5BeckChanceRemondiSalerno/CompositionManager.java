@@ -12,6 +12,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import proj5BeckChanceRemondiSalerno.CompositionActions.CompositionAction;
 import proj5BeckChanceRemondiSalerno.Controllers.TempoLineController;
 import proj5BeckChanceRemondiSalerno.Models.*;
 import proj5BeckChanceRemondiSalerno.Views.NoteGroupablePane;
@@ -61,6 +62,9 @@ public class CompositionManager {
      * The composition player for playing notes
      */
     private CompositionPlayer compositionPlayer = new CompositionPlayer();
+
+    private  Stack<CompositionAction> redoActions = new Stack<>();
+    private  Stack<CompositionAction> undoActions = new Stack<>();
 
     /**
      * constructor
@@ -211,8 +215,20 @@ public class CompositionManager {
         }
     }
 
+    public void actionCompleted(CompositionAction action) {
+        // add to undo stack
+        undoActions.push(action);
+        // remove everything from redo stack
+        redoActions.removeAllElements();
+    }
 
+    public void undoLastAction() {
+        undoActions.pop().undo();
+    }
 
+    public void redoLastUndoneAction() {
+        redoActions.pop().redo();
+    }
 
     /**
      * Finds a Note, if one exists, where the mouse click is inside of
