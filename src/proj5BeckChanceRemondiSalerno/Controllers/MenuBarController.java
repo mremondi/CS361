@@ -96,4 +96,13 @@ public class MenuBarController {
         CompositionManager.getInstance().ungroupSelectedGroup();
     }
 
+
+    @FXML protected  void handleRedo(ActionEvent event) {
+        CompositionManager.getInstance().redoLastUndoneAction();
+    }
+
+    @FXML protected  void handleUndo(ActionEvent event) {
+        CompositionManager.getInstance().undoLastAction();
+    }
+
 }
