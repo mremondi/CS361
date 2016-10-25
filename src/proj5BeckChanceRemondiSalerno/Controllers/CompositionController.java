@@ -11,11 +11,16 @@ package proj5BeckChanceRemondiSalerno.Controllers;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import proj5BeckChanceRemondiSalerno.CompositionActions.MoveAction;
+import proj5BeckChanceRemondiSalerno.CompositionActions.ResizeAction;
 import proj5BeckChanceRemondiSalerno.CompositionManager;
+import proj5BeckChanceRemondiSalerno.Models.NoteGroup;
 import proj5BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj5BeckChanceRemondiSalerno.Views.NoteGroupablePane;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -28,6 +33,12 @@ import java.util.Optional;
  * @author Mike Remondi
  */
 public class CompositionController {
+
+    /**
+     * The composition sheet pane containing notes.
+     */
+    @FXML
+    private Pane composition;
 
     /**
      * Accesses the CompositionManager shared instance.
@@ -63,6 +74,10 @@ public class CompositionController {
      * Drag box for easy multiple selection.
      */
     private Rectangle dragBox;
+
+    public void initialize() {
+        CompositionManager.getInstance().setCompositionController(this);
+    }
 
     /**
      * Handles the GUI's mousePressed event.
@@ -139,6 +154,14 @@ public class CompositionController {
     }
 
 
+    public void removeNotePane(NoteGroupablePane pane) {
+        composition.getChildren().remove(pane);
+    }
+
+
+    public void addNotePane(NoteGroupablePane pane) {
+        composition.getChildren().add(pane);
+    }
 
     /**
      * Resizes the notes horizontally.
@@ -148,10 +171,14 @@ public class CompositionController {
     private void resizeSelectedNotes(double dx) {
         for (NoteGroupable noteGroupable : managerInstance.getGroupables()) {
             if (noteGroupable.isSelected()){
-                noteGroupable.changeNoteDurations(dx);
-                managerInstance.getGroupPane(noteGroupable).changeWidth(dx);
+                resizeNote(noteGroupable,dx);
             }
         }
+    }
+
+    public void resizeNote(NoteGroupable note, double dx) {
+        note.changeNoteDurations(dx);
+        managerInstance.getGroupPane(note).changeWidth(dx);
     }
 
     /**
@@ -204,14 +231,17 @@ public class CompositionController {
     private void moveSelectedNotes(double dx, double dy) {
         for (NoteGroupable note : managerInstance.getGroupables()) {
             if (note.isSelected()){
-                NoteGroupablePane noteRectangle = managerInstance.getGroupPane(note);
-                noteRectangle.setTranslateX(noteRectangle.getTranslateX() + dx);
-                noteRectangle.setTranslateY(noteRectangle.getTranslateY() + dy);
+                moveNote(note,dx,dy);
             }
         }
     }
 
 
+    public void moveNote(NoteGroupable note, double dx, double dy) {
+        NoteGroupablePane noteRectangle = managerInstance.getGroupPane(note);
+        noteRectangle.setTranslateX(noteRectangle.getTranslateX() + dx);
+        noteRectangle.setTranslateY(noteRectangle.getTranslateY() + dy);
+    }
 
     /**
      * Handles the release of the drag motion of the mouse.
@@ -221,10 +251,14 @@ public class CompositionController {
      * corresponding pieces back to their resting state.
      */
     private void handleDragEnded() {
-        if(isMovingNotes) { releaseMovedNotes(); };
+        if(isMovingNotes) {
+            releaseMovedNotes();
+        } else if (isResizing) {
+            releaseResizedNotes();
+        }
         isResizing = false;
         isMovingNotes = false;
-        managerInstance.getComposition().getChildren().remove(this.dragBox);
+        composition.getChildren().remove(this.dragBox);
     }
 
     /**
@@ -232,6 +266,7 @@ public class CompositionController {
      * the nearest horizontal bar.
      */
     private void releaseMovedNotes() {
+        ArrayList<NoteGroupable> movedNotes = new ArrayList<>();
         for (NoteGroupable note : managerInstance.getGroupables()) {
             if(note.isSelected()) {
                 double pitchdy = (dragStartLocation.getY() - lastDragLocation.getY())/10;
@@ -239,8 +274,26 @@ public class CompositionController {
                 System.out.format("pitch dy: %f, start tick dx: %f\n", pitchdy, startTickdy);
                 note.changePitch(pitchdy);
                 note.changeStartTick(startTickdy);
+                movedNotes.add(note);
             }
         }
+
+        MoveAction moveAction = new MoveAction(movedNotes,
+                lastDragLocation.getX() - dragStartLocation.getX(),
+                lastDragLocation.getY() - dragStartLocation.getY());
+        CompositionManager.getInstance().actionCompleted(moveAction);
+    }
+
+    private void releaseResizedNotes() {
+        ArrayList<NoteGroupable> resizedNotes = new ArrayList<>();
+        for (NoteGroupable note : managerInstance.getGroupables()) {
+            if(note.isSelected()) {
+                resizedNotes.add(note);
+            }
+        }
+
+        ResizeAction resizeAction = new ResizeAction(resizedNotes, lastDragLocation.getX() - dragStartLocation.getX());
+        CompositionManager.getInstance().actionCompleted(resizeAction);
     }
 
     /**
@@ -303,6 +356,6 @@ public class CompositionController {
         this.dragBox.setX(x);
         this.dragBox.setY(y);
         this.dragBox.getStyleClass().add("dragBox");
-        managerInstance.getComposition().getChildren().add(this.dragBox);
+        composition.getChildren().add(this.dragBox);
     }
 }

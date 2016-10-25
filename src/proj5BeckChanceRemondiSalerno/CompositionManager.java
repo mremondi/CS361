@@ -13,6 +13,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import proj5BeckChanceRemondiSalerno.CompositionActions.CompositionAction;
+import proj5BeckChanceRemondiSalerno.CompositionActions.GroupAction;
+import proj5BeckChanceRemondiSalerno.Controllers.CompositionController;
 import proj5BeckChanceRemondiSalerno.Controllers.TempoLineController;
 import proj5BeckChanceRemondiSalerno.Models.*;
 import proj5BeckChanceRemondiSalerno.Views.NoteGroupablePane;
@@ -48,10 +50,8 @@ public class CompositionManager {
      */
     private TempoLineController tempoLineController;
 
-    /**
-     * The composition view
-     */
-    private Pane composition;
+
+    private CompositionController compositionController;
 
     /**
      * The index of the current selected instrument
@@ -91,20 +91,9 @@ public class CompositionManager {
         this.tempoLineController = tempoLineControllerontroller;
     }
 
-    /**
-     * Setter for the composition view
-     * @param composition The new composition view
-     */
-    public void setComposition(Pane composition){
-        this.composition = composition;
-    }
 
-    /**
-     * Getter for the composition view
-     * @return The composition view
-     */
-    public Pane getComposition(){
-        return this.composition;
+    public void setCompositionController(CompositionController compositionController){
+        this.compositionController = compositionController;
     }
 
     /**
@@ -178,19 +167,30 @@ public class CompositionManager {
              return Optional.empty();
         }
         for (NoteGroupable noteGroupable : notesToGroup) {
-            composition.getChildren().remove(noteGroupableRectsMap.get(noteGroupable));
+            compositionController.removeNotePane(noteGroupableRectsMap.get(noteGroupable));
             noteGroupableRectsMap.remove(noteGroupable);
         }
 
         NoteGroup group = new NoteGroup(notesToGroup);
-        NoteGroupablePane rect = createNoteGroupablePane(group);
-        noteGroupableRectsMap.put(group, rect);
-        composition.getChildren().add(rect);
+        NoteGroupablePane notePane = createNoteGroupablePane(group);
+        noteGroupableRectsMap.put(group, notePane);
+        compositionController.addNotePane(notePane);
         selectGroupable(group);
 
         return Optional.of(group);
     }
 
+    public void moveNotes(ArrayList<NoteGroupable> notes, double dx, double dy) {
+        for (NoteGroupable note : notes) {
+            compositionController.moveNote(note, dx, dy);
+        }
+    }
+
+    public void resizeNotes(ArrayList<NoteGroupable> notes, double dx) {
+        for (NoteGroupable note : notes) {
+            compositionController.resizeNote(note, dx);
+        }
+    }
 
     /**
      * Ungroups all current selected groups
@@ -207,7 +207,7 @@ public class CompositionManager {
 
         ArrayList<NoteGroupable> subNoteGroupables = ((NoteGroup) groupsToUnGroup.get(0)).getNoteGroupables();
 
-        composition.getChildren().remove(noteGroupableRectsMap.get(groupsToUnGroup.get(0)));
+       compositionController.removeNotePane(noteGroupableRectsMap.get(groupsToUnGroup.get(0)));
         noteGroupableRectsMap.remove(groupsToUnGroup.get(0));
 
         for (NoteGroupable subNoteGroupable : subNoteGroupables) {
@@ -223,20 +223,22 @@ public class CompositionManager {
     }
 
     public void undoLastAction() {
-        undoActions.pop().undo();
+        CompositionAction action = undoActions.pop();
+        action.undo();
+        redoActions.push(action);
     }
 
     public void redoLastUndoneAction() {
         redoActions.pop().redo();
     }
 
-    /**
-     * Finds a Note, if one exists, where the mouse click is inside of
-     * its rectangle.
-     *
-     * @param x MouseEvent x coordinate
-     * @param y MouseEvent y coordinate
-     */
+        /**
+         * Finds a Note, if one exists, where the mouse click is inside of
+         * its rectangle.
+         *
+         * @param x MouseEvent x coordinate
+         * @param y MouseEvent y coordinate
+         */
     public Optional<NoteGroupable> getGroupableAtPoint(double x, double y) {
         for (NoteGroupable noteGroupable : this.getGroupables()) {
             if (getGroupPane(noteGroupable).getIsInBounds(x, y)) {
@@ -333,7 +335,7 @@ public class CompositionManager {
         for (NoteGroupable noteGroupable : getGroupables()) {
             if (noteGroupable.isSelected()) {
                 NoteGroupablePane groupPane = noteGroupableRectsMap.get(noteGroupable);
-                composition.getChildren().remove(groupPane);
+                compositionController.removeNotePane(groupPane);
                 groupablesToDelete.add(noteGroupable);
             }
         }
@@ -350,7 +352,7 @@ public class CompositionManager {
     private void addGroupable(NoteGroupable noteGroupable) {
         NoteGroupablePane groupPane = createNoteGroupablePane(noteGroupable);
         noteGroupableRectsMap.put(noteGroupable, groupPane);
-        composition.getChildren().add(groupPane);
+        compositionController.addNotePane(groupPane);
         selectGroupable(noteGroupable);
     }
 

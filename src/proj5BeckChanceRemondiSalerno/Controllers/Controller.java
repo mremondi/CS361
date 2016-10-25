@@ -23,11 +23,6 @@ import proj5BeckChanceRemondiSalerno.CompositionManager;
  */
 public class Controller {
 
-    /**
-     * The composition sheet pane containing notes.
-     */
-    @FXML
-    private Pane fxCompositionSheet;
 
     /**
      * The pane containing the composition sheet lines.
@@ -47,10 +42,8 @@ public class Controller {
      * fields from the FXML file after the FXML has been initialized
      */
     public void initialize() {
-        CompositionManager.getInstance().setComposition(this.fxCompositionSheet);
         createLinePane();
         CompositionManager.getInstance().setTempoLineController(new TempoLineController(fxTempoLineContainerPane));
-
     }
 
     /**

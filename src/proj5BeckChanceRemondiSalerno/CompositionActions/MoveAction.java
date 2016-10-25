@@ -1,28 +1,30 @@
 package proj5BeckChanceRemondiSalerno.CompositionActions;
 
+import proj5BeckChanceRemondiSalerno.CompositionManager;
 import proj5BeckChanceRemondiSalerno.Models.NoteGroupable;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 public class MoveAction implements CompositionAction {
 
-    private NoteGroupable note;
-    private Point2D.Double startPoint;
-    private Point2D.Double endPoint;
+    private ArrayList<NoteGroupable> movedNotes;
+    private double dx;
+    private double dy;
 
-    public MoveAction(NoteGroupable note, Point2D.Double startPoint, Point2D.Double endPoint) {
-        this.note = note;
-        this.startPoint = startPoint;
-        this.endPoint = endPoint;
+    public MoveAction(ArrayList<NoteGroupable> movedNotes, double dx, double dy) {
+        this.movedNotes = movedNotes;
+        this.dx = dx;
+        this.dy = dy;
     }
 
     public void redo() {
-
+        CompositionManager.getInstance().moveNotes(movedNotes, dx, dy);
     }
 
     public void undo() {
-
+        CompositionManager.getInstance().moveNotes(movedNotes, -dx, -dy);
     }
 
 }
