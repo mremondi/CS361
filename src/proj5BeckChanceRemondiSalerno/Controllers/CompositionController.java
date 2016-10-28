@@ -13,8 +13,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
-import proj5BeckChanceRemondiSalerno.CompositionActions.MoveAction;
-import proj5BeckChanceRemondiSalerno.CompositionActions.ResizeAction;
+import proj5BeckChanceRemondiSalerno.CompositionActions.*;
 import proj5BeckChanceRemondiSalerno.CompositionManager;
 import proj5BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj5BeckChanceRemondiSalerno.Views.NoteGroupablePane;
@@ -254,6 +253,11 @@ public class CompositionController {
             releaseMovedNotes();
         } else if (isResizing) {
             releaseResizedNotes();
+        } else {
+            Bounds bounds = this.dragBox.getBoundsInParent();
+            ArrayList<NoteGroupable> selected = managerInstance.selectNotesIntersectingRectangle(bounds);
+            CompositionAction action = new SelectAction(selected);
+            CompositionManager.getInstance().actionCompleted(action);
         }
         isResizing = false;
         isMovingNotes = false;
@@ -311,10 +315,14 @@ public class CompositionController {
             // if this note is already selected, unselect it
             if (noteAtClickLocation.get().isSelected()){
                 managerInstance.deselectNote(noteAtClickLocation.get());
+                CompositionAction action = new DeselectAction(noteAtClickLocation.get());
+                CompositionManager.getInstance().actionCompleted(action);
             }
             // if it is not selected, select it
             else {
                 managerInstance.selectGroupable(noteAtClickLocation.get());
+                CompositionAction action = new SelectAction(noteAtClickLocation.get());
+                CompositionManager.getInstance().actionCompleted(action);
             }
         }
         // add a new note and select it

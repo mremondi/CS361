@@ -324,17 +324,17 @@ public class CompositionManager {
         return noteGroupableRectsMap.get(noteGroupable);
     }
 
-    /**
-     * Selects the groupables contained in an area
-     * @param bounds the area to select in
-     */
-    public void selectNotesIntersectingRectangle(Bounds bounds) {
+
+    public ArrayList<NoteGroupable> selectNotesIntersectingRectangle(Bounds bounds) {
+        ArrayList<NoteGroupable> selectedNotes = new ArrayList();
         for (NoteGroupable noteGroupable : getGroupables()) {
             if (getGroupPane(noteGroupable).getIsInRectangleBounds(bounds.getMinX(), bounds.getMinY(),
                     bounds.getMaxX(), bounds.getMaxY())) {
                 selectGroupable(noteGroupable);
+                selectedNotes.add(noteGroupable);
             }
         }
+        return selectedNotes;
     }
 
     /**
