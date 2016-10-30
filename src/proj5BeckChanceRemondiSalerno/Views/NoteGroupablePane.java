@@ -33,6 +33,9 @@ public class NoteGroupablePane extends Pane implements NoteView {
      */
     private boolean containsSingleNote = false;
 
+    /**
+     * Constructor. Initializes the CSS class
+     */
     public NoteGroupablePane(){
         this.getStyleClass().add("singleNoteGroupablePane");
     }

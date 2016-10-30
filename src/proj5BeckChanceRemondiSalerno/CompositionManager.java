@@ -52,9 +52,14 @@ public class CompositionManager {
      */
     private TempoLineController tempoLineController;
 
-
+    /**
+     * The controller for the Composition Pane
+     */
     private CompositionController compositionController;
 
+    /**
+     * The controller for the MenuBar
+     */
     private MenuBarController menuBarController;
 
 
@@ -68,7 +73,14 @@ public class CompositionManager {
      */
     private CompositionPlayer compositionPlayer = new CompositionPlayer();
 
+    /**
+     * The stack for remembering each CompositionAction for redoing.
+     */
     private  Stack<CompositionAction> redoActions = new Stack<>();
+
+    /**
+     * The stack for remembering each CompositionAction for undoing.
+     */
     private  Stack<CompositionAction> undoActions = new Stack<>();
 
     /**
@@ -96,19 +108,38 @@ public class CompositionManager {
         this.tempoLineController = tempoLineControllerontroller;
     }
 
-
+    /**
+     * Setter for the composition controller
+     *
+     * @param compositionController the new composition controller
+     */
     public void setCompositionController(CompositionController compositionController){
         this.compositionController = compositionController;
     }
 
+    /**
+     * Setter for the menu bar controller.
+     *
+     * @param menuBarController the new menu bar controller
+     */
     public void setMenuBarController(MenuBarController menuBarController) {
         this.menuBarController = menuBarController;
     }
 
+    /**
+     * Gets the redo stack.
+     *
+     * @return the redo stack field
+     */
     public Stack<CompositionAction> getRedoActions() {
         return redoActions;
     }
 
+    /**
+     * Gets the undo stack.
+     *
+     * @return the undo stack field
+     */
     public Stack<CompositionAction> getUndoActions() {
         return undoActions;
     }
@@ -189,6 +220,12 @@ public class CompositionManager {
         return group;
     }
 
+    /**
+     * Groups the selected notes.
+     *
+     * @param notesToGroup an arrayList of notes to group
+     * @return an Optional that is either empty or has a NoteGroup
+     */
     public Optional<NoteGroup> group(ArrayList<NoteGroupable> notesToGroup) {
         if (notesToGroup.size() < 2) {
             return Optional.empty();
@@ -204,14 +241,25 @@ public class CompositionManager {
         return Optional.of(group);
     }
 
-
-
+    /**
+     * Delegates the moving of notes to the Composition Controller.
+     *
+     * @param notes an ArrayList of notes to move
+     * @param dx the change in x
+     * @param dy the change in y
+     */
     public void moveNotes(ArrayList<NoteGroupable> notes, double dx, double dy) {
         for (NoteGroupable note : notes) {
             compositionController.moveNote(note, dx, dy);
         }
     }
 
+    /**
+     * Delegates the resizing of notes to the Composition Controller.
+     *
+     * @param notes an ArrayList of notes to resize
+     * @param dx the change in x
+     */
     public void resizeNotes(ArrayList<NoteGroupable> notes, double dx) {
         for (NoteGroupable note : notes) {
             compositionController.resizeNote(note, dx);
@@ -236,6 +284,11 @@ public class CompositionManager {
         actionCompleted(ungroupAction);
     }
 
+    /**
+     * Ungroups a NoteGroup.
+     *
+     * @param group the NoteGroup to ungroup
+     */
     public void ungroup(NoteGroup group) {
         ArrayList<NoteGroupable> subNoteGroupables = ((NoteGroup) group).getNoteGroupables();
 
@@ -247,14 +300,22 @@ public class CompositionManager {
         }
     }
 
+    /**
+     * Adds the given CompositionAction to the undoActions stack and
+     * empties the redo stack.
+     *
+     * @param action the CompositionAction that is completed.
+     */
     public void actionCompleted(CompositionAction action) {
-        // add to undo stack
         undoActions.push(action);
-        // remove everything from redo stack
         redoActions.removeAllElements();
         updateRedoUndoDisabled();
     }
 
+    /**
+     * Undoes the CompositionAction at the top of the undo stack and pushes
+     * it onto the redo stack.
+     */
     public void undoLastAction() {
         CompositionAction action = undoActions.pop();
         action.undo();
@@ -262,23 +323,30 @@ public class CompositionManager {
         updateRedoUndoDisabled();
     }
 
+    /**
+     * Redoes the Composition at the top of the redo stack.
+     */
     public void redoLastUndoneAction() {
         redoActions.pop().redo();
         updateRedoUndoDisabled();
     }
 
+    /**
+     * Sets the menu options for redo/undo to disabled if there is nothing
+     * in the respective stack.
+     */
     private void updateRedoUndoDisabled() {
         menuBarController.setRedoDisabled(redoActions.empty());
         menuBarController.setUndoDisabled(undoActions.empty());
     }
 
-        /**
-         * Finds a Note, if one exists, where the mouse click is inside of
-         * its rectangle.
-         *
-         * @param x MouseEvent x coordinate
-         * @param y MouseEvent y coordinate
-         */
+    /**
+     * Finds a Note, if one exists, where the mouse click is inside of
+     * its rectangle.
+     *
+     * @param x MouseEvent x coordinate
+     * @param y MouseEvent y coordinate
+     */
     public Optional<NoteGroupable> getGroupableAtPoint(double x, double y) {
         for (NoteGroupable noteGroupable : this.getGroupables()) {
             if (getGroupPane(noteGroupable).getIsInBounds(x, y)) {
@@ -324,7 +392,12 @@ public class CompositionManager {
         return noteGroupableRectsMap.get(noteGroupable);
     }
 
-
+    /**
+     * Selects the notes if they are in the selection box.
+     *
+     * @param bounds the x and y coordinates of the selection box
+     * @return an ArrayList of the selected NoteGroupables
+     */
     public ArrayList<NoteGroupable> selectNotesIntersectingRectangle(Bounds bounds) {
         ArrayList<NoteGroupable> selectedNotes = new ArrayList();
         for (NoteGroupable noteGroupable : getGroupables()) {
@@ -385,18 +458,27 @@ public class CompositionManager {
         actionCompleted(deleteGroupableAction);
     }
 
+    /**
+     * Deletes the specified groupables.
+     *
+     * @param groupables the ArrayList of NoteGroupables to delete
+     */
     public void deleteGroupables(ArrayList<NoteGroupable> groupables) {
         for (NoteGroupable noteGroupable : groupables) {
             deleteGroupable(noteGroupable);
         }
     }
 
+    /**
+     * Deletes a single groupable.
+     *
+     * @param noteGroupable the NoteGroupable to delete
+     */
     public void deleteGroupable(NoteGroupable noteGroupable) {
         NoteGroupablePane groupPane = noteGroupableRectsMap.get(noteGroupable);
         compositionController.removeNotePane(groupPane);
         noteGroupableRectsMap.remove(noteGroupable);
     }
-
 
     /**
      * Adds a
@@ -408,7 +490,6 @@ public class CompositionManager {
         compositionController.addNotePane(groupPane);
         selectGroupable(noteGroupable);
     }
-
 
     /**
      * Gets the list of notes.
@@ -424,7 +505,6 @@ public class CompositionManager {
         }
         return notes;
     }
-
 
     /**
      * Calculates the stop time for the composition created
@@ -470,9 +550,7 @@ public class CompositionManager {
                 subGroupRect.setLayoutY(subGroupRect.getLayoutY()-groupablePane.getLayoutY() + 5);
                 groupablePane.getChildren().add(subGroupRect);
             }
-
             return groupablePane;
         }
     }
-
 }

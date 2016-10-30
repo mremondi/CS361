@@ -19,22 +19,39 @@ import proj5BeckChanceRemondiSalerno.Models.NoteGroupable;
  * Created by mremondi on 10/21/16.
  */
 public class MenuBarController {
-
+    /**
+     * The redo menu item
+     */
     @FXML
     private MenuItem redoItem;
 
+    /**
+     * The undo menu item
+     */
     @FXML
     private MenuItem undoItem;
 
-
+    /**
+     * The standard method invoked when loading the controller.
+     */
     public void initialize() {
         CompositionManager.getInstance().setMenuBarController(this);
     }
 
+    /**
+     * Enables/disables the redo menu item.
+     *
+     * @param disabled a boolean indicator of whether it should be disabled
+     */
     public void setRedoDisabled(boolean disabled) {
         redoItem.setDisable(disabled);
     }
 
+    /**
+     * Enables/disables the undo menu item.
+     *
+     * @param disabled a boolean indicator of whether it should be disabled
+     */
     public void setUndoDisabled(boolean disabled) {
         undoItem.setDisable(disabled);
     }
@@ -117,11 +134,18 @@ public class MenuBarController {
         CompositionManager.getInstance().ungroupSelectedGroup();
     }
 
-
+    /**
+     * Redoes the last action
+     * @param event
+     */
     @FXML protected  void handleRedo(ActionEvent event) {
         CompositionManager.getInstance().redoLastUndoneAction();
     }
 
+    /**
+     * Unodes the last action
+     * @param event
+     */
     @FXML protected  void handleUndo(ActionEvent event) {
         CompositionManager.getInstance().undoLastAction();
     }

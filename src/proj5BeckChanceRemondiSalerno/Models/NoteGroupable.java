@@ -21,18 +21,80 @@ import java.util.ArrayList;
  * @author Mike Remondi
  */
 public interface NoteGroupable {
-
-    
+    /**
+     * Returns all of the notes in the Groupable object
+     * @return an ArrayList of Notes
+     */
     ArrayList<Note> getNotes();
+
+    /**
+     * Returns whether the Groupable is currently selected
+     *
+     * @return a boolean indicator
+     */
     boolean isSelected();
+
+    /**
+     * Sets the Groupable's selected field
+     *
+     * @param selected a boolean indicator of whether the Groupable is selected
+     */
     void setSelected(boolean selected);
+
+    /**
+     * Changes the duration of the notes within the Groupable
+     *
+     * @param dx the change in the x direction
+     */
     void changeNoteDurations(double dx);
+
+    /**
+     * Returns the duration of the Groupable
+     *
+     * @return the duration
+     */
     double getDuration();
+
+    /**
+     * Returns the start tick of the Groupable
+     *
+     * @return the start tick
+     */
     int getStartTick();
+
+    /**
+     * Returns the end tick of the Groupable
+     *
+     * @return the end tick
+     */
     int getEndTick();
+
+    /**
+     * Returns the Max pitch of the groupable
+     *
+     * @return the max pitch
+     */
     int getMaxPitch();
+
+    /**
+     * Returns the Min pitch of the Groupable
+     *
+     * @return the min pitch
+     */
     int getMinPitch();
+
+    /**
+     * Changes the pitch of the Groupable
+     *
+     * @param dy the change in the y direction
+     */
     void changePitch(double dy);
+
+    /**
+     * Changes the start tick of the Groupable
+     *
+     * @param dx the change in the x direction
+     */
     void changeStartTick(double dx);
 
 }

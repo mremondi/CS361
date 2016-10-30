@@ -15,7 +15,7 @@ import javax.sound.midi.ShortMessage;
 import java.util.ArrayList;
 
 /**
- * Created by Graham on 10/23/16.
+ * This class controls all the Actions directly related to the MidiPlayer
  */
 public class CompositionPlayer {
 

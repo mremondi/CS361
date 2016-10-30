@@ -18,11 +18,9 @@ import proj5BeckChanceRemondiSalerno.CompositionActions.*;
 import proj5BeckChanceRemondiSalerno.CompositionManager;
 import proj5BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj5BeckChanceRemondiSalerno.Views.NoteGroupablePane;
-
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Optional;
-
 
 /**
  * This models a controller for the composition view.
@@ -153,12 +151,20 @@ public class CompositionController {
         }
     }
 
-
+    /**
+     * Removes the note pane from the composition.
+     *
+     * @param pane the note pane to remove
+     */
     public void removeNotePane(NoteGroupablePane pane) {
         composition.getChildren().remove(pane);
     }
 
-
+    /**
+     * Adds the note pane from the composition.
+     *
+     * @param pane the note pane to add
+     */
     public void addNotePane(NoteGroupablePane pane) {
         composition.getChildren().add(pane);
     }
@@ -176,6 +182,12 @@ public class CompositionController {
         }
     }
 
+    /**
+     * Resizes the specified note by changing both its duration
+     * and the physical width of its corresponding rectangle.
+     * @param note the note to resize
+     * @param dx the change in the x direction
+     */
     public void resizeNote(NoteGroupable note, double dx) {
         note.changeNoteDurations(dx);
         managerInstance.getGroupPane(note).changeWidth(dx);
@@ -236,6 +248,13 @@ public class CompositionController {
         }
     }
 
+    /**
+     * Moves the note the specified note
+     *
+     * @param note the note to move
+     * @param dx the change in the x direction
+     * @param dy the change in the y direction
+     */
     public void moveNote(NoteGroupable note, double dx, double dy) {
         NoteGroupablePane noteGroupablePane = managerInstance.getGroupPane(note);
         System.out.println(noteGroupablePane.getLayoutX());
@@ -288,6 +307,9 @@ public class CompositionController {
         CompositionManager.getInstance().actionCompleted(moveAction);
     }
 
+    /**
+     * Release the resized notes.
+     */
     private void releaseResizedNotes() {
         ArrayList<NoteGroupable> resizedNotes = new ArrayList<>();
         for (NoteGroupable note : managerInstance.getGroupables()) {

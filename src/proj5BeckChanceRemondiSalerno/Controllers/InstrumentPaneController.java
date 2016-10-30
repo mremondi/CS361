@@ -25,11 +25,15 @@ import proj5BeckChanceRemondiSalerno.CompositionManager;
 public class InstrumentPaneController {
 
     /**
-     * The toggle group for the intruments.
+     * The toggle group for the instruments.
      */
     @FXML
     private ToggleGroup instrumentGroup;
 
+    /**
+     * The standard method invoked when loading the controller. Calls
+     * handleInstrumentChange to set an initial instrument to selected.
+     */
     public void initialize(){
         handleInstrumentChange();
     }

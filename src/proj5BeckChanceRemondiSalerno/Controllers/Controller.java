@@ -23,8 +23,6 @@ import proj5BeckChanceRemondiSalerno.CompositionManager;
  * @author Mike Remondi
  */
 public class Controller {
-
-
     /**
      * The pane containing the composition sheet lines.
      */
@@ -36,7 +34,6 @@ public class Controller {
      */
     @FXML
     private Pane fxTempoLineContainerPane;
-
 
     /**
      * Seeds our CompositionPaneManager and TempoLine objects with the

@@ -22,6 +22,9 @@ import javafx.scene.shape.Rectangle;
 
 public class NoteRectangle extends Rectangle implements NoteView {
 
+    /**
+     * The minimum size that the note can be
+     */
     public static final int MINIMUM_WIDTH = 5;
 
     /**
@@ -66,5 +69,4 @@ public class NoteRectangle extends Rectangle implements NoteView {
         }
         setWidth(getWidth() + dx);
     }
-
 }

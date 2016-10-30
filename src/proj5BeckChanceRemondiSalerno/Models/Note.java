@@ -40,10 +40,24 @@ public class Note implements NoteGroupable {
      */
     private int trackIndex;
 
-
+    /**
+     * The pitch of the note
+     */
     private int pitch;
+
+    /**
+     * the start tick of the note
+     */
     private int startTick;
+
+    /**
+     * the time duration of the note
+     */
     private double duration;
+
+    /**
+     * A boolean indicator of whether the note is currently selected
+     */
     private boolean selected;
 
     /**
@@ -168,6 +182,11 @@ public class Note implements NoteGroupable {
         this.selected = selected;
     }
 
+    /**
+     * Adds the note to the notes list and gets the notes
+     *
+     * @return the list of notes
+     */
     @Override
     public ArrayList<Note> getNotes() {
         ArrayList<Note> notes = new ArrayList<>();

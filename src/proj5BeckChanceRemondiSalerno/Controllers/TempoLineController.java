@@ -25,8 +25,6 @@ import javafx.util.Duration;
  */
 
 public class TempoLineController {
-
-
     /**
      * The main pane containing the tempo line.
      */
@@ -111,5 +109,4 @@ public class TempoLineController {
         tempoLine.setStroke(Color.RED);
         return tempoLine;
     }
-
 }

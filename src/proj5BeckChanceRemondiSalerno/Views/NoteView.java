@@ -19,7 +19,17 @@ package proj5BeckChanceRemondiSalerno.Views;
 
 public interface NoteView {
 
+    /**
+     * Sets the note rectangle to selected
+     * @param selected a boolean indicator of whether the note is selected
+     */
     void setSelected(boolean selected);
+
+    /**
+     * Changes the width of the note rectangle
+     *
+     * @param dx the change in the x direction
+     */
     void changeWidth(double dx);
 
 }

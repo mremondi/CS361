@@ -109,7 +109,6 @@ public class NoteGroup implements NoteGroupable {
         return maxEndTick;
     }
 
-
     /**
      * Changes all the note durations in the group
      * @param dx how much to change it by

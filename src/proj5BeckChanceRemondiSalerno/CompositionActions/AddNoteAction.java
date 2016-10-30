@@ -12,18 +12,41 @@ package proj5BeckChanceRemondiSalerno.CompositionActions;
 import proj5BeckChanceRemondiSalerno.CompositionManager;
 import proj5BeckChanceRemondiSalerno.Models.Note;
 
+/**
+ * This class implements the CompositionAction interface and represents the action
+ * of adding a Note to the Composition.
+ *
+ * @author Graham Chance
+ * @author Charlie Beck
+ * @author Ryan Salerno
+ * @author Mike Remondi
+ */
 public class AddNoteAction implements CompositionAction {
 
+    /**
+     *  The note to be added
+     */
     private Note note;
 
+    /**
+     * Constructor
+     *
+     * @param note takes a note to be added.
+     */
     public AddNoteAction(Note note) {
         this.note = note;
     }
 
+    /**
+     * Redoes the addition of a Note to the Composition.
+     */
     public void redo() {
         CompositionManager.getInstance().addGroupable(note);
     }
 
+    /**
+     * Undoes the addition of a Note to the Composition.
+     */
     public void undo() {
         CompositionManager.getInstance().deleteGroupable(note);
     }
