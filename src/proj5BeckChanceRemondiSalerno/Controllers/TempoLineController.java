@@ -104,10 +104,10 @@ public class TempoLineController {
         tempoLine.setVisible(false);
         tempoLine.setStartY(0);
         tempoLine.setStartX(0);
-        tempoLine.setEndX(5);
-        tempoLine.setStrokeWidth(5);
+        tempoLine.setEndX(1);
+        tempoLine.setStrokeWidth(1);
         tempoLineContainerPane.getChildren().add(tempoLine);
-        tempoLine.setStroke(Color.BLUE);
+        tempoLine.setStroke(Color.RED);
         return tempoLine;
     }
 

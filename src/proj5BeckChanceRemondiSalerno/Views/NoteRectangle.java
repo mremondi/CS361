@@ -22,6 +22,7 @@ import javafx.scene.shape.Rectangle;
 
 public class NoteRectangle extends Rectangle implements NoteView {
 
+    public static final int MINIMUM_WIDTH = 5;
 
     /**
      * current selected state
@@ -61,6 +62,9 @@ public class NoteRectangle extends Rectangle implements NoteView {
      * @param dx How much to change the width by
      */
     public void changeWidth(double dx) {
+        if (this.getWidth() + dx < MINIMUM_WIDTH){
+            setWidth(MINIMUM_WIDTH);
+        }
         setWidth(getWidth() + dx);
     }
 

@@ -274,7 +274,6 @@ public class CompositionController {
             if(note.isSelected()) {
                 double pitchdy = (dragStartLocation.getY() - lastDragLocation.getY())/10;
                 double startTickdy = lastDragLocation.getX() - dragStartLocation.getX();
-                System.out.format("pitch dy: %f, start tick dx: %f\n", pitchdy, startTickdy);
                 note.changePitch(pitchdy);
                 note.changeStartTick(startTickdy);
                 movedNotes.add(note);

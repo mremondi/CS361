@@ -26,7 +26,6 @@ public class CompositionPlayer {
     }
 
     public void play(ArrayList<Note> notes) {
-        System.out.format("playing with %d notes", notes.size());
         midiPlayer.stop();
         midiPlayer.clear();
         buildSong(notes);
@@ -41,7 +40,6 @@ public class CompositionPlayer {
     private void buildSong(ArrayList<Note> notes) {
         addProgramChanges(midiPlayer);
         for (Note note : notes) {
-            System.out.format("p: %d, st: %d\n", note.getPitch(), note.getStartTick());
             midiPlayer.addNote(note.getPitch(), note.getVolume(), note.getStartTick(), note.getDuration(),
                     note.getChannel(), note.getTrackIndex());
         }

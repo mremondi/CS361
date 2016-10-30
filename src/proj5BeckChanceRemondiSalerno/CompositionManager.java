@@ -9,16 +9,18 @@
 package proj5BeckChanceRemondiSalerno;
 
 import javafx.geometry.Bounds;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import proj5BeckChanceRemondiSalerno.CompositionActions.*;
 import proj5BeckChanceRemondiSalerno.Controllers.CompositionController;
 import proj5BeckChanceRemondiSalerno.Controllers.MenuBarController;
 import proj5BeckChanceRemondiSalerno.Controllers.TempoLineController;
-import proj5BeckChanceRemondiSalerno.Models.*;
+import proj5BeckChanceRemondiSalerno.Models.Note;
+import proj5BeckChanceRemondiSalerno.Models.NoteGroup;
+import proj5BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj5BeckChanceRemondiSalerno.Views.NoteGroupablePane;
 import proj5BeckChanceRemondiSalerno.Views.NoteRectangle;
+
 import java.util.*;
 
 /**
@@ -155,7 +157,6 @@ public class CompositionManager {
      * @return the note added
      */
     public NoteGroupable addNoteToComposition(double xPos, double yPos) {
-        System.out.format("adding note at location (%f, %f)\n", xPos, yPos);
         if (yPos >= 0 && yPos < 1280) {
             Note note = new Note(xPos, yPos, 100, currentSelectedInstrumentIndex);
             addGroupable(note);
@@ -173,7 +174,6 @@ public class CompositionManager {
      * @return
      */
     public Optional<NoteGroup> createNoteGroupWithSelectedNotes() {
-        System.out.println("grouping");
         ArrayList<NoteGroupable> notesToGroup = new ArrayList<>();
         for (NoteGroupable note : getGroupables()) {
             if (note.isSelected()) {
@@ -452,7 +452,6 @@ public class CompositionManager {
         groupablePane.setMinHeight(noteGroupable.getMaxPitch() - noteGroupable.getMinPitch() + 10);
         int x = noteGroupable.getStartTick();
         int y = (127- noteGroupable.getMaxPitch()) * 10;
-        System.out.format("adding notegroup pane at (%d, %d)\n", x,y);
         groupablePane.setLayoutX(x);
         groupablePane.setLayoutY(y);
 

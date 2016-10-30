@@ -33,6 +33,10 @@ public class NoteGroupablePane extends Pane implements NoteView {
      */
     private boolean containsSingleNote = false;
 
+    public NoteGroupablePane(){
+        this.getStyleClass().add("singleNoteGroupablePane");
+    }
+
     /**
      * Changes the width of the pane
      * @param dx How much to change the width by
@@ -51,11 +55,11 @@ public class NoteGroupablePane extends Pane implements NoteView {
      */
     public void setSelected(boolean selected) {
         if (containsSingleNote) {
-            setStyle("-fx-border-color: transparent; -fx-border-width: 0");
+            this.getStyleClass().add("singleNoteGroupablePane");
         } else if (selected) {
-            setStyle("-fx-border-color: red; -fx-border-width: 2; -fx-border-style: dashed");
+            this.getStyleClass().add("selectedGroupablePane");
         } else {
-            setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-border-style: dashed");
+            this.getStyleClass().add("unselectedGroupablePane");
         }
         this.selected = selected;
         for (Node node : getChildren()) {
@@ -68,7 +72,7 @@ public class NoteGroupablePane extends Pane implements NoteView {
     /**
      * Determines whether a location is in the bounds
      * @param x x location to test
-     * @param y y locatino to test
+     * @param y y location to test
      * @return Wether the location is inside the bounds of the pane
      */
     public boolean getIsInBounds(double x, double y) {
