@@ -19,7 +19,6 @@
         <ScrollPane>
             <StackPane BorderPane.alignment="CENTER">
                 <Pane fx:id="fxLinePane"/>
-                </Pane>
                 <fx:include fx:id="fxCompositionSheet" source="CompositionPane.fxml" />
             <Pane fx:id="fxTempoLineContainerPane" disable="true" StackPane.alignment="TOP_LEFT" />
             </StackPane>
