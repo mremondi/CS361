@@ -3,8 +3,8 @@
 <!--File: Composition.java
     Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
     Class: CS361
-    Project: 4
-    Date: October 11, 2016-->
+    Project: 6
+    Date: November 1, 2016-->
 
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -19,6 +19,7 @@
         <ScrollPane>
             <StackPane BorderPane.alignment="CENTER">
                 <Pane fx:id="fxLinePane"/>
+                </Pane>
                 <fx:include fx:id="fxCompositionSheet" source="CompositionPane.fxml" />
             <Pane fx:id="fxTempoLineContainerPane" disable="true" StackPane.alignment="TOP_LEFT" />
             </StackPane>

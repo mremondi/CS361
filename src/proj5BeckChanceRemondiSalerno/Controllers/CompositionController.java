@@ -1,10 +1,11 @@
 /*
- * File: CompositionController.java
+ * File: Controller.java
  * Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
  * Class: CS361
- * Project: 5
- * Due Date: October 23, 2016
+ * Project: 6
+ * Due Date: November 1, 2016
  */
+
 
 package proj5BeckChanceRemondiSalerno.Controllers;
 
@@ -17,6 +18,7 @@ import proj5BeckChanceRemondiSalerno.CompositionActions.*;
 import proj5BeckChanceRemondiSalerno.CompositionManager;
 import proj5BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj5BeckChanceRemondiSalerno.Views.NoteGroupablePane;
+
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -234,11 +236,11 @@ public class CompositionController {
         }
     }
 
-
     public void moveNote(NoteGroupable note, double dx, double dy) {
-        NoteGroupablePane noteRectangle = managerInstance.getGroupPane(note);
-        noteRectangle.setTranslateX(noteRectangle.getTranslateX() + dx);
-        noteRectangle.setTranslateY(noteRectangle.getTranslateY() + dy);
+        NoteGroupablePane noteGroupablePane = managerInstance.getGroupPane(note);
+        System.out.println(noteGroupablePane.getLayoutX());
+        noteGroupablePane.setTranslateX(noteGroupablePane.getTranslateX() + dx);
+        noteGroupablePane.setTranslateY(noteGroupablePane.getTranslateY() + dy);
     }
 
     /**

@@ -1,9 +1,9 @@
 /*
- * File: NoteRectangle.java
+ * File: Controller.java
  * Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
  * Class: CS361
- * Project: 5
- * Due Date: October 23, 2016
+ * Project: 6
+ * Due Date: November 1, 2016
  */
 
 package proj5BeckChanceRemondiSalerno.Views;
@@ -46,7 +46,6 @@ public class NoteRectangle extends Rectangle implements NoteView {
      * @param selected new selected state
      */
     public void setSelected(boolean selected) {
-
         if (selected) {
             setStroke(Color.RED);
             setStrokeWidth(3);
