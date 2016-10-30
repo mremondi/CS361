@@ -139,7 +139,7 @@ public class MenuBarController {
      * @param event
      */
     @FXML protected  void handleRedo(ActionEvent event) {
-        CompositionManager.getInstance().redoLastUndoneAction();
+        CompositionManager.getInstance().getCompositionActionManager().redoLastUndoneAction();
     }
 
     /**
@@ -147,7 +147,7 @@ public class MenuBarController {
      * @param event
      */
     @FXML protected  void handleUndo(ActionEvent event) {
-        CompositionManager.getInstance().undoLastAction();
+        CompositionManager.getInstance().getCompositionActionManager().undoLastAction();
     }
 
 }

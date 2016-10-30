@@ -73,15 +73,7 @@ public class CompositionManager {
      */
     private CompositionPlayer compositionPlayer = new CompositionPlayer();
 
-    /**
-     * The stack for remembering each CompositionAction for redoing.
-     */
-    private  Stack<CompositionAction> redoActions = new Stack<>();
-
-    /**
-     * The stack for remembering each CompositionAction for undoing.
-     */
-    private  Stack<CompositionAction> undoActions = new Stack<>();
+    private CompositionActionManager compositionActionManager = new CompositionActionManager();
 
     /**
      * constructor
@@ -124,24 +116,11 @@ public class CompositionManager {
      */
     public void setMenuBarController(MenuBarController menuBarController) {
         this.menuBarController = menuBarController;
+        compositionActionManager.setMenuBarController(menuBarController);
     }
 
-    /**
-     * Gets the redo stack.
-     *
-     * @return the redo stack field
-     */
-    public Stack<CompositionAction> getRedoActions() {
-        return redoActions;
-    }
-
-    /**
-     * Gets the undo stack.
-     *
-     * @return the undo stack field
-     */
-    public Stack<CompositionAction> getUndoActions() {
-        return undoActions;
+    public CompositionActionManager getCompositionActionManager() {
+        return compositionActionManager;
     }
 
     /**
@@ -193,7 +172,7 @@ public class CompositionManager {
             addGroupable(note);
             selectGroupable(note);
             AddNoteAction addNoteAction = new AddNoteAction(note);
-            actionCompleted(addNoteAction);
+            compositionActionManager.actionCompleted(addNoteAction);
             return note;
         }
         return null;
@@ -214,7 +193,7 @@ public class CompositionManager {
         Optional<NoteGroup> group = group(notesToGroup);
         if (group.isPresent()) {
             GroupAction groupAction = new GroupAction(group.get());
-            actionCompleted(groupAction);
+            compositionActionManager.actionCompleted(groupAction);
         }
 
         return group;
@@ -281,7 +260,7 @@ public class CompositionManager {
         NoteGroup group = (NoteGroup)groupsToUnGroup.get(0);
         ungroup(group);
         UngroupAction ungroupAction = new UngroupAction(group);
-        actionCompleted(ungroupAction);
+        compositionActionManager.actionCompleted(ungroupAction);
     }
 
     /**
@@ -300,45 +279,6 @@ public class CompositionManager {
         }
     }
 
-    /**
-     * Adds the given CompositionAction to the undoActions stack and
-     * empties the redo stack.
-     *
-     * @param action the CompositionAction that is completed.
-     */
-    public void actionCompleted(CompositionAction action) {
-        undoActions.push(action);
-        redoActions.removeAllElements();
-        updateRedoUndoDisabled();
-    }
-
-    /**
-     * Undoes the CompositionAction at the top of the undo stack and pushes
-     * it onto the redo stack.
-     */
-    public void undoLastAction() {
-        CompositionAction action = undoActions.pop();
-        action.undo();
-        redoActions.push(action);
-        updateRedoUndoDisabled();
-    }
-
-    /**
-     * Redoes the Composition at the top of the redo stack.
-     */
-    public void redoLastUndoneAction() {
-        redoActions.pop().redo();
-        updateRedoUndoDisabled();
-    }
-
-    /**
-     * Sets the menu options for redo/undo to disabled if there is nothing
-     * in the respective stack.
-     */
-    private void updateRedoUndoDisabled() {
-        menuBarController.setRedoDisabled(redoActions.empty());
-        menuBarController.setUndoDisabled(undoActions.empty());
-    }
 
     /**
      * Finds a Note, if one exists, where the mouse click is inside of
@@ -455,7 +395,7 @@ public class CompositionManager {
         deleteGroupables(groupablesToDelete);
 
         DeleteGroupablesAction deleteGroupableAction = new DeleteGroupablesAction(groupablesToDelete);
-        actionCompleted(deleteGroupableAction);
+        compositionActionManager.actionCompleted(deleteGroupableAction);
     }
 
     /**

@@ -278,7 +278,7 @@ public class CompositionController {
             Bounds bounds = this.dragBox.getBoundsInParent();
             ArrayList<NoteGroupable> selected = managerInstance.selectNotesIntersectingRectangle(bounds);
             CompositionAction action = new SelectAction(selected);
-            CompositionManager.getInstance().actionCompleted(action);
+            CompositionManager.getInstance().getCompositionActionManager().actionCompleted(action);
         }
         isResizing = false;
         isMovingNotes = false;
@@ -304,7 +304,7 @@ public class CompositionController {
         MoveAction moveAction = new MoveAction(movedNotes,
                 lastDragLocation.getX() - dragStartLocation.getX(),
                 lastDragLocation.getY() - dragStartLocation.getY());
-        CompositionManager.getInstance().actionCompleted(moveAction);
+        CompositionManager.getInstance().getCompositionActionManager().actionCompleted(moveAction);
     }
 
     /**
@@ -319,7 +319,7 @@ public class CompositionController {
         }
 
         ResizeAction resizeAction = new ResizeAction(resizedNotes, lastDragLocation.getX() - dragStartLocation.getX());
-        CompositionManager.getInstance().actionCompleted(resizeAction);
+        CompositionManager.getInstance().getCompositionActionManager().actionCompleted(resizeAction);
     }
 
     /**
@@ -339,13 +339,13 @@ public class CompositionController {
             if (noteAtClickLocation.get().isSelected()){
                 managerInstance.deselectNote(noteAtClickLocation.get());
                 CompositionAction action = new DeselectAction(noteAtClickLocation.get());
-                CompositionManager.getInstance().actionCompleted(action);
+                CompositionManager.getInstance().getCompositionActionManager().actionCompleted(action);
             }
             // if it is not selected, select it
             else {
                 managerInstance.selectGroupable(noteAtClickLocation.get());
                 CompositionAction action = new SelectAction(noteAtClickLocation.get());
-                CompositionManager.getInstance().actionCompleted(action);
+                CompositionManager.getInstance().getCompositionActionManager().actionCompleted(action);
             }
         }
         // add a new note and select it
