@@ -277,8 +277,10 @@ public class CompositionController {
         } else {
             Bounds bounds = this.dragBox.getBoundsInParent();
             ArrayList<NoteGroupable> selected = managerInstance.selectNotesIntersectingRectangle(bounds);
-            CompositionAction action = new SelectAction(selected);
-            CompositionManager.getInstance().getCompositionActionManager().actionCompleted(action);
+            if (selected.size() > 0) {
+                CompositionAction action = new SelectAction(selected);
+                CompositionManager.getInstance().getCompositionActionManager().actionCompleted(action);
+            }
         }
         isResizing = false;
         isMovingNotes = false;
@@ -369,6 +371,8 @@ public class CompositionController {
         managerInstance.clearSelectedNotes();
         if (noteAtClickLocation.isPresent()) {
             if (!noteAtClickLocation.get().isSelected()){
+                SelectAction selectAction = new SelectAction(noteAtClickLocation.get());
+                managerInstance.getCompositionActionManager().actionCompleted(selectAction);
                 managerInstance.selectGroupable(noteAtClickLocation.get());
             }
         } else {
