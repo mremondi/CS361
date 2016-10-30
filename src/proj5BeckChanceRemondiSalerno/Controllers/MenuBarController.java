@@ -31,11 +31,11 @@ public class MenuBarController {
     @FXML
     private MenuItem undoItem;
 
-    /**
-     * The standard method invoked when loading the controller.
-     */
-    public void initialize() {
-        CompositionManager.getInstance().setMenuBarController(this);
+    CompositionManager compositionManager;
+
+    public void setCompositionManager(CompositionManager compositionManager) {
+        this.compositionManager = compositionManager;
+        this.compositionManager.getCompositionActionManager().setMenuBarController(this);
     }
 
     /**
@@ -67,9 +67,9 @@ public class MenuBarController {
      * Selects all of the notes and adds them to the selected arraylist.
      */
     private void selectAllNotes() {
-        CompositionManager.getInstance().clearSelectedNotes();
-        for (NoteGroupable noteGroupable : CompositionManager.getInstance().getGroupables()) {
-            CompositionManager.getInstance().selectGroupable(noteGroupable);
+        compositionManager.clearSelectedNotes();
+        for (NoteGroupable noteGroupable : compositionManager.getGroupables()) {
+            compositionManager.selectGroupable(noteGroupable);
         }
     }
 
@@ -86,7 +86,7 @@ public class MenuBarController {
      * Deletes all the selected notes from the composition pane
      */
     private void deleteNotes() {
-        CompositionManager.getInstance().deleteSelectedGroupables();
+        compositionManager.deleteSelectedGroupables();
     }
 
 
@@ -95,7 +95,7 @@ public class MenuBarController {
      */
     @FXML
     protected void handlePlayMidi() {
-        CompositionManager.getInstance().play();
+        compositionManager.play();
     }
 
     /**
@@ -103,7 +103,7 @@ public class MenuBarController {
      */
     @FXML
     protected void handleStopMusic() {
-        CompositionManager.getInstance().stop();
+        compositionManager.stop();
     }
 
     /**
@@ -122,7 +122,7 @@ public class MenuBarController {
      */
     @FXML
     protected void handleGroup(ActionEvent event) {
-        CompositionManager.getInstance().createNoteGroupWithSelectedNotes();
+        compositionManager.createNoteGroupWithSelectedNotes();
     }
 
     /**
@@ -131,7 +131,7 @@ public class MenuBarController {
      */
     @FXML
     protected void handleUngroup(ActionEvent event) {
-        CompositionManager.getInstance().ungroupSelectedGroup();
+        compositionManager.ungroupSelectedGroup();
     }
 
     /**
@@ -139,7 +139,7 @@ public class MenuBarController {
      * @param event
      */
     @FXML protected  void handleRedo(ActionEvent event) {
-        CompositionManager.getInstance().getCompositionActionManager().redoLastUndoneAction();
+        compositionManager.getCompositionActionManager().redoLastUndoneAction();
     }
 
     /**
@@ -147,7 +147,7 @@ public class MenuBarController {
      * @param event
      */
     @FXML protected  void handleUndo(ActionEvent event) {
-        CompositionManager.getInstance().getCompositionActionManager().undoLastAction();
+        compositionManager.getCompositionActionManager().undoLastAction();
     }
 
 }

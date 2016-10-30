@@ -13,18 +13,18 @@
 
 <BorderPane prefHeight="300.0" prefWidth="400.0" stylesheets="@Main.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proj5BeckChanceRemondiSalerno.Controllers.Controller">
     <top>
-        <fx:include source="MenuBar.fxml" BorderPane.alignment="CENTER" />
+        <fx:include source="MenuBar.fxml" BorderPane.alignment="CENTER" fx:id="menuBar"/>
     </top>
     <center>
         <ScrollPane>
             <StackPane BorderPane.alignment="CENTER">
-                <Pane fx:id="fxLinePane"/>
-                <fx:include fx:id="fxCompositionSheet" source="CompositionPane.fxml" />
-            <Pane fx:id="fxTempoLineContainerPane" disable="true" StackPane.alignment="TOP_LEFT" />
+                <Pane fx:id="linePane"/>
+                <fx:include fx:id="composition" source="CompositionPane.fxml" />
+            <Pane fx:id="tempoLineContainerPane" disable="true" StackPane.alignment="TOP_LEFT" />
             </StackPane>
         </ScrollPane>
     </center>
     <left>
-        <fx:include source="InstrumentPane.fxml" />
+        <fx:include source="InstrumentPane.fxml" fx:id="instrumentPane" />
     </left>
 </BorderPane>

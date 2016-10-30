@@ -20,7 +20,7 @@ import proj5BeckChanceRemondiSalerno.Models.NoteGroupable;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
-public class DeselectAction implements CompositionAction {
+public class DeselectAction extends CompositionAction {
     /**
      * The note to deselect.
      */
@@ -31,23 +31,22 @@ public class DeselectAction implements CompositionAction {
      *
      * @param note the note to deselect
      */
-    public DeselectAction(NoteGroupable note) {
+    public DeselectAction(NoteGroupable note, CompositionManager compositionManager) {
+        this.compositionManager = compositionManager;
         this.note = note;
     }
 
     /**
      * Redoes the deselection of a note.
      */
-    @Override
     public void redo() {
-        CompositionManager.getInstance().deselectNote(note);
+        compositionManager.deselectNote(note);
     }
 
     /**
      * Undoes the deselection of a note by reselecting it.
      */
-    @Override
     public void undo() {
-        CompositionManager.getInstance().selectGroupable(note);
+        compositionManager.selectGroupable(note);
     }
 }

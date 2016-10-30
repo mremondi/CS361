@@ -21,7 +21,7 @@ import proj5BeckChanceRemondiSalerno.Models.NoteGroup;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
-public class UngroupAction implements CompositionAction {
+public class UngroupAction extends CompositionAction {
     /**
      * The note group
      */
@@ -32,7 +32,8 @@ public class UngroupAction implements CompositionAction {
      *
      * @param group the note group
      */
-    public UngroupAction(NoteGroup group) {
+    public UngroupAction(NoteGroup group, CompositionManager compositionManager) {
+        this.compositionManager = compositionManager;
         this.group = group;
     }
 
@@ -40,14 +41,14 @@ public class UngroupAction implements CompositionAction {
      * Redoes the ungrouping of notes.
      */
     public void redo() {
-        CompositionManager.getInstance().ungroup(group);
+        compositionManager.ungroup(group);
     }
 
     /**
      * Undoes the ungrouping of notes by regrouping them.
      */
     public void undo() {
-        CompositionManager.getInstance().group(group.getNoteGroupables());
+        compositionManager.group(group.getNoteGroupables());
     }
 
 }

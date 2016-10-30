@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import proj5BeckChanceRemondiSalerno.CompositionActions.*;
 import proj5BeckChanceRemondiSalerno.Controllers.CompositionController;
+import proj5BeckChanceRemondiSalerno.Controllers.InstrumentPaneController;
 import proj5BeckChanceRemondiSalerno.Controllers.MenuBarController;
 import proj5BeckChanceRemondiSalerno.Controllers.TempoLineController;
 import proj5BeckChanceRemondiSalerno.Models.Note;
@@ -38,11 +39,6 @@ import java.util.*;
 public class CompositionManager {
 
     /**
-     * The shared instance of the singleton
-     */
-    private static CompositionManager instance = null;
-
-    /**
      * The map for matching note models to their views
      */
     private HashMap<NoteGroupable, NoteGroupablePane> noteGroupableRectsMap = new HashMap<>();
@@ -57,16 +53,8 @@ public class CompositionManager {
      */
     private CompositionController compositionController;
 
-    /**
-     * The controller for the MenuBar
-     */
-    private MenuBarController menuBarController;
 
-
-    /**
-     * The index of the current selected instrument
-     */
-    private int currentSelectedInstrumentIndex;
+    private InstrumentPaneController instrumentPaneController;
 
     /**
      * The composition player for playing notes
@@ -77,20 +65,11 @@ public class CompositionManager {
 
     /**
      * constructor
-     * hidden from public to enforce singleton
      */
-    private CompositionManager() {}
+    public CompositionManager() {
 
-    /**
-     * shared instance getter
-     * @return The single shared instance
-     */
-    public static synchronized CompositionManager getInstance(){
-        if (instance == null){
-            instance = new CompositionManager();
-        }
-        return instance;
     }
+
 
     /**
      * Setter for tempo line controller
@@ -98,6 +77,10 @@ public class CompositionManager {
      */
     public void setTempoLineController(TempoLineController tempoLineControllerontroller){
         this.tempoLineController = tempoLineControllerontroller;
+    }
+
+    public void setInstrumentPaneController(InstrumentPaneController instrumentPaneController) {
+        this.instrumentPaneController = instrumentPaneController;
     }
 
     /**
@@ -109,15 +92,6 @@ public class CompositionManager {
         this.compositionController = compositionController;
     }
 
-    /**
-     * Setter for the menu bar controller.
-     *
-     * @param menuBarController the new menu bar controller
-     */
-    public void setMenuBarController(MenuBarController menuBarController) {
-        this.menuBarController = menuBarController;
-        compositionActionManager.setMenuBarController(menuBarController);
-    }
 
     public CompositionActionManager getCompositionActionManager() {
         return compositionActionManager;
@@ -148,14 +122,6 @@ public class CompositionManager {
         return null;
     }
 
-    /**
-     * Setter for current instrument
-     * @param newInstrumentIndex The new instrument index
-     */
-    public void setInstrumentIndex(int newInstrumentIndex) {
-        currentSelectedInstrumentIndex = newInstrumentIndex;
-    }
-
 
     /**
      * Creates a visual representation of the the notes
@@ -168,10 +134,10 @@ public class CompositionManager {
      */
     public NoteGroupable addNoteToComposition(double xPos, double yPos) {
         if (yPos >= 0 && yPos < 1280) {
-            Note note = new Note(xPos, yPos, 100, currentSelectedInstrumentIndex);
+            Note note = new Note(xPos, yPos, 100, instrumentPaneController.getCurrentInstrumentIndex());
             addGroupable(note);
             selectGroupable(note);
-            AddNoteAction addNoteAction = new AddNoteAction(note);
+            AddNoteAction addNoteAction = new AddNoteAction(note, this);
             compositionActionManager.actionCompleted(addNoteAction);
             return note;
         }
@@ -192,7 +158,7 @@ public class CompositionManager {
         }
         Optional<NoteGroup> group = group(notesToGroup);
         if (group.isPresent()) {
-            GroupAction groupAction = new GroupAction(group.get());
+            GroupAction groupAction = new GroupAction(group.get(), this);
             compositionActionManager.actionCompleted(groupAction);
         }
 
@@ -259,7 +225,7 @@ public class CompositionManager {
         if (groupsToUnGroup.size() != 1) { return; }
         NoteGroup group = (NoteGroup)groupsToUnGroup.get(0);
         ungroup(group);
-        UngroupAction ungroupAction = new UngroupAction(group);
+        UngroupAction ungroupAction = new UngroupAction(group, this);
         compositionActionManager.actionCompleted(ungroupAction);
     }
 
@@ -394,7 +360,7 @@ public class CompositionManager {
 
         deleteGroupables(groupablesToDelete);
 
-        DeleteGroupablesAction deleteGroupableAction = new DeleteGroupablesAction(groupablesToDelete);
+        DeleteGroupablesAction deleteGroupableAction = new DeleteGroupablesAction(groupablesToDelete, this);
         compositionActionManager.actionCompleted(deleteGroupableAction);
     }
 

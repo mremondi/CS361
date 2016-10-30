@@ -21,7 +21,7 @@ import proj5BeckChanceRemondiSalerno.Models.Note;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
-public class AddNoteAction implements CompositionAction {
+public class AddNoteAction extends CompositionAction {
 
     /**
      *  The note to be added
@@ -33,7 +33,8 @@ public class AddNoteAction implements CompositionAction {
      *
      * @param note takes a note to be added.
      */
-    public AddNoteAction(Note note) {
+    public AddNoteAction(Note note, CompositionManager compositionManager) {
+        this.compositionManager = compositionManager;
         this.note = note;
     }
 
@@ -41,14 +42,14 @@ public class AddNoteAction implements CompositionAction {
      * Redoes the addition of a Note to the Composition.
      */
     public void redo() {
-        CompositionManager.getInstance().addGroupable(note);
+        compositionManager.addGroupable(note);
     }
 
     /**
      * Undoes the addition of a Note to the Composition.
      */
     public void undo() {
-        CompositionManager.getInstance().deleteGroupable(note);
+        compositionManager.deleteGroupable(note);
     }
 
 }

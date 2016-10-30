@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
-public class SelectAction implements CompositionAction {
+public class SelectAction extends CompositionAction {
     /**
      * The ArrayList of selected notes
      */
@@ -33,7 +33,8 @@ public class SelectAction implements CompositionAction {
      *
      * @param selected the selected notes
      */
-    public SelectAction(ArrayList<NoteGroupable> selected) {
+    public SelectAction(ArrayList<NoteGroupable> selected, CompositionManager compositionManager) {
+        this.compositionManager = compositionManager;
         this.selected = selected;
     }
 
@@ -42,7 +43,8 @@ public class SelectAction implements CompositionAction {
      *
      * @param note the selected note
      */
-    public SelectAction(NoteGroupable note) {
+    public SelectAction(NoteGroupable note, CompositionManager compositionManager) {
+        this.compositionManager = compositionManager;
         this.selected = new ArrayList<>();
         this.selected.add(note);
     }
@@ -53,7 +55,7 @@ public class SelectAction implements CompositionAction {
     @Override
     public void redo() {
         for (NoteGroupable note : selected) {
-            CompositionManager.getInstance().selectGroupable(note);
+            compositionManager.selectGroupable(note);
         }
     }
 
@@ -63,7 +65,7 @@ public class SelectAction implements CompositionAction {
     @Override
     public void undo() {
         for (NoteGroupable note : selected) {
-            CompositionManager.getInstance().deselectNote(note);
+            compositionManager.deselectNote(note);
         }
     }
 }

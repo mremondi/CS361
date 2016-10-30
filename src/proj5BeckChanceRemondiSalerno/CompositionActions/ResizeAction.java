@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
-public class ResizeAction implements CompositionAction {
+public class ResizeAction extends CompositionAction {
     /**
      * The ArrayList of resized notes.
      */
@@ -39,7 +39,8 @@ public class ResizeAction implements CompositionAction {
      * @param resizedNotes the notes that were resized
      * @param dx the change in the x direction
      */
-    public ResizeAction(ArrayList<NoteGroupable> resizedNotes, double dx) {
+    public ResizeAction(ArrayList<NoteGroupable> resizedNotes, double dx, CompositionManager compositionManager) {
+        this.compositionManager = compositionManager;
         this.resizedNotes = resizedNotes;
         this.dx = dx;
     }
@@ -48,14 +49,14 @@ public class ResizeAction implements CompositionAction {
      * Redoes the resizing of notes.
      */
     public void redo() {
-        CompositionManager.getInstance().resizeNotes(resizedNotes, dx);
+        compositionManager.resizeNotes(resizedNotes, dx);
     }
 
     /**
      * Undoes the resizing of notes.
      */
     public void undo() {
-        CompositionManager.getInstance().resizeNotes(resizedNotes, -dx);
+        compositionManager.resizeNotes(resizedNotes, -dx);
     }
 
 }

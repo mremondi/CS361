@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
-public class DeleteGroupablesAction implements CompositionAction {
+public class DeleteGroupablesAction extends CompositionAction {
     /**
      * An ArrayList of NoteGroupables to be deleted
      */
@@ -33,7 +33,8 @@ public class DeleteGroupablesAction implements CompositionAction {
      *
      * @param groupables the NoteGroupables to be deleted
      */
-    public DeleteGroupablesAction(ArrayList<NoteGroupable> groupables) {
+    public DeleteGroupablesAction(ArrayList<NoteGroupable> groupables, CompositionManager compositionManager) {
+        this.compositionManager = compositionManager;
         this.groupables = groupables;
     }
 
@@ -41,7 +42,7 @@ public class DeleteGroupablesAction implements CompositionAction {
      * Redoes the deleteGroupables action
      */
     public void redo() {
-        CompositionManager.getInstance().deleteGroupables(groupables);
+        compositionManager.deleteGroupables(groupables);
     }
 
     /**
@@ -49,7 +50,7 @@ public class DeleteGroupablesAction implements CompositionAction {
      */
     public void undo() {
         for (NoteGroupable groupable : groupables) {
-            CompositionManager.getInstance().addGroupable(groupable);
+            compositionManager.addGroupable(groupable);
         }
     }
 }

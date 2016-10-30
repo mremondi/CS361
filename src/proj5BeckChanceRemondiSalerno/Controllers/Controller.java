@@ -27,13 +27,22 @@ public class Controller {
      * The pane containing the composition sheet lines.
      */
     @FXML
-    private Pane fxLinePane;
+    private Pane linePane;
 
     /**
      * The container pane for the tempo line
      */
     @FXML
-    private Pane fxTempoLineContainerPane;
+    private Pane tempoLineContainerPane;
+
+    @FXML
+    private MenuBarController menuBarController;
+
+    @FXML
+    private InstrumentPaneController instrumentPaneController;
+
+    @FXML
+    private CompositionController compositionController;
 
     /**
      * Seeds our CompositionPaneManager and TempoLine objects with the
@@ -41,8 +50,14 @@ public class Controller {
      */
     public void initialize() {
         createLinePane();
-        CompositionManager.getInstance().setTempoLineController(new TempoLineController(fxTempoLineContainerPane));
+        CompositionManager compositionManager = new CompositionManager();
+        compositionController.setCompositionManager(compositionManager);
+        compositionManager.setCompositionController(compositionController);
+        compositionManager.setInstrumentPaneController(instrumentPaneController);
+        compositionManager.setTempoLineController(new TempoLineController(tempoLineContainerPane));
+        menuBarController.setCompositionManager(compositionManager);
     }
+
 
     /**
      * Creates a visual representation of a composition panel
@@ -53,7 +68,7 @@ public class Controller {
         for (int i = 0; i < 127; i++) {
             staffLine = new Line(0, i * 10, 2000, i * 10);
             staffLine.getStyleClass().add("staffLine");
-            fxLinePane.getChildren().add(staffLine);
+            linePane.getChildren().add(staffLine);
         }
     }
 }

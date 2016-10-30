@@ -30,19 +30,8 @@ public class InstrumentPaneController {
     @FXML
     private ToggleGroup instrumentGroup;
 
-    /**
-     * The standard method invoked when loading the controller. Calls
-     * handleInstrumentChange to set an initial instrument to selected.
-     */
-    public void initialize(){
-        handleInstrumentChange();
-    }
 
-    /**
-     * Changes the instrument that the future notes swill be played with
-     */
-    @FXML
-    public void handleInstrumentChange() {
-        CompositionManager.getInstance().setInstrumentIndex(instrumentGroup.getToggles().indexOf(instrumentGroup.getSelectedToggle()));
+    public int getCurrentInstrumentIndex() {
+        return instrumentGroup.getToggles().indexOf(instrumentGroup.getSelectedToggle());
     }
 }

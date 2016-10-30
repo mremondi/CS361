@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
-public class MoveAction implements CompositionAction {
+public class MoveAction extends CompositionAction {
     /**
      * The moved notes
      */
@@ -45,7 +45,8 @@ public class MoveAction implements CompositionAction {
      * @param dx the change in the x direction
      * @param dy the change in the y direction
      */
-    public MoveAction(ArrayList<NoteGroupable> movedNotes, double dx, double dy) {
+    public MoveAction(ArrayList<NoteGroupable> movedNotes, double dx, double dy, CompositionManager compositionManager) {
+        this.compositionManager = compositionManager;
         this.movedNotes = movedNotes;
         this.dx = dx;
         this.dy = dy;
@@ -55,14 +56,14 @@ public class MoveAction implements CompositionAction {
      * Redoes the moving of notes.
      */
     public void redo() {
-        CompositionManager.getInstance().moveNotes(movedNotes, dx, dy);
+        compositionManager.moveNotes(movedNotes, dx, dy);
     }
 
     /**
      * Undoes the moving of notes
      */
     public void undo() {
-        CompositionManager.getInstance().moveNotes(movedNotes, -dx, -dy);
+        compositionManager.moveNotes(movedNotes, -dx, -dy);
     }
 
 }

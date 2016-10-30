@@ -20,7 +20,7 @@ import proj5BeckChanceRemondiSalerno.Models.NoteGroup;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
-public class GroupAction implements CompositionAction {
+public class GroupAction extends CompositionAction {
     /**
      * The NoteGroup to group
      */
@@ -31,7 +31,8 @@ public class GroupAction implements CompositionAction {
      *
      * @param group the NoteGroup to group
      */
-    public GroupAction(NoteGroup group) {
+    public GroupAction(NoteGroup group, CompositionManager compositionManager) {
+        this.compositionManager = compositionManager;
         this.group = group;
     }
 
@@ -39,14 +40,14 @@ public class GroupAction implements CompositionAction {
      * Redoes the grouping of the specified NoteGroup.
      */
     public void redo() {
-        CompositionManager.getInstance().group(group.getNoteGroupables());
+        compositionManager.group(group.getNoteGroupables());
     }
 
     /**
      * Undoes the grouping of the specified NoteGroup by ungrouping the group.
      */
     public void undo() {
-        CompositionManager.getInstance().ungroup(group);
+        compositionManager.ungroup(group);
     }
 
 }

@@ -41,7 +41,7 @@ public class CompositionController {
     /**
      * Accesses the CompositionManager shared instance.
      */
-    private final CompositionManager managerInstance = CompositionManager.getInstance();
+    private CompositionManager compositionManager;
 
     /**
      * The last location of the drag.
@@ -73,8 +73,10 @@ public class CompositionController {
      */
     private Rectangle dragBox;
 
-    public void initialize() {
-        CompositionManager.getInstance().setCompositionController(this);
+
+    public void setCompositionManager(CompositionManager compositionManager) {
+        this.compositionManager = compositionManager;
+        compositionManager.setCompositionController(this);
     }
 
     /**
@@ -142,12 +144,12 @@ public class CompositionController {
             resizeSelectedNotes(dx);
         } else {
             if (!controlDrag){
-                managerInstance.clearSelectedNotes();
+                compositionManager.clearSelectedNotes();
             }
             this.dragBox.setWidth(this.dragBox.getWidth() + dx);
             this.dragBox.setHeight(this.dragBox.getHeight() + dy);
             Bounds bounds = this.dragBox.getBoundsInParent();
-            managerInstance.selectNotesIntersectingRectangle(bounds);
+            compositionManager.selectNotesIntersectingRectangle(bounds);
         }
     }
 
@@ -175,7 +177,7 @@ public class CompositionController {
      * @param dx the change in the mouse's x coordinate
      */
     private void resizeSelectedNotes(double dx) {
-        for (NoteGroupable noteGroupable : managerInstance.getGroupables()) {
+        for (NoteGroupable noteGroupable : compositionManager.getGroupables()) {
             if (noteGroupable.isSelected()){
                 resizeNote(noteGroupable,dx);
             }
@@ -190,7 +192,7 @@ public class CompositionController {
      */
     public void resizeNote(NoteGroupable note, double dx) {
         note.changeNoteDurations(dx);
-        managerInstance.getGroupPane(note).changeWidth(dx);
+        compositionManager.getGroupPane(note).changeWidth(dx);
     }
 
     /**
@@ -207,11 +209,11 @@ public class CompositionController {
         if (controlDrag) { return; }
         isResizing = false;
         isMovingNotes = false;
-        Optional<NoteGroupable> optionalNote = managerInstance.getGroupableAtPoint(x, y);
+        Optional<NoteGroupable> optionalNote = compositionManager.getGroupableAtPoint(x, y);
         // if the click is on a note
         if (optionalNote.isPresent()) {
             NoteGroupable note = optionalNote.get();
-            NoteGroupablePane groupPane = managerInstance.getGroupPane(note);
+            NoteGroupablePane groupPane = compositionManager.getGroupPane(note);
             boolean onNoteEdge = false;
             // if it is on the edge of a note
             if (groupPane.getIsOnEdge(x, y)) {
@@ -220,8 +222,8 @@ public class CompositionController {
             }
 
             if (!note.isSelected()) {
-                managerInstance.clearSelectedNotes();
-                managerInstance.selectGroupable(note);
+                compositionManager.clearSelectedNotes();
+                compositionManager.selectGroupable(note);
             }
 
             if (!onNoteEdge) {
@@ -241,7 +243,7 @@ public class CompositionController {
      * @param dy the change in the mouse's y coordinate
      */
     private void moveSelectedNotes(double dx, double dy) {
-        for (NoteGroupable note : managerInstance.getGroupables()) {
+        for (NoteGroupable note : compositionManager.getGroupables()) {
             if (note.isSelected()){
                 moveNote(note,dx,dy);
             }
@@ -256,7 +258,7 @@ public class CompositionController {
      * @param dy the change in the y direction
      */
     public void moveNote(NoteGroupable note, double dx, double dy) {
-        NoteGroupablePane noteGroupablePane = managerInstance.getGroupPane(note);
+        NoteGroupablePane noteGroupablePane = compositionManager.getGroupPane(note);
         System.out.println(noteGroupablePane.getLayoutX());
         noteGroupablePane.setTranslateX(noteGroupablePane.getTranslateX() + dx);
         noteGroupablePane.setTranslateY(noteGroupablePane.getTranslateY() + dy);
@@ -276,10 +278,10 @@ public class CompositionController {
             releaseResizedNotes();
         } else {
             Bounds bounds = this.dragBox.getBoundsInParent();
-            ArrayList<NoteGroupable> selected = managerInstance.selectNotesIntersectingRectangle(bounds);
+            ArrayList<NoteGroupable> selected = compositionManager.selectNotesIntersectingRectangle(bounds);
             if (selected.size() > 0) {
-                CompositionAction action = new SelectAction(selected);
-                CompositionManager.getInstance().getCompositionActionManager().actionCompleted(action);
+                CompositionAction action = new SelectAction(selected, compositionManager);
+                compositionManager.getCompositionActionManager().actionCompleted(action);
             }
         }
         isResizing = false;
@@ -293,7 +295,7 @@ public class CompositionController {
      */
     private void releaseMovedNotes() {
         ArrayList<NoteGroupable> movedNotes = new ArrayList<>();
-        for (NoteGroupable note : managerInstance.getGroupables()) {
+        for (NoteGroupable note : compositionManager.getGroupables()) {
             if(note.isSelected()) {
                 double pitchdy = (dragStartLocation.getY() - lastDragLocation.getY())/10;
                 double startTickdy = lastDragLocation.getX() - dragStartLocation.getX();
@@ -305,8 +307,8 @@ public class CompositionController {
 
         MoveAction moveAction = new MoveAction(movedNotes,
                 lastDragLocation.getX() - dragStartLocation.getX(),
-                lastDragLocation.getY() - dragStartLocation.getY());
-        CompositionManager.getInstance().getCompositionActionManager().actionCompleted(moveAction);
+                lastDragLocation.getY() - dragStartLocation.getY(), compositionManager);
+        compositionManager.getCompositionActionManager().actionCompleted(moveAction);
     }
 
     /**
@@ -314,14 +316,14 @@ public class CompositionController {
      */
     private void releaseResizedNotes() {
         ArrayList<NoteGroupable> resizedNotes = new ArrayList<>();
-        for (NoteGroupable note : managerInstance.getGroupables()) {
+        for (NoteGroupable note : compositionManager.getGroupables()) {
             if(note.isSelected()) {
                 resizedNotes.add(note);
             }
         }
 
-        ResizeAction resizeAction = new ResizeAction(resizedNotes, lastDragLocation.getX() - dragStartLocation.getX());
-        CompositionManager.getInstance().getCompositionActionManager().actionCompleted(resizeAction);
+        ResizeAction resizeAction = new ResizeAction(resizedNotes, lastDragLocation.getX() - dragStartLocation.getX(), compositionManager);
+        compositionManager.getCompositionActionManager().actionCompleted(resizeAction);
     }
 
     /**
@@ -334,26 +336,26 @@ public class CompositionController {
      * @param y the y location of the mouse click on the pane
      */
     private void handleControlClickAt(double x, double y) {
-        Optional<NoteGroupable> noteAtClickLocation = managerInstance.getGroupableAtPoint(x, y);
+        Optional<NoteGroupable> noteAtClickLocation = compositionManager.getGroupableAtPoint(x, y);
         // if there is a note at the click location
         if (noteAtClickLocation.isPresent()) {
             // if this note is already selected, unselect it
             if (noteAtClickLocation.get().isSelected()){
-                managerInstance.deselectNote(noteAtClickLocation.get());
-                CompositionAction action = new DeselectAction(noteAtClickLocation.get());
-                CompositionManager.getInstance().getCompositionActionManager().actionCompleted(action);
+                compositionManager.deselectNote(noteAtClickLocation.get());
+                CompositionAction action = new DeselectAction(noteAtClickLocation.get(), compositionManager);
+                compositionManager.getCompositionActionManager().actionCompleted(action);
             }
             // if it is not selected, select it
             else {
-                managerInstance.selectGroupable(noteAtClickLocation.get());
-                CompositionAction action = new SelectAction(noteAtClickLocation.get());
-                CompositionManager.getInstance().getCompositionActionManager().actionCompleted(action);
+                compositionManager.selectGroupable(noteAtClickLocation.get());
+                CompositionAction action = new SelectAction(noteAtClickLocation.get(), compositionManager);
+                compositionManager.getCompositionActionManager().actionCompleted(action);
             }
         }
         // add a new note and select it
         else{
-            NoteGroupable note = managerInstance.addNoteToComposition(x, y);
-            managerInstance.selectGroupable(note);
+            NoteGroupable note = compositionManager.addNoteToComposition(x, y);
+            compositionManager.selectGroupable(note);
         }
     }
 
@@ -366,17 +368,17 @@ public class CompositionController {
      * @param y the y location of the mouse click on the pane
      */
     private void handleClickAt(double x, double y) {
-        managerInstance.stop();
-        Optional<NoteGroupable> noteAtClickLocation = managerInstance.getGroupableAtPoint(x, y);
-        managerInstance.clearSelectedNotes();
+        compositionManager.stop();
+        Optional<NoteGroupable> noteAtClickLocation = compositionManager.getGroupableAtPoint(x, y);
+        compositionManager.clearSelectedNotes();
         if (noteAtClickLocation.isPresent()) {
             if (!noteAtClickLocation.get().isSelected()){
-                SelectAction selectAction = new SelectAction(noteAtClickLocation.get());
-                managerInstance.getCompositionActionManager().actionCompleted(selectAction);
-                managerInstance.selectGroupable(noteAtClickLocation.get());
+                SelectAction selectAction = new SelectAction(noteAtClickLocation.get(), compositionManager);
+                compositionManager.getCompositionActionManager().actionCompleted(selectAction);
+                compositionManager.selectGroupable(noteAtClickLocation.get());
             }
         } else {
-            managerInstance.addNoteToComposition(x, y);
+            compositionManager.addNoteToComposition(x, y);
         }
     }
 
