@@ -16,7 +16,7 @@
         <MenuItem accelerator="Shortcut+G" onAction="#handleGroup" text="Group"/>
         <MenuItem accelerator="Shortcut+U" onAction="#handleUngroup" text="Ungroup"/>
         <MenuItem accelerator="Shortcut+Z" onAction="#handleUndo" text="Undo" fx:id="undoItem"/>
-        <MenuItem accelerator="Shortcut+Y" onAction="#handleRedo" text="Redo" fx:id="redoItem"/>
+        <MenuItem accelerator="Shift+Shortcut+Z" onAction="#handleRedo" text="Redo" fx:id="redoItem"/>
     </Menu>
     <Menu text="Actions">
         <MenuItem accelerator="Shortcut+P" onAction="#handlePlayMidi" text="Play"/>
