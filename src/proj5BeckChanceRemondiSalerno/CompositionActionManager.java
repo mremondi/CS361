@@ -60,7 +60,9 @@ public class CompositionActionManager {
      * Redoes the Composition at the top of the redo stack.
      */
     public void redoLastUndoneAction() {
-        redoActions.pop().redo();
+        CompositionAction action = redoActions.pop();
+        action.redo();
+        undoActions.push(action);
         updateRedoUndoDisabled();
     }
 
