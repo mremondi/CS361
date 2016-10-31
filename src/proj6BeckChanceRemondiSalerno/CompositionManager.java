@@ -203,6 +203,8 @@ public class CompositionManager {
     public void moveNotes(ArrayList<NoteGroupable> notes, double dx, double dy) {
         for (NoteGroupable note : notes) {
             compositionController.moveNote(note, dx, dy);
+            note.changeStartTick(dx);
+            note.changePitch(-dy/10);
         }
     }
 
@@ -215,6 +217,7 @@ public class CompositionManager {
     public void resizeNotes(ArrayList<NoteGroupable> notes, double dx) {
         for (NoteGroupable note : notes) {
             compositionController.resizeNote(note, dx);
+            note.changeNoteDurations(dx);
         }
     }
 
