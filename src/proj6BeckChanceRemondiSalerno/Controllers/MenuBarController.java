@@ -31,6 +31,9 @@ public class MenuBarController {
     @FXML
     private MenuItem undoItem;
 
+    /**
+     * The composition manager for forwarded menu actions to
+     */
     CompositionManager compositionManager;
 
     public void setCompositionManager(CompositionManager compositionManager) {

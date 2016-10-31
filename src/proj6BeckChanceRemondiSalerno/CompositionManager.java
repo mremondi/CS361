@@ -50,7 +50,9 @@ public class CompositionManager {
      */
     private CompositionController compositionController;
 
-
+    /**
+     * Source for getting the current instrument.
+     */
     private InstrumentSource instrumentSource;
 
     /**
@@ -58,13 +60,16 @@ public class CompositionManager {
      */
     private CompositionPlayer compositionPlayer = new CompositionPlayer();
 
+    /**
+     * Manager for the performed composition actions
+     */
     private CompositionActionManager compositionActionManager = new CompositionActionManager();
 
     /**
      * constructor
      */
     public CompositionManager() {
-
+        super();
     }
 
 
@@ -76,6 +81,10 @@ public class CompositionManager {
         this.tempoLineController = tempoLineControllerontroller;
     }
 
+    /**
+     * Setter for the instrument source
+     * @param instrumentSource The new instrument source
+     */
     public void setInstrumentSource(InstrumentSource instrumentSource) {
         this.instrumentSource = instrumentSource;
     }
@@ -89,7 +98,10 @@ public class CompositionManager {
         this.compositionController = compositionController;
     }
 
-
+    /**
+     * Getter for the composition action manager
+     * @return The composition action manager
+     */
     public CompositionActionManager getCompositionActionManager() {
         return compositionActionManager;
     }

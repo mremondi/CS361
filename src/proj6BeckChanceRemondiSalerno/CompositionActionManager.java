@@ -1,3 +1,11 @@
+/*
+ * File: CompositionActionManager.java
+ * Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
+ * Class: CS361
+ * Project: 6
+ * Due Date: November 1, 2016
+ */
+
 package proj6BeckChanceRemondiSalerno;
 
 import proj6BeckChanceRemondiSalerno.CompositionActions.CompositionAction;
@@ -5,7 +13,12 @@ import proj6BeckChanceRemondiSalerno.Controllers.MenuBarController;
 import java.util.Stack;
 
 /**
- * Created by Graham on 10/30/16.
+ * This models an object that can manage redo and undo actions
+ *
+ * @author Graham Chance
+ * @author Charlie Beck
+ * @author Ryan Salerno
+ * @author Mike Remondi
  */
 public class CompositionActionManager {
 

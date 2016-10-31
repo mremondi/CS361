@@ -1,5 +1,5 @@
 /*
- * File: Controller.java
+ * File: TempoLineController.java
  * Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
  * Class: CS361
  * Project: 6

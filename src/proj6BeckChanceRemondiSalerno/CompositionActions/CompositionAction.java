@@ -1,5 +1,5 @@
 /*
- * File: Controller.java
+ * File: CompositionAction.java
  * Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
  * Class: CS361
  * Project: 6
@@ -20,6 +20,9 @@ import proj6BeckChanceRemondiSalerno.CompositionManager;
  */
 public abstract class CompositionAction {
 
+    /**
+     * The composition manager for the composition action to perform its action
+     */
     CompositionManager compositionManager;
 
     /**

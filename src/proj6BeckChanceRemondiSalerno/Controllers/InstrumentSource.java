@@ -18,5 +18,9 @@ package proj6BeckChanceRemondiSalerno.Controllers;
  * @author Mike Remondi
  */
 public interface InstrumentSource {
+    /**
+     * Getter for the current instrument index
+     * @return The current instrument index
+     */
     int getCurrentInstrumentIndex();
 }

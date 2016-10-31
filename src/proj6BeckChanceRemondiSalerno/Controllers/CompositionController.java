@@ -73,7 +73,10 @@ public class CompositionController {
      */
     private Rectangle dragBox;
 
-
+    /**
+     * Setter for the composition manager
+     * @param compositionManager The new composition manager
+     */
     public void setCompositionManager(CompositionManager compositionManager) {
         this.compositionManager = compositionManager;
         compositionManager.setCompositionController(this);

@@ -19,12 +19,22 @@ import java.util.ArrayList;
  */
 public class CompositionPlayer {
 
+    /**
+     * The midi player for playing audible notes.
+     */
     private MidiPlayer midiPlayer = new MidiPlayer(100, 60);
 
+    /**
+     * Constructor
+     */
     public CompositionPlayer() {
         super();
     }
 
+    /**
+     * Plays a song with given notes.
+     * @param notes Notes to play.
+     */
     public void play(ArrayList<Note> notes) {
         midiPlayer.stop();
         midiPlayer.clear();
@@ -32,11 +42,17 @@ public class CompositionPlayer {
         midiPlayer.play();
     }
 
+    /**
+     * Stops playing music.
+     */
     public void stop() {
         midiPlayer.stop();
     }
 
-
+    /**
+     * Builds a song with given notes and adds them to the midiplayer.
+     * @param notes Notes to build the song with
+     */
     private void buildSong(ArrayList<Note> notes) {
         addProgramChanges(midiPlayer);
         for (Note note : notes) {
