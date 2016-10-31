@@ -63,14 +63,8 @@ public class MenuBarController {
      * Sets all of the notes to be selected and adds them to the selected list.
      */
     public void handleSelectAll() {
-        selectAllNotes();
-    }
-
-    /**
-     * Selects all of the notes and adds them to the selected arraylist.
-     */
-    private void selectAllNotes() {
         compositionManager.selectAllNotes();
+
     }
 
     /**
