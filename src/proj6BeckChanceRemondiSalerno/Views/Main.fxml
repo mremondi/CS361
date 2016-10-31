@@ -17,7 +17,7 @@
     </top>
     <center>
         <ScrollPane>
-            <StackPane BorderPane.alignment="CENTER">
+            <StackPane BorderPane.alignment="CENTER" maxHeight="1270" maxWidth="2000">
                 <Pane fx:id="linePane"/>
                 <fx:include fx:id="composition" source="CompositionPane.fxml" />
             <Pane fx:id="tempoLineContainerPane" disable="true" StackPane.alignment="TOP_LEFT" />
