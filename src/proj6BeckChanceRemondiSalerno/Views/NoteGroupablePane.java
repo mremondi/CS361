@@ -36,24 +36,26 @@ public class NoteGroupablePane extends Pane implements NoteView {
     /**
      * Constructor. Initializes the CSS class
      */
-    public NoteGroupablePane(){
+    public NoteGroupablePane() {
         this.getStyleClass().add("singleNoteGroupablePane");
     }
 
     /**
      * Changes the width of the pane
+     *
      * @param dx How much to change the width by
      */
     public void changeWidth(double dx) {
         for (Node node : getChildren()) {
             if (node instanceof NoteView) {
-                ((NoteView)node).changeWidth(dx);
+                ((NoteView) node).changeWidth(dx);
             }
         }
     }
 
     /**
      * Setter for selected state
+     *
      * @param selected new selected state
      */
     public void setSelected(boolean selected) {
@@ -67,13 +69,14 @@ public class NoteGroupablePane extends Pane implements NoteView {
         this.selected = selected;
         for (Node node : getChildren()) {
             if (node instanceof NoteView) {
-                ((NoteView)node).setSelected(selected);
+                ((NoteView) node).setSelected(selected);
             }
         }
     }
 
     /**
      * Determines whether a location is in the bounds
+     *
      * @param x x location to test
      * @param y y location to test
      * @return Wether the location is inside the bounds of the pane
@@ -93,15 +96,14 @@ public class NoteGroupablePane extends Pane implements NoteView {
      * @param rectYMin the smallest y coordinate of the rectangle
      * @param rectXMax the biggest x coordinate of the rectangle
      * @param rectYMax the bigget y coordinate of the rectangle
-     *
      * @return a boolean value indicating whether this note is within the rectangle.
      */
     public boolean getIsInRectangleBounds(double rectXMin, double rectYMin,
                                           double rectXMax, double rectYMax) {
         Bounds bounds = getBoundsInParent();
         boolean xInBounds = (bounds.getMinX() < rectXMax && bounds.getMinX() > rectXMin) ||
-                (bounds.getMaxX() >rectXMin && bounds.getMaxX() < rectXMax);
-        boolean yInBounds = (bounds.getMinY() > rectYMin && bounds.getMinY() < rectYMax ) ||
+                (bounds.getMaxX() > rectXMin && bounds.getMaxX() < rectXMax);
+        boolean yInBounds = (bounds.getMinY() > rectYMin && bounds.getMinY() < rectYMax) ||
                 (bounds.getMaxY() > rectYMin && bounds.getMaxY() < rectYMax);
         return xInBounds && yInBounds;
     }
@@ -113,7 +115,6 @@ public class NoteGroupablePane extends Pane implements NoteView {
      *
      * @param x the mouse click's x coordinate
      * @param y the mouse click's y coordinate
-     *
      * @return a boolean value indicating whether the mouse click is on the note's edge.
      */
     public boolean getIsOnEdge(double x, double y) {
@@ -126,11 +127,26 @@ public class NoteGroupablePane extends Pane implements NoteView {
 
     /**
      * Setter for containsSingleNote
+     *
      * @param containsSingleNote New containsSingleNote value
      */
     public void setContainsSingleNote(boolean containsSingleNote) {
         this.containsSingleNote = containsSingleNote;
     }
+
+    /**
+     * Rounds the y coordinate of the note's rectangle in order to snap to a
+     * space between two horizontal bars.
+     */
+    public void roundToNearestYLocation() {
+        if (this.getLayoutY() % 10 < 5) {
+            setLayoutY(getLayoutY() - (getLayoutY() % 10));
+        } else {
+            setLayoutY(getLayoutY() + (10 - (getLayoutY() % 10)));
+        }
+    }
+
+
 }
 
 

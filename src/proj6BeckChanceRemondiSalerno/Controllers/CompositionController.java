@@ -303,6 +303,7 @@ public class CompositionController {
                 double startTickdy = lastDragLocation.getX() - dragStartLocation.getX();
                 note.changePitch(pitchdy);
                 note.changeStartTick(startTickdy);
+                compositionManager.getGroupPane(note).roundToNearestYLocation();
                 movedNotes.add(note);
             }
         }
