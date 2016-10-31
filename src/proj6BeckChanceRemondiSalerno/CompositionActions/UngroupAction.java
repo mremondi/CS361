@@ -48,7 +48,7 @@ public class UngroupAction extends CompositionAction {
      * Undoes the ungrouping of notes by regrouping them.
      */
     public void undo() {
-        compositionManager.group(group.getNoteGroupables());
+        group = compositionManager.group(group.getNoteGroupables()).get();
     }
 
 }

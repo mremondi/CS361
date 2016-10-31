@@ -55,6 +55,7 @@ public class CompositionActionManager {
         undoActions.push(action);
         redoActions.removeAllElements();
         updateRedoUndoDisabled();
+        //System.out.println("completed " + action.getClass());
     }
 
     /**
@@ -66,6 +67,7 @@ public class CompositionActionManager {
         action.undo();
         redoActions.push(action);
         updateRedoUndoDisabled();
+        //System.out.println("undoing " + action.getClass());
     }
 
     /**
@@ -76,6 +78,7 @@ public class CompositionActionManager {
         action.redo();
         undoActions.push(action);
         updateRedoUndoDisabled();
+        //System.out.println("redoing " + action.getClass());
     }
 
     /**

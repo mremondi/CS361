@@ -40,7 +40,7 @@ public class GroupAction extends CompositionAction {
      * Redoes the grouping of the specified NoteGroup.
      */
     public void redo() {
-        compositionManager.group(group.getNoteGroupables());
+        group = compositionManager.group(group.getNoteGroupables()).get();
     }
 
     /**
