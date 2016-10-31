@@ -262,24 +262,8 @@ public class CompositionController {
      */
     public void moveNote(NoteGroupable note, double dx, double dy) {
         NoteGroupablePane noteGroupablePane = compositionManager.getGroupPane(note);
-        double currentX = noteGroupablePane.getLayoutX() + noteGroupablePane.getTranslateX();
-        double currentY = noteGroupablePane.getLayoutY() + noteGroupablePane.getTranslateY();
-        if (currentX <= 0 && currentY <= 0){
-            noteGroupablePane.setLayoutX(noteGroupablePane.getWidth());
-            noteGroupablePane.setLayoutY(10);
-        }
-        else if (currentX <= 0 ){
-            noteGroupablePane.setLayoutX(noteGroupablePane.getWidth());
-            noteGroupablePane.setTranslateY(noteGroupablePane.getTranslateY() + dy);
-        }
-        else if(currentY <= 0 ){
-            noteGroupablePane.setTranslateX(noteGroupablePane.getTranslateX() + dx);
-            noteGroupablePane.setLayoutY(10);
-        }
-        else {
-            noteGroupablePane.setTranslateX(noteGroupablePane.getTranslateX() + dx);
-            noteGroupablePane.setTranslateY(noteGroupablePane.getTranslateY() + dy);
-        }
+        noteGroupablePane.setTranslateX(noteGroupablePane.getTranslateX() + dx);
+        noteGroupablePane.setTranslateY(noteGroupablePane.getTranslateY() + dy);
     }
 
     /**
@@ -313,6 +297,7 @@ public class CompositionController {
      */
     private void releaseMovedNotes() {
         ArrayList<NoteGroupable> movedNotes = new ArrayList<>();
+        ArrayList<NoteGroupable> outOfRangeNotes = new ArrayList<>();
         for (NoteGroupable note : compositionManager.getGroupables()) {
             if(note.isSelected()) {
                 double pitchdy = (dragStartLocation.getY() - lastDragLocation.getY())/10;
@@ -321,7 +306,20 @@ public class CompositionController {
                 note.changeStartTick(startTickdy);
                 compositionManager.getGroupPane(note).roundToNearestYLocation();
                 movedNotes.add(note);
+                if (note.getStartTick() < 0 || note.getStartTick() > 2000){
+                    // remove note completely
+                    movedNotes.remove(note);
+                    outOfRangeNotes.add(note);
+                }
+                if (note.getMinPitch() < 0 || note.getMaxPitch() > 127){
+                    // remove note completely
+                    movedNotes.remove(note);
+                    outOfRangeNotes.add(note);
+                }
             }
+        }
+        for (NoteGroupable note: outOfRangeNotes){
+            compositionManager.deleteGroupable(note);
         }
 
         MoveAction moveAction = new MoveAction(movedNotes,
