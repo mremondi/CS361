@@ -12,10 +12,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import proj5BeckChanceRemondiSalerno.CompositionActions.*;
-import proj5BeckChanceRemondiSalerno.Controllers.CompositionController;
-import proj5BeckChanceRemondiSalerno.Controllers.InstrumentPaneController;
-import proj5BeckChanceRemondiSalerno.Controllers.MenuBarController;
-import proj5BeckChanceRemondiSalerno.Controllers.TempoLineController;
+import proj5BeckChanceRemondiSalerno.Controllers.*;
 import proj5BeckChanceRemondiSalerno.Models.Note;
 import proj5BeckChanceRemondiSalerno.Models.NoteGroup;
 import proj5BeckChanceRemondiSalerno.Models.NoteGroupable;
@@ -54,7 +51,7 @@ public class CompositionManager {
     private CompositionController compositionController;
 
 
-    private InstrumentPaneController instrumentPaneController;
+    private InstrumentSource instrumentSource;
 
     /**
      * The composition player for playing notes
@@ -79,8 +76,8 @@ public class CompositionManager {
         this.tempoLineController = tempoLineControllerontroller;
     }
 
-    public void setInstrumentPaneController(InstrumentPaneController instrumentPaneController) {
-        this.instrumentPaneController = instrumentPaneController;
+    public void setInstrumentSource(InstrumentSource instrumentSource) {
+        this.instrumentSource = instrumentSource;
     }
 
     /**
@@ -134,7 +131,7 @@ public class CompositionManager {
      */
     public NoteGroupable addNoteToComposition(double xPos, double yPos) {
         if (yPos >= 0 && yPos < 1280) {
-            Note note = new Note(xPos, yPos, 100, instrumentPaneController.getCurrentInstrumentIndex());
+            Note note = new Note(xPos, yPos, 100, instrumentSource.getCurrentInstrumentIndex());
             addGroupable(note);
             selectGroupable(note);
             AddNoteAction addNoteAction = new AddNoteAction(note, this);

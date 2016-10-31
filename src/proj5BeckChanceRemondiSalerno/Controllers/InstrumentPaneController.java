@@ -22,7 +22,7 @@ import proj5BeckChanceRemondiSalerno.CompositionManager;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
-public class InstrumentPaneController {
+public class InstrumentPaneController implements InstrumentSource {
 
     /**
      * The toggle group for the instruments.
