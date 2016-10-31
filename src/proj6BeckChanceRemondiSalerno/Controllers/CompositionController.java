@@ -262,7 +262,6 @@ public class CompositionController {
      */
     public void moveNote(NoteGroupable note, double dx, double dy) {
         NoteGroupablePane noteGroupablePane = compositionManager.getGroupPane(note);
-        System.out.println(noteGroupablePane.getLayoutX());
         noteGroupablePane.setTranslateX(noteGroupablePane.getTranslateX() + dx);
         noteGroupablePane.setTranslateY(noteGroupablePane.getTranslateY() + dy);
     }

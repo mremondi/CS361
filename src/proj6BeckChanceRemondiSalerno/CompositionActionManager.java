@@ -52,7 +52,6 @@ public class CompositionActionManager {
      * @param action the CompositionAction that is completed.
      */
     public void actionCompleted(CompositionAction action) {
-        System.out.println("Adding action: " + action.getClass());
         undoActions.push(action);
         redoActions.removeAllElements();
         updateRedoUndoDisabled();
