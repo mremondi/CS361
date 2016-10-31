@@ -60,11 +60,11 @@ public class NoteGroupablePane extends Pane implements NoteView {
      */
     public void setSelected(boolean selected) {
         if (containsSingleNote) {
-            this.getStyleClass().add("singleNoteGroupablePane");
+            this.getStyleClass().setAll("singleNoteGroupablePane");
         } else if (selected) {
-            this.getStyleClass().add("selectedGroupablePane");
+            this.getStyleClass().setAll("selectedGroupablePane");
         } else {
-            this.getStyleClass().add("unselectedGroupablePane");
+            this.getStyleClass().setAll("unselectedGroupablePane");
         }
         this.selected = selected;
         for (Node node : getChildren()) {
