@@ -73,7 +73,6 @@ public class Note implements NoteGroupable {
         this.trackIndex = 0;
     }
 
-
     /**
      * Accessor method for pitch
      *
@@ -128,6 +127,11 @@ public class Note implements NoteGroupable {
         return duration;
     }
 
+    /**
+     * Setter for the note duration
+     *
+     * @param duration the new duration
+     */
     private void setDuration(double duration){
         this.duration = duration;
     }

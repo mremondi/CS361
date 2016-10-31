@@ -262,8 +262,24 @@ public class CompositionController {
      */
     public void moveNote(NoteGroupable note, double dx, double dy) {
         NoteGroupablePane noteGroupablePane = compositionManager.getGroupPane(note);
-        noteGroupablePane.setTranslateX(noteGroupablePane.getTranslateX() + dx);
-        noteGroupablePane.setTranslateY(noteGroupablePane.getTranslateY() + dy);
+        double currentX = noteGroupablePane.getLayoutX() + noteGroupablePane.getTranslateX();
+        double currentY = noteGroupablePane.getLayoutY() + noteGroupablePane.getTranslateY();
+        if (currentX <= 0 && currentY <= 0){
+            noteGroupablePane.setLayoutX(noteGroupablePane.getWidth());
+            noteGroupablePane.setLayoutY(10);
+        }
+        else if (currentX <= 0 ){
+            noteGroupablePane.setLayoutX(noteGroupablePane.getWidth());
+            noteGroupablePane.setTranslateY(noteGroupablePane.getTranslateY() + dy);
+        }
+        else if(currentY <= 0 ){
+            noteGroupablePane.setTranslateX(noteGroupablePane.getTranslateX() + dx);
+            noteGroupablePane.setLayoutY(10);
+        }
+        else {
+            noteGroupablePane.setTranslateX(noteGroupablePane.getTranslateX() + dx);
+            noteGroupablePane.setTranslateY(noteGroupablePane.getTranslateY() + dy);
+        }
     }
 
     /**
@@ -324,7 +340,6 @@ public class CompositionController {
                 resizedNotes.add(note);
             }
         }
-
         ResizeAction resizeAction = new ResizeAction(resizedNotes, lastDragLocation.getX() - dragStartLocation.getX(), compositionManager);
         compositionManager.getCompositionActionManager().actionCompleted(resizeAction);
     }

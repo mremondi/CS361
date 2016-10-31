@@ -141,7 +141,7 @@ public class CompositionManager {
      *
      * @return the note added
      */
-    public void addNoteToComposition(double xPos, double yPos) {
+    public Optional<Note> addNoteToComposition(double xPos, double yPos) {
         if (yPos >= 0 && yPos < 1280) {
             Note note = new Note(xPos, yPos, 100, instrumentPaneController.getCurrentInstrumentIndex());
             addGroupable(note);
@@ -149,7 +149,9 @@ public class CompositionManager {
             AddNoteAction addNoteAction = new AddNoteAction(note, this);
             compositionActionManager.actionCompleted(addNoteAction);
             selectGroupable(note);
+            return Optional.of(note);
         }
+        return Optional.empty();
     }
 
 
@@ -157,7 +159,7 @@ public class CompositionManager {
      * Creates a note group from current selected groupables
      * @return
      */
-    public void createNoteGroupWithSelectedNotes() {
+    public Optional<NoteGroup> createNoteGroupWithSelectedNotes() {
         ArrayList<NoteGroupable> notesToGroup = new ArrayList<>();
         for (NoteGroupable note : getGroupables()) {
             if (note.isSelected()) {
@@ -169,7 +171,7 @@ public class CompositionManager {
             GroupAction groupAction = new GroupAction(group.get(), this);
             compositionActionManager.actionCompleted(groupAction);
         }
-
+        return group;
     }
 
     /**
@@ -186,10 +188,8 @@ public class CompositionManager {
             compositionController.removeNotePane(noteGroupableRectsMap.get(noteGroupable));
             noteGroupableRectsMap.remove(noteGroupable);
         }
-
         NoteGroup group = new NoteGroup(notesToGroup);
         addGroupable(group);
-
         return Optional.of(group);
     }
 
@@ -462,7 +462,7 @@ public class CompositionManager {
         NoteGroupablePane groupablePane = new NoteGroupablePane();
         groupablePane.setMinHeight(noteGroupable.getMaxPitch() - noteGroupable.getMinPitch() + 10);
         int x = noteGroupable.getStartTick();
-        int y = (127- noteGroupable.getMaxPitch()) * 10;
+        int y = (127 - noteGroupable.getMaxPitch()) * 10;
         groupablePane.setLayoutX(x);
         groupablePane.setLayoutY(y);
 
@@ -477,8 +477,8 @@ public class CompositionManager {
             NoteGroup group = (NoteGroup) noteGroupable;
             for (NoteGroupable subNoteGroupable : group.getNoteGroupables()) {
                 NoteGroupablePane subGroupRect = createNoteGroupablePane(subNoteGroupable);
-                subGroupRect.setLayoutX(subGroupRect.getLayoutX()-groupablePane.getLayoutX() + 5);
-                subGroupRect.setLayoutY(subGroupRect.getLayoutY()-groupablePane.getLayoutY() + 5);
+                subGroupRect.setLayoutX(subGroupRect.getLayoutX()-groupablePane.getLayoutX());
+                subGroupRect.setLayoutY(subGroupRect.getLayoutY()-groupablePane.getLayoutY());
                 groupablePane.getChildren().add(subGroupRect);
             }
             return groupablePane;
