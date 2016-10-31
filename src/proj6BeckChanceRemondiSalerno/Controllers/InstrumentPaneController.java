@@ -21,7 +21,7 @@ import javafx.scene.control.ToggleGroup;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
-public class InstrumentPaneController implements InstrumentSource {
+public class InstrumentPaneController {
 
     /**
      * The toggle group for the instruments.

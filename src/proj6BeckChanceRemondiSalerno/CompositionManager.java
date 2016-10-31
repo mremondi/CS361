@@ -53,7 +53,7 @@ public class CompositionManager {
     /**
      * Source for getting the current instrument.
      */
-    private InstrumentSource instrumentSource;
+    private InstrumentPaneController instrumentPaneController;
 
     /**
      * The composition player for playing notes
@@ -82,11 +82,11 @@ public class CompositionManager {
     }
 
     /**
-     * Setter for the instrument source
-     * @param instrumentSource The new instrument source
+     * Setter for the instrument controller
+     * @param instrumentPaneController The new instrument controller
      */
-    public void setInstrumentSource(InstrumentSource instrumentSource) {
-        this.instrumentSource = instrumentSource;
+    public void setInstrumentPaneController(InstrumentPaneController instrumentPaneController) {
+        this.instrumentPaneController = instrumentPaneController;
     }
 
     /**
@@ -143,7 +143,7 @@ public class CompositionManager {
      */
     public void addNoteToComposition(double xPos, double yPos) {
         if (yPos >= 0 && yPos < 1280) {
-            Note note = new Note(xPos, yPos, 100, instrumentSource.getCurrentInstrumentIndex());
+            Note note = new Note(xPos, yPos, 100, instrumentPaneController.getCurrentInstrumentIndex());
             addGroupable(note);
             selectGroupable(note);
             AddNoteAction addNoteAction = new AddNoteAction(note, this);
