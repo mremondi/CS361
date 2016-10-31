@@ -70,10 +70,7 @@ public class MenuBarController {
      * Selects all of the notes and adds them to the selected arraylist.
      */
     private void selectAllNotes() {
-        compositionManager.clearSelectedNotes();
-        for (NoteGroupable noteGroupable : compositionManager.getGroupables()) {
-            compositionManager.selectGroupable(noteGroupable);
-        }
+        compositionManager.selectAllNotes();
     }
 
     /**

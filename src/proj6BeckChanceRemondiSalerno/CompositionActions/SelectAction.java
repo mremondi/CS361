@@ -12,6 +12,7 @@ import proj6BeckChanceRemondiSalerno.CompositionManager;
 import proj6BeckChanceRemondiSalerno.Models.NoteGroupable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * This class implements the CompositionAction interface and represents the action
@@ -26,14 +27,14 @@ public class SelectAction extends CompositionAction {
     /**
      * The ArrayList of selected notes
      */
-    private ArrayList<NoteGroupable> selected;
+    private Collection<NoteGroupable> selected;
 
     /**
      * Constructor
      *
      * @param selected the selected notes
      */
-    public SelectAction(ArrayList<NoteGroupable> selected, CompositionManager compositionManager) {
+    public SelectAction(Collection<NoteGroupable> selected, CompositionManager compositionManager) {
         this.compositionManager = compositionManager;
         this.selected = selected;
     }

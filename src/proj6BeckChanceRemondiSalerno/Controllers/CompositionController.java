@@ -355,10 +355,9 @@ public class CompositionController {
                 compositionManager.getCompositionActionManager().actionCompleted(action);
             }
         }
-        // add a new note and select it
+        // add a new note
         else{
-            NoteGroupable note = compositionManager.addNoteToComposition(x, y);
-            compositionManager.selectGroupable(note);
+            compositionManager.addNoteToComposition(x, y);
         }
     }
 

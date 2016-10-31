@@ -141,16 +141,15 @@ public class CompositionManager {
      *
      * @return the note added
      */
-    public NoteGroupable addNoteToComposition(double xPos, double yPos) {
+    public void addNoteToComposition(double xPos, double yPos) {
         if (yPos >= 0 && yPos < 1280) {
             Note note = new Note(xPos, yPos, 100, instrumentSource.getCurrentInstrumentIndex());
             addGroupable(note);
             selectGroupable(note);
             AddNoteAction addNoteAction = new AddNoteAction(note, this);
             compositionActionManager.actionCompleted(addNoteAction);
-            return note;
+            selectGroupable(note);
         }
-        return null;
     }
 
 
@@ -158,7 +157,7 @@ public class CompositionManager {
      * Creates a note group from current selected groupables
      * @return
      */
-    public Optional<NoteGroup> createNoteGroupWithSelectedNotes() {
+    public void createNoteGroupWithSelectedNotes() {
         ArrayList<NoteGroupable> notesToGroup = new ArrayList<>();
         for (NoteGroupable note : getGroupables()) {
             if (note.isSelected()) {
@@ -171,7 +170,6 @@ public class CompositionManager {
             compositionActionManager.actionCompleted(groupAction);
         }
 
-        return group;
     }
 
     /**
@@ -323,6 +321,22 @@ public class CompositionManager {
             }
         }
         return selectedNotes;
+    }
+
+    public void selectAllNotes() {
+        ArrayList<NoteGroupable> newlySelectedNotes = new ArrayList<>();
+        for (NoteGroupable note : getGroupables()) {
+            if (!note.isSelected()) {
+                newlySelectedNotes.add(note);
+            }
+        }
+        clearSelectedNotes();
+        for (NoteGroupable noteGroupable : getGroupables()) {
+            selectGroupable(noteGroupable);
+        }
+
+        SelectAction selectAction = new SelectAction(newlySelectedNotes, this);
+        compositionActionManager.actionCompleted(selectAction);
     }
 
     /**
