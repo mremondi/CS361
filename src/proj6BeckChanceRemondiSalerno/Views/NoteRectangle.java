@@ -66,7 +66,8 @@ public class NoteRectangle extends Rectangle implements NoteView {
     public void changeWidth(double dx) {
         if (this.getWidth() + dx < MINIMUM_WIDTH){
             setWidth(MINIMUM_WIDTH);
+        } else {
+            setWidth(getWidth() + dx);
         }
-        setWidth(getWidth() + dx);
     }
 }

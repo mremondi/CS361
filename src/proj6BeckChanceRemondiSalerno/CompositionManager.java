@@ -443,7 +443,6 @@ public class CompositionManager {
      */
     private NoteGroupablePane createNoteGroupablePane(NoteGroupable noteGroupable) {
         NoteGroupablePane groupablePane = new NoteGroupablePane();
-        groupablePane.setMinWidth(noteGroupable.getEndTick() - noteGroupable.getStartTick());
         groupablePane.setMinHeight(noteGroupable.getMaxPitch() - noteGroupable.getMinPitch() + 10);
         int x = noteGroupable.getStartTick();
         int y = (127- noteGroupable.getMaxPitch()) * 10;
