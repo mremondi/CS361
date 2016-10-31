@@ -139,10 +139,10 @@ public class NoteGroupablePane extends Pane implements NoteView {
      * space between two horizontal bars.
      */
     public void roundToNearestYLocation() {
-        if (getTranslateY() % 10 < 5) {
-            setTranslateY(getTranslateY() - (getTranslateY() % 10));
+        if (getLayoutY() % 10 < 5) {
+            setLayoutY(getLayoutY() - (getLayoutY() % 10));
         } else {
-            setTranslateY(getTranslateY() - (getTranslateY() % 10));
+            setLayoutY(getLayoutY() + (getLayoutY() % 10));
         }
     }
 }
