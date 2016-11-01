@@ -56,6 +56,8 @@ public class Controller {
         compositionManager.setInstrumentPaneController(instrumentPaneController);
         compositionManager.setTempoLineController(new TempoLineController(tempoLineContainerPane));
         menuBarController.setCompositionManager(compositionManager);
+        compositionManager.setMenuBarController(menuBarController);
+        compositionManager.deleteSelectedGroupables();
     }
 
 

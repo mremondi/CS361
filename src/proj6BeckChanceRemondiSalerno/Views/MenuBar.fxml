@@ -11,15 +11,15 @@
         <MenuItem accelerator="Shortcut+Q" onAction="#handleExit" text="Exit"/>
     </Menu>
     <Menu text="Edit">
-        <MenuItem accelerator="Shortcut+A" onAction="#handleSelectAll" text="Select All"/>
-        <MenuItem accelerator="Shortcut+Delete" onAction="#handleDelete" text="Delete"/>
-        <MenuItem accelerator="Shortcut+G" onAction="#handleGroup" text="Group"/>
-        <MenuItem accelerator="Shortcut+U" onAction="#handleUngroup" text="Ungroup"/>
+        <MenuItem accelerator="Shortcut+A" onAction="#handleSelectAll" text="Select All" fx:id="selectAllItem"/>
+        <MenuItem accelerator="Shortcut+Delete" onAction="#handleDelete" text="Delete" fx:id="deleteItem"/>
+        <MenuItem accelerator="Shortcut+G" onAction="#handleGroup" text="Group" fx:id="groupItem"/>
+        <MenuItem accelerator="Shortcut+U" onAction="#handleUngroup" text="Ungroup" fx:id="ungroupItem"/>
         <MenuItem accelerator="Shortcut+Z" onAction="#handleUndo" text="Undo" fx:id="undoItem"/>
         <MenuItem accelerator="Shift+Shortcut+Z" onAction="#handleRedo" text="Redo" fx:id="redoItem"/>
     </Menu>
     <Menu text="Actions">
-        <MenuItem accelerator="Shortcut+P" onAction="#handlePlayMidi" text="Play"/>
+        <MenuItem accelerator="Shortcut+P" onAction="#handlePlayMidi" text="Play" fx:id="playItem"/>
         <MenuItem accelerator="Shortcut+S" onAction="#handleStopMusic" text="Stop"/>
     </Menu>
 </MenuBar>

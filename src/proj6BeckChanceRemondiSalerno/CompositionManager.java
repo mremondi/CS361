@@ -66,6 +66,11 @@ public class CompositionManager {
     private CompositionActionManager compositionActionManager = new CompositionActionManager();
 
     /**
+     * The menu bar controller that handles menu actions
+     */
+    private MenuBarController menuBarController;
+
+    /**
      * constructor
      */
     public CompositionManager() {
@@ -96,6 +101,22 @@ public class CompositionManager {
      */
     public void setCompositionController(CompositionController compositionController){
         this.compositionController = compositionController;
+    }
+
+    /**
+     * Setter for the menu bar controller
+     * @param menuBarController The new menu bar controller
+     */
+    public void setMenuBarController(MenuBarController menuBarController) {
+        this.menuBarController = menuBarController;
+    }
+
+    /**
+     * Getter for the menu bar controller
+     * @return the menu bar controller
+     */
+    public MenuBarController getMenuBarController() {
+        return menuBarController;
     }
 
     /**
@@ -484,4 +505,6 @@ public class CompositionManager {
             return groupablePane;
         }
     }
+
+
 }
