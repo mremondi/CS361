@@ -1,0 +1,15 @@
+<!--File: Composition.java
+    Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
+    Class: CS361
+    Project: 6
+    Date: November 1, 2016-->
+<?import javafx.scene.layout.Pane?>
+<Pane xmlns="http://javafx.com/javafx/8.0.65"
+       xmlns:fx="http://javafx.com/fxml/1"
+        fx:id="composition"
+       fx:controller="proj7BeckChanceRemondiSalerno.Controllers.CompositionController"
+       onMousePressed="#handleMousePressed"
+       onMouseDragged="#handleMouseDrag"
+       onMouseReleased="#handleMouseReleased">
+
+</Pane>
