@@ -244,4 +244,14 @@ public class Note implements NoteGroupable {
     public void changeStartTick(double dx) {
         startTick += dx;
     }
+
+    @Override
+    public Note clone() {
+        try {
+            return (Note)super.clone();
+        } catch (CloneNotSupportedException e) {
+            System.out.println(e);
+            return null;
+        }
+    }
 }

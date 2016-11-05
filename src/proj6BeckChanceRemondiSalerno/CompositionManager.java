@@ -429,6 +429,12 @@ public class CompositionManager {
         noteGroupableRectsMap.remove(noteGroupable);
     }
 
+    public void deselectAllNotes() {
+        for (NoteGroupable noteGroupable: getGroupables()) {
+            noteGroupable.setSelected(false);
+        }
+    }
+
     /**
      * Adds a
      * @param noteGroupable

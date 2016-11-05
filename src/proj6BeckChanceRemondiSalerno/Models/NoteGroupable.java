@@ -10,6 +10,7 @@
 package proj6BeckChanceRemondiSalerno.Models;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +21,7 @@ import java.util.ArrayList;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
-public interface NoteGroupable {
+public interface NoteGroupable extends Cloneable, Serializable {
     /**
      * Returns all of the notes in the Groupable object
      * @return an ArrayList of Notes
@@ -97,4 +98,5 @@ public interface NoteGroupable {
      */
     void changeStartTick(double dx);
 
+    NoteGroupable clone();
 }

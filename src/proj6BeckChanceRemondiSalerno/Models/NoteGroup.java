@@ -181,4 +181,21 @@ public class NoteGroup implements NoteGroupable {
             noteGroupable.changePitch(dy);
         }
     }
+
+    @Override
+    public NoteGroup clone() {
+        NoteGroup clone;
+        try {
+            clone = (NoteGroup)super.clone();
+        } catch (CloneNotSupportedException e) {
+            System.out.println(e);
+            return null;
+        }
+        ArrayList<NoteGroupable> clonedNotes = new ArrayList<>();
+        for (NoteGroupable note : noteGroupables) {
+            clonedNotes.add(note.clone());
+        }
+        clone.noteGroupables = clonedNotes;
+        return clone;
+    }
 }
