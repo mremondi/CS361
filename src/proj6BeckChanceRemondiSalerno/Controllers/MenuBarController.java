@@ -212,11 +212,13 @@ public class MenuBarController {
     @FXML protected  void handleCut(ActionEvent event) {
         copySelectedNotes();
         compositionManager.deleteSelectedGroupables();
+        updateEnabledMenuItems();
     }
 
 
     @FXML protected  void handleCopy(ActionEvent event) {
         copySelectedNotes();
+        updateEnabledMenuItems();
     }
 
     private void copySelectedNotes() {
@@ -224,6 +226,7 @@ public class MenuBarController {
         content.put(notesClipboardKey, compositionManager.getSelectedNotes());
         Clipboard.getSystemClipboard().setContent(content);
         System.out.println("Copying " + compositionManager.getSelectedNotes().size() + " notes");
+        updateEnabledMenuItems();
     }
 
 
@@ -237,6 +240,7 @@ public class MenuBarController {
                 compositionManager.addGroupable(noteGroupable.clone());
             }
         }
+        updateEnabledMenuItems();
     }
 
     /**
@@ -252,6 +256,6 @@ public class MenuBarController {
         playItem.setDisable(allNotes.isEmpty());
         copyItem.setDisable(selectedNotes.isEmpty());
         cutItem.setDisable(selectedNotes.isEmpty());
-        //pasteItem.setDisable(Clipboard.getSystemClipboard().);
+        pasteItem.setDisable(Clipboard.getSystemClipboard().getContent(notesClipboardKey) == null);
     }
 }
