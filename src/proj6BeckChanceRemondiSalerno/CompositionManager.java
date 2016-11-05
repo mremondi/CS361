@@ -9,9 +9,6 @@
 package proj6BeckChanceRemondiSalerno;
 
 import javafx.geometry.Bounds;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DataFormat;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import proj6BeckChanceRemondiSalerno.CompositionActions.*;
@@ -21,7 +18,6 @@ import proj6BeckChanceRemondiSalerno.Models.NoteGroup;
 import proj6BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj6BeckChanceRemondiSalerno.Views.NoteGroupablePane;
 import proj6BeckChanceRemondiSalerno.Views.NoteRectangle;
-
 import java.util.*;
 
 /**
@@ -73,6 +69,9 @@ public class CompositionManager {
      */
     private MenuBarController menuBarController;
 
+    /**
+     * Manager for copying, cutting, and pasting notes
+     */
     private NotesClipboardManager notesClipboardManager;
 
 
@@ -349,6 +348,9 @@ public class CompositionManager {
         return selectedNotes;
     }
 
+    /**
+     * Selects all notes on the composition
+     */
     public void selectAllNotes() {
         ArrayList<NoteGroupable> newlySelectedNotes = new ArrayList<>();
         for (NoteGroupable note : getGroupables()) {

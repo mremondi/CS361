@@ -2,7 +2,6 @@ package proj6BeckChanceRemondiSalerno.CompositionActions;
 
 import proj6BeckChanceRemondiSalerno.CompositionManager;
 import proj6BeckChanceRemondiSalerno.Models.NoteGroupable;
-
 import java.util.ArrayList;
 
 /**
@@ -10,13 +9,24 @@ import java.util.ArrayList;
  */
 public class PasteAction extends CompositionAction {
 
+    /**
+     * The notes that were pasted
+     */
     private ArrayList<NoteGroupable> pastedNotes;
 
+    /**
+     * Constructor
+     * @param pastedNotes The notes that were pasted
+     * @param compositionManager The composition Manager
+     */
     public PasteAction(ArrayList<NoteGroupable> pastedNotes, CompositionManager compositionManager) {
         this.compositionManager = compositionManager;
         this.pastedNotes = pastedNotes;
     }
 
+    /**
+     * Undoes the paste action
+     */
     @Override
     public void undo() {
         for (NoteGroupable noteGroupable: pastedNotes) {
@@ -24,6 +34,9 @@ public class PasteAction extends CompositionAction {
         }
     }
 
+    /**
+     * Redoes the paste action
+     */
     @Override
     public void redo() {
         for (NoteGroupable noteGroupable : pastedNotes) {

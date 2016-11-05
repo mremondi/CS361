@@ -13,10 +13,20 @@ import java.util.ArrayList;
  */
 public class NotesClipboardManager {
 
+    /**
+     * The composition manager
+     */
     final private CompositionManager compositionManager;
 
+    /**
+     * The data format for notes on the clipboard
+     */
     final private DataFormat notesClipboardKey = new DataFormat("notes");
 
+    /**
+     * Constructor
+     * @param compositionManager The composition manager
+     */
     NotesClipboardManager(CompositionManager compositionManager) {
         this.compositionManager = compositionManager;
     }
