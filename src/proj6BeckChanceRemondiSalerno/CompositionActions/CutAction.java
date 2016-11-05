@@ -2,6 +2,7 @@ package proj6BeckChanceRemondiSalerno.CompositionActions;
 
 import proj6BeckChanceRemondiSalerno.CompositionManager;
 import proj6BeckChanceRemondiSalerno.Models.NoteGroupable;
+import proj6BeckChanceRemondiSalerno.NotesClipboardManager;
 
 import java.util.ArrayList;
 
@@ -11,10 +12,12 @@ import java.util.ArrayList;
 public class CutAction extends CompositionAction {
 
     private ArrayList<NoteGroupable> cutNotes;
+    private NotesClipboardManager notesClipboardManager;
 
-    public CutAction(ArrayList<NoteGroupable> cutNotes, CompositionManager compositionManager) {
+    public CutAction(ArrayList<NoteGroupable> cutNotes, CompositionManager compositionManager, NotesClipboardManager notesClipboardManager) {
         this.compositionManager = compositionManager;
         this.cutNotes = cutNotes;
+        this.notesClipboardManager = notesClipboardManager;
     }
 
     @Override
@@ -26,6 +29,6 @@ public class CutAction extends CompositionAction {
 
     @Override
     public void redo() {
-        compositionManager.cutNotes(cutNotes);
+        notesClipboardManager.cutNotes(cutNotes);
     }
 }

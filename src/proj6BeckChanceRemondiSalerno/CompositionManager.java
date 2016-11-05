@@ -73,14 +73,14 @@ public class CompositionManager {
      */
     private MenuBarController menuBarController;
 
-    final private DataFormat notesClipboardKey = new DataFormat("notes");
+    private NotesClipboardManager notesClipboardManager;
 
 
     /**
      * constructor
      */
     public CompositionManager() {
-        super();
+        notesClipboardManager = new NotesClipboardManager(this);
     }
 
 
@@ -435,52 +435,48 @@ public class CompositionManager {
         noteGroupableRectsMap.remove(noteGroupable);
     }
 
+    /**
+     * Deselects all notes on the composition
+     */
     public void deselectAllNotes() {
         for (NoteGroupable noteGroupable: getGroupables()) {
             deselectNote(noteGroupable);
         }
     }
 
-    public void cutNotes(ArrayList<NoteGroupable> notes) {
-        copyNotes(notes);
-        deleteGroupables(notes);
-    }
 
-    public void copyNotes(ArrayList<NoteGroupable> notes) {
-        ClipboardContent content = new ClipboardContent();
-        content.put(notesClipboardKey, notes);
-        Clipboard.getSystemClipboard().setContent(content);
-    }
 
+    /**
+     * Copies selected notes to the clipboard
+     */
     public void copySelectedNotes() {
-        copyNotes(getSelectedNotes());
+        notesClipboardManager.copyNotes(getSelectedNotes());
     }
 
+    /**
+     * Copies selected notes to the clipboard and removes them from the composition.
+     */
     public void cutSelectedNotes() {
         ArrayList<NoteGroupable> selectedNotes = getSelectedNotes();
-        cutNotes(selectedNotes);
-        CutAction cutAction = new CutAction(selectedNotes, this);
+        notesClipboardManager.cutNotes(selectedNotes);
+        CutAction cutAction = new CutAction(selectedNotes, this, notesClipboardManager);
         compositionActionManager.actionCompleted(cutAction);
     }
 
+    /**
+     * Pastes the notes on the clipboard to the composition
+     */
     public void pasteNotes() {
-        Object content = Clipboard.getSystemClipboard().getContent(notesClipboardKey);
-        if (content != null) {
-            deselectAllNotes();
-            ArrayList<NoteGroupable> notes = (ArrayList<NoteGroupable>)content;
-            ArrayList<NoteGroupable> pastedNotes = new ArrayList<>();
-            for (NoteGroupable noteGroupable : notes) {
-                NoteGroupable noteClone = noteGroupable.clone();
-                addGroupable(noteClone);
-                pastedNotes.add(noteClone);
-            }
-            PasteAction pasteAction = new PasteAction(pastedNotes, this);
-            compositionActionManager.actionCompleted(pasteAction);
-        }
+        notesClipboardManager.pasteNotes();
     }
 
+
+    /**
+     * Whether there are notes on the clipboard currently
+     * @return Whether or not there are notes on the clipboard
+     */
     public boolean isClipboardEmpty() {
-        return Clipboard.getSystemClipboard().getContent(notesClipboardKey) == null;
+        return notesClipboardManager.isClipboardEmpty();
     }
 
     /**
