@@ -17,6 +17,10 @@
         <MenuItem accelerator="Shortcut+U" onAction="#handleUngroup" text="Ungroup" fx:id="ungroupItem"/>
         <MenuItem accelerator="Shortcut+Z" onAction="#handleUndo" text="Undo" fx:id="undoItem"/>
         <MenuItem accelerator="Shift+Shortcut+Z" onAction="#handleRedo" text="Redo" fx:id="redoItem"/>
+        <MenuItem accelerator="Shortcut+C" onAction="#handleCopy" text="Copy" fx:id="copyItem"/>
+        <MenuItem accelerator="Shortcut+X" onAction="#handleCut" text="Cut" fx:id="cutItem"/>
+        <MenuItem accelerator="Shortcut+V" onAction="#handlePaste" text="Paste" fx:id="pasteItem"/>
+
     </Menu>
     <Menu text="Actions">
         <MenuItem accelerator="Shortcut+P" onAction="#handlePlayMidi" text="Play" fx:id="playItem"/>

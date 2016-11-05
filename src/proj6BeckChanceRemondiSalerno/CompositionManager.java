@@ -181,12 +181,8 @@ public class CompositionManager {
      * @return
      */
     public Optional<NoteGroup> createNoteGroupWithSelectedNotes() {
-        ArrayList<NoteGroupable> notesToGroup = new ArrayList<>();
-        for (NoteGroupable note : getGroupables()) {
-            if (note.isSelected()) {
-                notesToGroup.add(note);
-            }
-        }
+        ArrayList<NoteGroupable> notesToGroup = getSelectedNotes();
+
         Optional<NoteGroup> group = group(notesToGroup);
         if (group.isPresent()) {
             GroupAction groupAction = new GroupAction(group.get(), this);
@@ -442,6 +438,16 @@ public class CompositionManager {
         noteGroupableRectsMap.put(noteGroupable, groupPane);
         compositionController.addNotePane(groupPane);
         selectGroupable(noteGroupable);
+    }
+
+    public ArrayList<NoteGroupable> getSelectedNotes() {
+        ArrayList<NoteGroupable> selectedNotes = new ArrayList<>();
+        for (NoteGroupable noteGroupable : getGroupables()) {
+            if (noteGroupable.isSelected()) {
+                selectedNotes.add(noteGroupable);
+            }
+        }
+        return selectedNotes;
     }
 
     /**

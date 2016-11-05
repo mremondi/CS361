@@ -12,6 +12,7 @@ package proj6BeckChanceRemondiSalerno.Controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.Clipboard;
 import proj6BeckChanceRemondiSalerno.CompositionManager;
 import proj6BeckChanceRemondiSalerno.Models.NoteGroup;
 import proj6BeckChanceRemondiSalerno.Models.NoteGroupable;
@@ -60,10 +61,29 @@ public class MenuBarController {
     private MenuItem playItem;
 
     /**
-     * The play menu item
+     * The select all menu item
      */
     @FXML
     private MenuItem selectAllItem;
+
+    /**
+     * The copy menu item
+     */
+    @FXML
+    private MenuItem copyItem;
+
+    /**
+     * The cut menu item
+     */
+    @FXML
+    private MenuItem cutItem;
+
+    /**
+     * The paste menu item
+     */
+    @FXML
+    private MenuItem pasteItem;
+
 
     /**
      * The composition manager for forwarded menu actions to
@@ -181,23 +201,34 @@ public class MenuBarController {
         updateEnabledMenuItems();
     }
 
+
+    @FXML protected  void handleCut(ActionEvent event) {
+
+    }
+
+
+    @FXML protected  void handleCopy(ActionEvent event) {
+
+    }
+
+    @FXML protected  void handlePaste(ActionEvent event) {
+
+    }
+
     /**
      * Updates the disabled state of relevant menu items
      */
     public void updateEnabledMenuItems() {
-        ArrayList<NoteGroupable> selectedNotes = new ArrayList<>();
+        ArrayList<NoteGroupable> selectedNotes = compositionManager.getSelectedNotes();
         Set<NoteGroupable> allNotes = compositionManager.getGroupables();
-        for (NoteGroupable note : allNotes) {
-            if (note.isSelected()) {
-                selectedNotes.add(note);
-            }
-        }
-
         deleteItem.setDisable(selectedNotes.isEmpty());
         groupItem.setDisable(selectedNotes.size() < 2);
         ungroupItem.setDisable(!(selectedNotes.size() == 1  && selectedNotes.get(0) instanceof NoteGroup));
         selectAllItem.setDisable(allNotes.isEmpty());
         playItem.setDisable(allNotes.isEmpty());
+        copyItem.setDisable(selectedNotes.isEmpty());
+        cutItem.setDisable(selectedNotes.isEmpty());
+        //pasteItem.setDisable(Clipboard.getSystemClipboard().);
     }
 
 }
