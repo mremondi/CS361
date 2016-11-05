@@ -18,14 +18,16 @@ import javafx.scene.input.DataFormat;
 import proj6BeckChanceRemondiSalerno.CompositionManager;
 import proj6BeckChanceRemondiSalerno.Models.NoteGroup;
 import proj6BeckChanceRemondiSalerno.Models.NoteGroupable;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by mremondi on 10/21/16.
+ * This class models a controller for the menu bar.
+ *
+ * @author Graham Chance
+ * @author Charlie Beck
+ * @author Ryan Salerno
+ * @author Mike Remondi
  */
 public class MenuBarController {
     /**
