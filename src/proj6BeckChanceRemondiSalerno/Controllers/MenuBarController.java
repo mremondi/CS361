@@ -15,6 +15,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
+import proj6BeckChanceRemondiSalerno.CompositionActions.PasteAction;
 import proj6BeckChanceRemondiSalerno.CompositionManager;
 import proj6BeckChanceRemondiSalerno.Models.NoteGroup;
 import proj6BeckChanceRemondiSalerno.Models.NoteGroupable;
@@ -91,7 +92,6 @@ public class MenuBarController {
     private MenuItem pasteItem;
 
 
-    final private DataFormat notesClipboardKey = new DataFormat("notes");
 
 
     /**
@@ -212,36 +212,19 @@ public class MenuBarController {
 
 
     @FXML protected  void handleCut(ActionEvent event) {
-        copySelectedNotes();
-        compositionManager.deleteSelectedGroupables();
+        compositionManager.cutSelectedNotes();
         updateEnabledMenuItems();
     }
 
 
     @FXML protected  void handleCopy(ActionEvent event) {
-        copySelectedNotes();
-        updateEnabledMenuItems();
-    }
-
-    private void copySelectedNotes() {
-        ClipboardContent content = new ClipboardContent();
-        content.put(notesClipboardKey, compositionManager.getSelectedNotes());
-        Clipboard.getSystemClipboard().setContent(content);
-        System.out.println("Copying " + compositionManager.getSelectedNotes().size() + " notes");
+        compositionManager.copySelectedNotes();
         updateEnabledMenuItems();
     }
 
 
     @FXML protected  void handlePaste(ActionEvent event) {
-        Object content = Clipboard.getSystemClipboard().getContent(notesClipboardKey);
-        if (content != null) {
-            compositionManager.deselectAllNotes();
-            ArrayList<NoteGroupable> notes = (ArrayList<NoteGroupable>)content;
-            System.out.println("Pasting " + notes.size() + " notes");
-            for (NoteGroupable noteGroupable : notes) {
-                compositionManager.addGroupable(noteGroupable.clone());
-            }
-        }
+        compositionManager.pasteNotes();
         updateEnabledMenuItems();
     }
 
@@ -258,6 +241,6 @@ public class MenuBarController {
         playItem.setDisable(allNotes.isEmpty());
         copyItem.setDisable(selectedNotes.isEmpty());
         cutItem.setDisable(selectedNotes.isEmpty());
-        pasteItem.setDisable(Clipboard.getSystemClipboard().getContent(notesClipboardKey) == null);
+        pasteItem.setDisable(compositionManager.isClipboardEmpty());
     }
 }

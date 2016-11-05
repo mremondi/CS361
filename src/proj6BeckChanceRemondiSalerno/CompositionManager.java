@@ -9,6 +9,9 @@
 package proj6BeckChanceRemondiSalerno;
 
 import javafx.geometry.Bounds;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import proj6BeckChanceRemondiSalerno.CompositionActions.*;
@@ -69,6 +72,9 @@ public class CompositionManager {
      * The menu bar controller that handles menu actions
      */
     private MenuBarController menuBarController;
+
+    final private DataFormat notesClipboardKey = new DataFormat("notes");
+
 
     /**
      * constructor
@@ -431,8 +437,50 @@ public class CompositionManager {
 
     public void deselectAllNotes() {
         for (NoteGroupable noteGroupable: getGroupables()) {
-            noteGroupable.setSelected(false);
+            deselectNote(noteGroupable);
         }
+    }
+
+    public void cutNotes(ArrayList<NoteGroupable> notes) {
+        copyNotes(notes);
+        deleteGroupables(notes);
+    }
+
+    public void copyNotes(ArrayList<NoteGroupable> notes) {
+        ClipboardContent content = new ClipboardContent();
+        content.put(notesClipboardKey, notes);
+        Clipboard.getSystemClipboard().setContent(content);
+    }
+
+    public void copySelectedNotes() {
+        copyNotes(getSelectedNotes());
+    }
+
+    public void cutSelectedNotes() {
+        ArrayList<NoteGroupable> selectedNotes = getSelectedNotes();
+        cutNotes(selectedNotes);
+        CutAction cutAction = new CutAction(selectedNotes, this);
+        compositionActionManager.actionCompleted(cutAction);
+    }
+
+    public void pasteNotes() {
+        Object content = Clipboard.getSystemClipboard().getContent(notesClipboardKey);
+        if (content != null) {
+            deselectAllNotes();
+            ArrayList<NoteGroupable> notes = (ArrayList<NoteGroupable>)content;
+            ArrayList<NoteGroupable> pastedNotes = new ArrayList<>();
+            for (NoteGroupable noteGroupable : notes) {
+                NoteGroupable noteClone = noteGroupable.clone();
+                addGroupable(noteClone);
+                pastedNotes.add(noteClone);
+            }
+            PasteAction pasteAction = new PasteAction(pastedNotes, this);
+            compositionActionManager.actionCompleted(pasteAction);
+        }
+    }
+
+    public boolean isClipboardEmpty() {
+        return Clipboard.getSystemClipboard().getContent(notesClipboardKey) == null;
     }
 
     /**
