@@ -1,3 +1,12 @@
+/*
+ * File: PasteAction.java
+ * Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
+ * Class: CS361
+ * Project: 7
+ * Due Date: November 10, 2016
+ */
+
+
 package proj7BeckChanceRemondiSalerno.CompositionActions;
 
 import proj7BeckChanceRemondiSalerno.CompositionManager;
