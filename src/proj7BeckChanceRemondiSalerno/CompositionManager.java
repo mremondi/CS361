@@ -206,10 +206,7 @@ public class CompositionManager {
         if (notesToGroup.size() < 2) {
             return Optional.empty();
         }
-        for (NoteGroupable noteGroupable : notesToGroup) {
-            compositionController.removeNotePane(noteGroupableRectsMap.get(noteGroupable));
-            noteGroupableRectsMap.remove(noteGroupable);
-        }
+        deleteGroupables(notesToGroup);
         NoteGroup group = new NoteGroup(notesToGroup);
         addGroupable(group);
         return Optional.of(group);

@@ -10,6 +10,7 @@ package proj7BeckChanceRemondiSalerno.CompositionActions;
 
 import proj7BeckChanceRemondiSalerno.CompositionManager;
 import proj7BeckChanceRemondiSalerno.Models.NoteGroup;
+import proj7BeckChanceRemondiSalerno.Models.NoteGroupable;
 
 /**
  * This class implements the CompositionAction interface and represents the action
@@ -40,7 +41,10 @@ public class GroupAction extends CompositionAction {
      * Redoes the grouping of the specified NoteGroup.
      */
     public void redo() {
-        group = compositionManager.group(group.getNoteGroupables()).get();
+        for (NoteGroupable noteGroupable: group.getNoteGroupables()) {
+            compositionManager.deleteGroupable(noteGroupable);
+        }
+        compositionManager.addGroupable(group);
     }
 
     /**

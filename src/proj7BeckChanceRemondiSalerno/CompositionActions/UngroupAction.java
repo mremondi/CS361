@@ -11,6 +11,7 @@ package proj7BeckChanceRemondiSalerno.CompositionActions;
 
 import proj7BeckChanceRemondiSalerno.CompositionManager;
 import proj7BeckChanceRemondiSalerno.Models.NoteGroup;
+import proj7BeckChanceRemondiSalerno.Models.NoteGroupable;
 
 /**
  * This class implements the CompositionAction interface and represents the action
@@ -48,7 +49,10 @@ public class UngroupAction extends CompositionAction {
      * Undoes the ungrouping of notes by regrouping them.
      */
     public void undo() {
-        group = compositionManager.group(group.getNoteGroupables()).get();
+        for (NoteGroupable noteGroupable: group.getNoteGroupables()) {
+            compositionManager.deleteGroupable(noteGroupable);
+        }
+        compositionManager.addGroupable(group);
     }
 
 }
