@@ -236,7 +236,6 @@ public class CompositionManager {
     public void resizeNotes(ArrayList<NoteGroupable> notes, double dx) {
         for (NoteGroupable note : notes) {
             compositionController.resizeNote(note, dx);
-            note.changeNoteDurations(dx);
         }
     }
 
