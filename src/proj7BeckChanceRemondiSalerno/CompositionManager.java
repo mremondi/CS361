@@ -596,4 +596,52 @@ public class CompositionManager {
     public void actionCompleted(CompositionAction action){
         this.compositionActionManager.actionCompleted(action);
     }
+
+    /**
+     * Returns an Observable boolean of whether there are any notes selected.
+     *
+     * @return a SimpleBooleanProperty indicator
+     */
+    public SimpleBooleanProperty isSelectedNotesEmpty(){
+        return new SimpleBooleanProperty(getSelectedNotes().isEmpty());
+    }
+
+    /**
+     * Returns an Observable boolean of whether the selected notes are groupable.
+     *
+     * @return a SimpleBooleanProperty indicator
+     */
+    public SimpleBooleanProperty isSelectedNotesGroupable(){
+        System.out.println(getSelectedNotes().size());
+        return new SimpleBooleanProperty(getSelectedNotes().size() < 2);
+    }
+
+    /**
+     * Returns an Observable boolean of whether the selected notes
+     * are able to be ungrouped
+     *
+     * @return a SimpleBooleanProperty indicator
+     */
+    public SimpleBooleanProperty isSelectedNotesUngroupable(){
+        return new SimpleBooleanProperty(!(getSelectedNotes().size() == 1
+                && getSelectedNotes().get(0) instanceof NoteGroup));
+    }
+
+    /**
+     * Returns an Observable boolean of whether there are any notes on the composition
+     *
+     * @return a SimpleBooleanProperty indicator
+     */
+    public SimpleBooleanProperty areThereNotes(){
+        return new SimpleBooleanProperty(getGroupables().isEmpty());
+    }
+
+    /**
+     * Returns an Observable boolean of whether the clipboard is empty.
+     *
+     * @return a SimpleBooleanProperty indicator
+     */
+    public SimpleBooleanProperty bindIsClipboardEmpty(){
+        return new SimpleBooleanProperty(isClipboardEmpty());
+    }
 }

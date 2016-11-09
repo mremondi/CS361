@@ -13,11 +13,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import proj7BeckChanceRemondiSalerno.CompositionManager;
-import proj7BeckChanceRemondiSalerno.Models.NoteGroup;
-import proj7BeckChanceRemondiSalerno.Models.NoteGroupable;
-
-import java.util.ArrayList;
-import java.util.Set;
 
 /**
  * This class models a controller for the menu bar.
@@ -106,7 +101,7 @@ public class MenuBarController {
      */
     public void handleSelectAll() {
         compositionManager.selectAllNotes();
-
+        updateEnabledMenuItems();
     }
 
     /**
@@ -205,17 +200,14 @@ public class MenuBarController {
      * Updates the disabled state of relevant menu items
      */
     public void updateEnabledMenuItems() {
-        ArrayList<NoteGroupable> selectedNotes = compositionManager.getSelectedNotes();
-        Set<NoteGroupable> allNotes = compositionManager.getGroupables();
-        deleteItem.setDisable(selectedNotes.isEmpty());
-        groupItem.setDisable(selectedNotes.size() < 2);
-        ungroupItem.setDisable(!(selectedNotes.size() == 1  && selectedNotes.get(0) instanceof NoteGroup));
-        selectAllItem.setDisable(allNotes.isEmpty());
-        playItem.setDisable(allNotes.isEmpty());
-        copyItem.setDisable(selectedNotes.isEmpty());
-        cutItem.setDisable(selectedNotes.isEmpty());
-        pasteItem.setDisable(compositionManager.isClipboardEmpty());
-
+        deleteItem.disableProperty().bind(compositionManager.isSelectedNotesEmpty());
+        groupItem.disableProperty().bind(compositionManager.isSelectedNotesGroupable());
+        ungroupItem.disableProperty().bind(compositionManager.isSelectedNotesUngroupable());
+        selectAllItem.disableProperty().bind(compositionManager.areThereNotes());
+        playItem.disableProperty().bind(compositionManager.areThereNotes());
+        copyItem.disableProperty().bind(compositionManager.isSelectedNotesEmpty());
+        cutItem.disableProperty().bind(compositionManager.isSelectedNotesEmpty());
+        pasteItem.disableProperty().bind(compositionManager.bindIsClipboardEmpty());
         undoItem.disableProperty().bind(compositionManager.isUndoEmpty());
         redoItem.disableProperty().bind(compositionManager.isRedoEmpty());
     }
