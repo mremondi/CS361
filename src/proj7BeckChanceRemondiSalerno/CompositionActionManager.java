@@ -57,7 +57,7 @@ public class CompositionActionManager {
     /**
      * Tells whether there are any actions in the Undo Stack.
      *
-     * @return a boolean indicator
+     * @return a boolean property to bind to
      */
     public SimpleBooleanProperty isUndoEmpty(){
         return new SimpleBooleanProperty(this.undoActions.empty());
@@ -66,7 +66,7 @@ public class CompositionActionManager {
     /**
      * Tells whether there are any actions in the Redo Stack.
      *
-     * @return a boolean indicator
+     * @return a boolean property to bind to
      */
     public SimpleBooleanProperty isRedoEmpty(){
         return new SimpleBooleanProperty(this.redoActions.empty());

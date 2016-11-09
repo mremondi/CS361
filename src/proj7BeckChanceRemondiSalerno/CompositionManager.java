@@ -8,6 +8,7 @@
 
 package proj7BeckChanceRemondiSalerno;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Bounds;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -122,14 +123,6 @@ public class CompositionManager {
      */
     public MenuBarController getMenuBarController() {
         return menuBarController;
-    }
-
-    /**
-     * Getter for the composition action manager
-     * @return The composition action manager
-     */
-    public CompositionActionManager getCompositionActionManager() {
-        return compositionActionManager;
     }
 
     /**
@@ -442,8 +435,6 @@ public class CompositionManager {
         }
     }
 
-
-
     /**
      * Copies selected notes to the clipboard
      */
@@ -488,6 +479,11 @@ public class CompositionManager {
         selectGroupable(noteGroupable);
     }
 
+    /**
+     * Gets the currently selected notes.
+     *
+     * @return an ArrayList of NoteGroupables that are selected
+     */
     public ArrayList<NoteGroupable> getSelectedNotes() {
         ArrayList<NoteGroupable> selectedNotes = new ArrayList<>();
         for (NoteGroupable noteGroupable : getGroupables()) {
@@ -560,5 +556,44 @@ public class CompositionManager {
         }
     }
 
+    /**
+     * Asks the ActionManager whether the undo stack is empty
+     *
+     * @return a boolean property to bind to
+     */
+    public SimpleBooleanProperty isUndoEmpty(){
+        return this.compositionActionManager.isUndoEmpty();
+    }
 
+    /**
+     * Asks the ActionManager whether the redo stack is empty.
+     *
+     * @return a boolean property to bind to
+     */
+    public SimpleBooleanProperty isRedoEmpty(){
+        return this.compositionActionManager.isRedoEmpty();
+    }
+
+    /**
+     * Tells the ActionManager to redo the last undone action.
+     */
+    public void redoLastUndoneAction(){
+        this.compositionActionManager.redoLastUndoneAction();
+    }
+
+    /**
+     * Tells the ActionManager to undo the last action.
+     */
+    public void undoLastAction(){
+        this.compositionActionManager.undoLastAction();
+    }
+
+    /**
+     * Tells the action manager CompositionAction has been completed.
+     *
+     * @param action The completed CompositionAction
+     */
+    public void actionCompleted(CompositionAction action){
+        this.compositionActionManager.actionCompleted(action);
+    }
 }

@@ -74,7 +74,7 @@ public class NotesClipboardManager {
                 pastedNotes.add(noteClone);
             }
             PasteAction pasteAction = new PasteAction(pastedNotes, compositionManager);
-            compositionManager.getCompositionActionManager().actionCompleted(pasteAction);
+            compositionManager.actionCompleted(pasteAction);
         }
     }
 

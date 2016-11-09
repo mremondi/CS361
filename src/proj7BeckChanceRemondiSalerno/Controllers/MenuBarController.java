@@ -170,7 +170,7 @@ public class MenuBarController {
      * @param event
      */
     @FXML protected  void handleRedo(ActionEvent event) {
-        compositionManager.getCompositionActionManager().redoLastUndoneAction();
+        compositionManager.redoLastUndoneAction();
         updateEnabledMenuItems();
     }
 
@@ -179,7 +179,7 @@ public class MenuBarController {
      * @param event
      */
     @FXML protected  void handleUndo(ActionEvent event) {
-        compositionManager.getCompositionActionManager().undoLastAction();
+        compositionManager.undoLastAction();
         updateEnabledMenuItems();
     }
 
@@ -216,7 +216,7 @@ public class MenuBarController {
         cutItem.setDisable(selectedNotes.isEmpty());
         pasteItem.setDisable(compositionManager.isClipboardEmpty());
 
-        undoItem.disableProperty().bind(compositionManager.getCompositionActionManager().isUndoEmpty());
-        redoItem.disableProperty().bind(compositionManager.getCompositionActionManager().isRedoEmpty());
+        undoItem.disableProperty().bind(compositionManager.isUndoEmpty());
+        redoItem.disableProperty().bind(compositionManager.isRedoEmpty());
     }
 }

@@ -283,7 +283,7 @@ public class CompositionController {
             ArrayList<NoteGroupable> selected = compositionManager.selectNotesIntersectingRectangle(bounds);
             if (selected.size() > 0) {
                 CompositionAction action = new SelectAction(selected, compositionManager);
-                compositionManager.getCompositionActionManager().actionCompleted(action);
+                compositionManager.actionCompleted(action);
             }
         }
         isResizing = false;
@@ -325,7 +325,7 @@ public class CompositionController {
         MoveAction moveAction = new MoveAction(movedNotes,
                 lastDragLocation.getX() - dragStartLocation.getX(),
                 lastDragLocation.getY() - dragStartLocation.getY(), compositionManager);
-        compositionManager.getCompositionActionManager().actionCompleted(moveAction);
+        compositionManager.actionCompleted(moveAction);
     }
 
     /**
@@ -339,7 +339,7 @@ public class CompositionController {
             }
         }
         ResizeAction resizeAction = new ResizeAction(resizedNotes, lastDragLocation.getX() - dragStartLocation.getX(), compositionManager);
-        compositionManager.getCompositionActionManager().actionCompleted(resizeAction);
+        compositionManager.actionCompleted(resizeAction);
     }
 
     /**
@@ -359,13 +359,13 @@ public class CompositionController {
             if (noteAtClickLocation.get().isSelected()){
                 compositionManager.deselectNote(noteAtClickLocation.get());
                 CompositionAction action = new DeselectAction(noteAtClickLocation.get(), compositionManager);
-                compositionManager.getCompositionActionManager().actionCompleted(action);
+                compositionManager.actionCompleted(action);
             }
             // if it is not selected, select it
             else {
                 compositionManager.selectGroupable(noteAtClickLocation.get());
                 CompositionAction action = new SelectAction(noteAtClickLocation.get(), compositionManager);
-                compositionManager.getCompositionActionManager().actionCompleted(action);
+                compositionManager.actionCompleted(action);
             }
         }
         // add a new note
@@ -390,7 +390,7 @@ public class CompositionController {
             if (!noteAtClickLocation.get().isSelected()){
                 compositionManager.clearSelectedNotes();
                 SelectAction selectAction = new SelectAction(noteAtClickLocation.get(), compositionManager);
-                compositionManager.getCompositionActionManager().actionCompleted(selectAction);
+                compositionManager.actionCompleted(selectAction);
                 compositionManager.selectGroupable(noteAtClickLocation.get());
             }
         } else {
