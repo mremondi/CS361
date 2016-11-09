@@ -612,7 +612,6 @@ public class CompositionManager {
      * @return a SimpleBooleanProperty indicator
      */
     public SimpleBooleanProperty isSelectedNotesGroupable(){
-        System.out.println(getSelectedNotes().size());
         return new SimpleBooleanProperty(getSelectedNotes().size() < 2);
     }
 
