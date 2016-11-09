@@ -15,6 +15,7 @@ import javafx.scene.control.MenuItem;
 import proj7BeckChanceRemondiSalerno.CompositionManager;
 import proj7BeckChanceRemondiSalerno.Models.NoteGroup;
 import proj7BeckChanceRemondiSalerno.Models.NoteGroupable;
+
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -87,9 +88,6 @@ public class MenuBarController {
     @FXML
     private MenuItem pasteItem;
 
-
-
-
     /**
      * The composition manager for forwarded menu actions to
      */
@@ -101,28 +99,7 @@ public class MenuBarController {
      */
     public void setCompositionManager(CompositionManager compositionManager) {
         this.compositionManager = compositionManager;
-        this.compositionManager.getCompositionActionManager().setMenuBarController(this);
     }
-
-    /**
-     * Enables/disables the redo menu item.
-     *
-     * @param disabled a boolean indicator of whether it should be disabled
-     */
-    public void setRedoDisabled(boolean disabled) {
-        redoItem.setDisable(disabled);
-    }
-
-    /**
-     * Enables/disables the undo menu item.
-     *
-     * @param disabled a boolean indicator of whether it should be disabled
-     */
-    public void setUndoDisabled(boolean disabled) {
-        undoItem.setDisable(disabled);
-        updateEnabledMenuItems();
-    }
-
 
     /**
      * Sets all of the notes to be selected and adds them to the selected list.
@@ -238,5 +215,8 @@ public class MenuBarController {
         copyItem.setDisable(selectedNotes.isEmpty());
         cutItem.setDisable(selectedNotes.isEmpty());
         pasteItem.setDisable(compositionManager.isClipboardEmpty());
+
+        undoItem.disableProperty().bind(compositionManager.getCompositionActionManager().isUndoEmpty());
+        redoItem.disableProperty().bind(compositionManager.getCompositionActionManager().isRedoEmpty());
     }
 }

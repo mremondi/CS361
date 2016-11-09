@@ -8,8 +8,9 @@
 
 package proj7BeckChanceRemondiSalerno;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import proj7BeckChanceRemondiSalerno.CompositionActions.CompositionAction;
-import proj7BeckChanceRemondiSalerno.Controllers.MenuBarController;
+
 import java.util.Stack;
 
 /**
@@ -33,19 +34,6 @@ public class CompositionActionManager {
     private  Stack<CompositionAction> undoActions = new Stack<>();
 
     /**
-     * The controller for the MenuBar
-     */
-    private MenuBarController menuBarController;
-
-    /**
-     * Setter for the menuBarController
-     * @param menuBarController
-     */
-    public void setMenuBarController(MenuBarController menuBarController) {
-        this.menuBarController = menuBarController;
-    }
-
-    /**
      * Adds the given CompositionAction to the undoActions stack and
      * empties the redo stack.
      *
@@ -54,8 +42,6 @@ public class CompositionActionManager {
     public void actionCompleted(CompositionAction action) {
         undoActions.push(action);
         redoActions.removeAllElements();
-        updateRedoUndoDisabled();
-        //System.out.println("completed " + action.getClass());
     }
 
     /**
@@ -66,8 +52,24 @@ public class CompositionActionManager {
         CompositionAction action = undoActions.pop();
         action.undo();
         redoActions.push(action);
-        updateRedoUndoDisabled();
-        //System.out.println("undoing " + action.getClass());
+    }
+
+    /**
+     * Tells whether there are any actions in the Undo Stack.
+     *
+     * @return a boolean indicator
+     */
+    public SimpleBooleanProperty isUndoEmpty(){
+        return new SimpleBooleanProperty(this.undoActions.empty());
+    }
+
+    /**
+     * Tells whether there are any actions in the Redo Stack.
+     *
+     * @return a boolean indicator
+     */
+    public SimpleBooleanProperty isRedoEmpty(){
+        return new SimpleBooleanProperty(this.redoActions.empty());
     }
 
     /**
@@ -77,16 +79,5 @@ public class CompositionActionManager {
         CompositionAction action = redoActions.pop();
         action.redo();
         undoActions.push(action);
-        updateRedoUndoDisabled();
-        //System.out.println("redoing " + action.getClass());
-    }
-
-    /**
-     * Sets the menu options for redo/undo to disabled if there is nothing
-     * in the respective stack.
-     */
-    private void updateRedoUndoDisabled() {
-        menuBarController.setRedoDisabled(redoActions.empty());
-        menuBarController.setUndoDisabled(undoActions.empty());
     }
 }
