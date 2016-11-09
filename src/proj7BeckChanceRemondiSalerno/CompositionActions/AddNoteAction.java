@@ -11,6 +11,9 @@ package proj7BeckChanceRemondiSalerno.CompositionActions;
 
 import proj7BeckChanceRemondiSalerno.CompositionManager;
 import proj7BeckChanceRemondiSalerno.Models.Note;
+import proj7BeckChanceRemondiSalerno.Models.NoteGroupable;
+
+import java.util.ArrayList;
 
 /**
  * This class implements the CompositionAction interface and represents the action
@@ -28,13 +31,16 @@ public class AddNoteAction extends CompositionAction {
      */
     private Note note;
 
+    private ArrayList<NoteGroupable> deselectedNotes;
+
     /**
      * Constructor
      *
      * @param note takes a note to be added.
      */
-    public AddNoteAction(Note note, CompositionManager compositionManager) {
+    public AddNoteAction(Note note, ArrayList<NoteGroupable> deselectedNotes, CompositionManager compositionManager) {
         this.compositionManager = compositionManager;
+        this.deselectedNotes = deselectedNotes;
         this.note = note;
     }
 
@@ -42,6 +48,9 @@ public class AddNoteAction extends CompositionAction {
      * Redoes the addition of a Note to the Composition.
      */
     public void redo() {
+        for (NoteGroupable note: deselectedNotes) {
+            compositionManager.deselectNote(note);
+        }
         compositionManager.addGroupable(note);
     }
 
@@ -49,6 +58,9 @@ public class AddNoteAction extends CompositionAction {
      * Undoes the addition of a Note to the Composition.
      */
     public void undo() {
+        for (NoteGroupable note: deselectedNotes) {
+            compositionManager.selectGroupable(note);
+        }
         compositionManager.deleteGroupable(note);
     }
 

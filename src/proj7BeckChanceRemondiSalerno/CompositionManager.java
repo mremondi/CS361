@@ -170,10 +170,10 @@ public class CompositionManager {
     public Optional<Note> addNoteToComposition(double xPos, double yPos) {
         if (yPos >= 0 && yPos < 1280) {
             Note note = new Note(xPos, yPos, 100, instrumentPaneController.getCurrentInstrumentIndex());
-            addGroupable(note);
-            selectGroupable(note);
-            AddNoteAction addNoteAction = new AddNoteAction(note, this);
+            AddNoteAction addNoteAction = new AddNoteAction(note, getSelectedNotes(), this);
             compositionActionManager.actionCompleted(addNoteAction);
+            clearSelectedNotes();
+            addGroupable(note);
             selectGroupable(note);
             return Optional.of(note);
         }
@@ -315,8 +315,6 @@ public class CompositionManager {
     public void deselectNote(NoteGroupable noteGroupable){
         noteGroupable.setSelected(false);
         noteGroupableRectsMap.get(noteGroupable).setSelected(false);
-        DeselectAction deselectAction = new DeselectAction(noteGroupable, this); // change
-        this.getCompositionActionManager().actionCompleted(deselectAction);     // change
     }
 
     /**

@@ -386,9 +386,9 @@ public class CompositionController {
     private void handleClickAt(double x, double y) {
         compositionManager.stop();
         Optional<NoteGroupable> noteAtClickLocation = compositionManager.getGroupableAtPoint(x, y);
-        compositionManager.clearSelectedNotes();
         if (noteAtClickLocation.isPresent()) {
             if (!noteAtClickLocation.get().isSelected()){
+                compositionManager.clearSelectedNotes();
                 SelectAction selectAction = new SelectAction(noteAtClickLocation.get(), compositionManager);
                 compositionManager.getCompositionActionManager().actionCompleted(selectAction);
                 compositionManager.selectGroupable(noteAtClickLocation.get());
