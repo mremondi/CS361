@@ -10,7 +10,6 @@ package proj7BeckChanceRemondiSalerno;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import proj7BeckChanceRemondiSalerno.CompositionActions.CompositionAction;
-
 import java.util.Stack;
 
 /**
@@ -33,6 +32,16 @@ public class CompositionActionManager {
      */
     private  Stack<CompositionAction> undoActions = new Stack<>();
 
+    private SimpleBooleanProperty undoEmptyProperty = new SimpleBooleanProperty();
+
+    private SimpleBooleanProperty redoEmptyProperty = new SimpleBooleanProperty();
+
+    public CompositionActionManager() {
+        super();
+        undoEmptyProperty.set(true);
+        redoEmptyProperty.set(true);
+    }
+
     /**
      * Adds the given CompositionAction to the undoActions stack and
      * empties the redo stack.
@@ -52,24 +61,7 @@ public class CompositionActionManager {
         CompositionAction action = undoActions.pop();
         action.undo();
         redoActions.push(action);
-    }
-
-    /**
-     * Tells whether there are any actions in the Undo Stack.
-     *
-     * @return a boolean property to bind to
-     */
-    public SimpleBooleanProperty isUndoEmpty(){
-        return new SimpleBooleanProperty(this.undoActions.empty());
-    }
-
-    /**
-     * Tells whether there are any actions in the Redo Stack.
-     *
-     * @return a boolean property to bind to
-     */
-    public SimpleBooleanProperty isRedoEmpty(){
-        return new SimpleBooleanProperty(this.redoActions.empty());
+        updateEmptyProperties();
     }
 
     /**
@@ -79,5 +71,19 @@ public class CompositionActionManager {
         CompositionAction action = redoActions.pop();
         action.redo();
         undoActions.push(action);
+        updateEmptyProperties();
+    }
+
+    private void updateEmptyProperties() {
+        redoEmptyProperty.set(redoActions.isEmpty());
+        undoEmptyProperty.set(undoActions.isEmpty());
+    }
+
+    public SimpleBooleanProperty getUndoEmptyProperty() {
+        return undoEmptyProperty;
+    }
+
+    public SimpleBooleanProperty getRedoEmptyProperty() {
+        return redoEmptyProperty;
     }
 }

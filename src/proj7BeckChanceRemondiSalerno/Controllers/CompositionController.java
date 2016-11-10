@@ -372,7 +372,6 @@ public class CompositionController {
         else{
             compositionManager.addNoteToComposition(x, y);
         }
-        compositionManager.getMenuBarController().updateEnabledMenuItems();
     }
 
     /**
@@ -396,7 +395,6 @@ public class CompositionController {
         } else {
             compositionManager.addNoteToComposition(x, y);
         }
-        compositionManager.getMenuBarController().updateEnabledMenuItems();
     }
 
     /**
