@@ -30,14 +30,22 @@ public class CompositionActionManager {
     /**
      * The stack for remembering each CompositionAction for undoing.
      */
-    private  Stack<CompositionAction> undoActions = new Stack<>();
+    private Stack<CompositionAction> undoActions = new Stack<>();
 
+    /**
+     * Observable property for binding to the undo menu item
+     */
     private SimpleBooleanProperty undoEmptyProperty = new SimpleBooleanProperty();
 
+    /**
+     * Observable property for binding to the redo menu item
+     */
     private SimpleBooleanProperty redoEmptyProperty = new SimpleBooleanProperty();
 
+    /**
+     * Constructor
+     */
     public CompositionActionManager() {
-        super();
         undoEmptyProperty.set(true);
         redoEmptyProperty.set(true);
     }
@@ -74,11 +82,19 @@ public class CompositionActionManager {
         updateEmptyProperties();
     }
 
+    /**
+     * Updates the Observables if the stack is empty
+     */
     private void updateEmptyProperties() {
         redoEmptyProperty.set(redoActions.isEmpty());
         undoEmptyProperty.set(undoActions.isEmpty());
     }
 
+    /**
+     * Gets the Undo Observable Property
+     *
+     * @return a SimpleBooleanProperty
+     */
     public SimpleBooleanProperty getUndoEmptyProperty() {
         return undoEmptyProperty;
     }

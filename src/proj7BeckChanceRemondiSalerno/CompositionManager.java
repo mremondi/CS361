@@ -475,7 +475,6 @@ public class CompositionManager {
      */
     public void pasteNotes() {
         notesClipboardManager.pasteNotes();
-        System.out.println();
     }
 
 
