@@ -9,6 +9,7 @@
 
 package proj7BeckChanceRemondiSalerno;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
@@ -18,7 +19,13 @@ import proj7BeckChanceRemondiSalerno.Models.NoteGroupable;
 import java.util.ArrayList;
 
 /**
- * Created by Graham on 11/5/16.
+ *
+ * This class models a manager for cutting, copying, and pasting notes
+ *
+ * @author Graham Chance
+ * @author Charlie Beck
+ * @author Ryan Salerno
+ * @author Mike Remondi
  */
 public class NotesClipboardManager {
 
@@ -33,10 +40,16 @@ public class NotesClipboardManager {
     final private DataFormat notesClipboardKey = new DataFormat("notes");
 
     /**
+     * The property for the clipboard's empty state
+     */
+    private SimpleBooleanProperty clipboardEmptyProperty = new SimpleBooleanProperty();
+
+    /**
      * Constructor
      * @param compositionManager The composition manager
      */
     NotesClipboardManager(CompositionManager compositionManager) {
+        clipboardEmptyProperty.set(true);
         this.compositionManager = compositionManager;
     }
 
@@ -47,6 +60,7 @@ public class NotesClipboardManager {
     public void cutNotes(ArrayList<NoteGroupable> notes) {
         copyNotes(notes);
         compositionManager.deleteGroupables(notes);
+        clipboardEmptyProperty.set(false);
     }
 
     /**
@@ -57,6 +71,7 @@ public class NotesClipboardManager {
         ClipboardContent content = new ClipboardContent();
         content.put(notesClipboardKey, notes);
         Clipboard.getSystemClipboard().setContent(content);
+        clipboardEmptyProperty.set(false);
     }
 
     /**
@@ -78,12 +93,13 @@ public class NotesClipboardManager {
         }
     }
 
+
     /**
-     * Whether there are notes on the clipboard currently
-     * @return Whether or not there are notes on the clipboard
+     * Getter for clipboardEmptyProperty
+     * @return clipboardEmptyProperty
      */
-    public boolean isClipboardEmpty() {
-        return Clipboard.getSystemClipboard().getContent(notesClipboardKey) == null;
+    public SimpleBooleanProperty getClipboardEmptyProperty() {
+        return clipboardEmptyProperty;
     }
 
 

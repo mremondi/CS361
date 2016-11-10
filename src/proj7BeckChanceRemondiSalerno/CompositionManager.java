@@ -8,7 +8,13 @@
 
 package proj7BeckChanceRemondiSalerno;
 
+
+import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleMapProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.MapChangeListener;
+import javafx.collections.ObservableMap;
 import javafx.geometry.Bounds;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -38,7 +44,7 @@ public class CompositionManager {
     /**
      * The map for matching note models to their views
      */
-    private HashMap<NoteGroupable, NoteGroupablePane> noteGroupableRectsMap = new HashMap<>();
+    private ObservableMap<NoteGroupable, NoteGroupablePane> noteGroupableRectsMap = FXCollections.observableHashMap();
 
     /**
      * The controller for the tempo line
@@ -66,9 +72,25 @@ public class CompositionManager {
     private CompositionActionManager compositionActionManager = new CompositionActionManager();
 
     /**
-     * The menu bar controller that handles menu actions
+     * The property for the notes map
      */
-    private MenuBarController menuBarController;
+    private SimpleMapProperty<NoteGroupable, NoteGroupablePane> notesMapProperty = new SimpleMapProperty<>();
+
+    /**
+     * The property for whether nothing is selected
+     */
+    private SimpleBooleanProperty isNothingSelectedProperty = new SimpleBooleanProperty();
+
+    /**
+     * The property for whether a group action can occur
+     */
+    private SimpleBooleanProperty cannotGroupProperty = new SimpleBooleanProperty();
+
+    /**
+     * The property for whether an ungroup action can occur
+     */
+    private SimpleBooleanProperty cannotUngroupProperty = new SimpleBooleanProperty();
+
 
     /**
      * Manager for copying, cutting, and pasting notes
@@ -81,6 +103,16 @@ public class CompositionManager {
      */
     public CompositionManager() {
         notesClipboardManager = new NotesClipboardManager(this);
+        notesMapProperty.set(noteGroupableRectsMap);
+        isNothingSelectedProperty.set(true);
+        cannotUngroupProperty.set(true);
+        cannotGroupProperty.set(true);
+        notesMapProperty.addListener(new MapChangeListener() {
+            @Override
+            public void onChanged(Change change) {
+                updateProperties();
+            }
+        });
     }
 
 
@@ -109,21 +141,6 @@ public class CompositionManager {
         this.compositionController = compositionController;
     }
 
-    /**
-     * Setter for the menu bar controller
-     * @param menuBarController The new menu bar controller
-     */
-    public void setMenuBarController(MenuBarController menuBarController) {
-        this.menuBarController = menuBarController;
-    }
-
-    /**
-     * Getter for the menu bar controller
-     * @return the menu bar controller
-     */
-    public MenuBarController getMenuBarController() {
-        return menuBarController;
-    }
 
     /**
      * Maps channel numbers to specific instrument color association
@@ -299,6 +316,7 @@ public class CompositionManager {
     public void selectGroupable(NoteGroupable noteGroupable) {
         noteGroupable.setSelected(true);
         noteGroupableRectsMap.get(noteGroupable).setSelected(true);
+        updateProperties();
     }
 
     /**
@@ -308,6 +326,7 @@ public class CompositionManager {
     public void deselectNote(NoteGroupable noteGroupable){
         noteGroupable.setSelected(false);
         noteGroupableRectsMap.get(noteGroupable).setSelected(false);
+        updateProperties();
     }
 
     /**
@@ -461,14 +480,6 @@ public class CompositionManager {
 
 
     /**
-     * Whether there are notes on the clipboard currently
-     * @return Whether or not there are notes on the clipboard
-     */
-    public boolean isClipboardEmpty() {
-        return notesClipboardManager.isClipboardEmpty();
-    }
-
-    /**
      * Adds a
      * @param noteGroupable
      */
@@ -557,24 +568,6 @@ public class CompositionManager {
     }
 
     /**
-     * Asks the ActionManager whether the undo stack is empty
-     *
-     * @return a boolean property to bind to
-     */
-    public SimpleBooleanProperty isUndoEmpty(){
-        return this.compositionActionManager.isUndoEmpty();
-    }
-
-    /**
-     * Asks the ActionManager whether the redo stack is empty.
-     *
-     * @return a boolean property to bind to
-     */
-    public SimpleBooleanProperty isRedoEmpty(){
-        return this.compositionActionManager.isRedoEmpty();
-    }
-
-    /**
      * Tells the ActionManager to redo the last undone action.
      */
     public void redoLastUndoneAction(){
@@ -597,50 +590,71 @@ public class CompositionManager {
         this.compositionActionManager.actionCompleted(action);
     }
 
+
     /**
-     * Returns an Observable boolean of whether there are any notes selected.
-     *
-     * @return a SimpleBooleanProperty indicator
+     * Getter for emptyProperty of notesMapProperty
+     * @return emptyProperty of notesMapProperty
      */
-    public SimpleBooleanProperty isSelectedNotesEmpty(){
-        return new SimpleBooleanProperty(getSelectedNotes().isEmpty());
+    public ReadOnlyBooleanProperty getNotesEmptyProperty() {
+        return notesMapProperty.emptyProperty();
     }
 
     /**
-     * Returns an Observable boolean of whether the selected notes are groupable.
-     *
-     * @return a SimpleBooleanProperty indicator
+     * Getter for isNothingSelectedProperty
+     * @return isNothingSelectedProperty
      */
-    public SimpleBooleanProperty isSelectedNotesGroupable(){
-        return new SimpleBooleanProperty(getSelectedNotes().size() < 2);
+    public SimpleBooleanProperty getIsNothingSelectedProperty() {
+        return isNothingSelectedProperty;
     }
 
     /**
-     * Returns an Observable boolean of whether the selected notes
-     * are able to be ungrouped
-     *
-     * @return a SimpleBooleanProperty indicator
+     * Getter for clipboardEmptyProperty
+     * @return clipboardEmptyProperty
      */
-    public SimpleBooleanProperty isSelectedNotesUngroupable(){
-        return new SimpleBooleanProperty(!(getSelectedNotes().size() == 1
+    public SimpleBooleanProperty getClipboardEmptyProperty() {
+        return notesClipboardManager.getClipboardEmptyProperty();
+    }
+
+    /**
+     * Getter for undoEmptyProperty
+     * @return undoEmptyProperty
+     */
+    public SimpleBooleanProperty getUndoEmptyProperty() {
+        return compositionActionManager.getUndoEmptyProperty();
+    }
+
+    /**
+     * Getter for redoEmptyProperty
+     * @return redoEmptyProperty
+     */
+    public SimpleBooleanProperty getRedoEmptyProperty() {
+        return compositionActionManager.getRedoEmptyProperty();
+    }
+
+    /**
+     * Getter for cannotGroupProperty
+     * @return cannotGroupProperty
+     */
+    public SimpleBooleanProperty getCannotGroupProperty() {
+        return cannotGroupProperty;
+    }
+
+    /**
+     * Getter for cannotUngroupProperty
+     * @return cannotUngroupProperty
+     */
+    public SimpleBooleanProperty getCannotUngroupProperty() {
+        return cannotUngroupProperty;
+    }
+
+    /**
+     * Updates the composition manager's properties
+     */
+    private void updateProperties() {
+        int selectedCount = getSelectedNotes().size();
+        isNothingSelectedProperty.set(selectedCount==0);
+        cannotGroupProperty.set(selectedCount<2);
+        cannotUngroupProperty.set(!(getSelectedNotes().size() == 1
                 && getSelectedNotes().get(0) instanceof NoteGroup));
-    }
-
-    /**
-     * Returns an Observable boolean of whether there are any notes on the composition
-     *
-     * @return a SimpleBooleanProperty indicator
-     */
-    public SimpleBooleanProperty areThereNotes(){
-        return new SimpleBooleanProperty(getGroupables().isEmpty());
-    }
-
-    /**
-     * Returns an Observable boolean of whether the clipboard is empty.
-     *
-     * @return a SimpleBooleanProperty indicator
-     */
-    public SimpleBooleanProperty bindIsClipboardEmpty(){
-        return new SimpleBooleanProperty(isClipboardEmpty());
     }
 }

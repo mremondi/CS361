@@ -94,6 +94,7 @@ public class MenuBarController {
      */
     public void setCompositionManager(CompositionManager compositionManager) {
         this.compositionManager = compositionManager;
+        this.bindWithCompositionManager(compositionManager);
     }
 
     /**
@@ -101,7 +102,6 @@ public class MenuBarController {
      */
     public void handleSelectAll() {
         compositionManager.selectAllNotes();
-        updateEnabledMenuItems();
     }
 
     /**
@@ -110,7 +110,6 @@ public class MenuBarController {
     @FXML
     public void handleDelete() {
         compositionManager.deleteSelectedGroupables();
-        updateEnabledMenuItems();
     }
 
 
@@ -147,7 +146,6 @@ public class MenuBarController {
     @FXML
     protected void handleGroup(ActionEvent event) {
         compositionManager.createNoteGroupWithSelectedNotes();
-        updateEnabledMenuItems();
     }
 
     /**
@@ -157,7 +155,6 @@ public class MenuBarController {
     @FXML
     protected void handleUngroup(ActionEvent event) {
         compositionManager.ungroupSelectedGroup();
-        updateEnabledMenuItems();
     }
 
     /**
@@ -166,49 +163,55 @@ public class MenuBarController {
      */
     @FXML protected  void handleRedo(ActionEvent event) {
         compositionManager.redoLastUndoneAction();
-        updateEnabledMenuItems();
     }
 
     /**
-     * Unodes the last action
+     * Undoes the last action
      * @param event
      */
     @FXML protected  void handleUndo(ActionEvent event) {
         compositionManager.undoLastAction();
-        updateEnabledMenuItems();
-    }
-
-
-    @FXML protected  void handleCut(ActionEvent event) {
-        compositionManager.cutSelectedNotes();
-        updateEnabledMenuItems();
-    }
-
-
-    @FXML protected  void handleCopy(ActionEvent event) {
-        compositionManager.copySelectedNotes();
-        updateEnabledMenuItems();
-    }
-
-
-    @FXML protected  void handlePaste(ActionEvent event) {
-        compositionManager.pasteNotes();
-        updateEnabledMenuItems();
     }
 
     /**
-     * Updates the disabled state of relevant menu items
+     * Cuts selected notes
+     * @param event
      */
-    public void updateEnabledMenuItems() {
-        deleteItem.disableProperty().bind(compositionManager.isSelectedNotesEmpty());
-        groupItem.disableProperty().bind(compositionManager.isSelectedNotesGroupable());
-        ungroupItem.disableProperty().bind(compositionManager.isSelectedNotesUngroupable());
-        selectAllItem.disableProperty().bind(compositionManager.areThereNotes());
-        playItem.disableProperty().bind(compositionManager.areThereNotes());
-        copyItem.disableProperty().bind(compositionManager.isSelectedNotesEmpty());
-        cutItem.disableProperty().bind(compositionManager.isSelectedNotesEmpty());
-        pasteItem.disableProperty().bind(compositionManager.bindIsClipboardEmpty());
-        undoItem.disableProperty().bind(compositionManager.isUndoEmpty());
-        redoItem.disableProperty().bind(compositionManager.isRedoEmpty());
+    @FXML protected  void handleCut(ActionEvent event) {
+        compositionManager.cutSelectedNotes();
+    }
+
+    /**
+     * Copies selected notes
+     * @param event
+     */
+    @FXML protected  void handleCopy(ActionEvent event) {
+        compositionManager.copySelectedNotes();
+    }
+
+    /**
+     * Pastes notes from clipboard
+     * @param event
+     */
+    @FXML protected  void handlePaste(ActionEvent event) {
+        compositionManager.pasteNotes();
+    }
+
+
+    /**
+     * Binds menu item disabled states with properties
+     * @param compositionManager The composition manager to use for binding
+     */
+    private void bindWithCompositionManager(CompositionManager compositionManager) {
+        deleteItem.disableProperty().bind(compositionManager.getIsNothingSelectedProperty());
+        groupItem.disableProperty().bind(compositionManager.getCannotGroupProperty());
+        ungroupItem.disableProperty().bind(compositionManager.getCannotUngroupProperty());
+        selectAllItem.disableProperty().bind(compositionManager.getNotesEmptyProperty());
+        playItem.disableProperty().bind(compositionManager.getNotesEmptyProperty());
+        copyItem.disableProperty().bind(compositionManager.getIsNothingSelectedProperty());
+        cutItem.disableProperty().bind(compositionManager.getIsNothingSelectedProperty());
+        pasteItem.disableProperty().bind(compositionManager.getClipboardEmptyProperty());
+        undoItem.disableProperty().bind(compositionManager.getRedoEmptyProperty());
+        redoItem.disableProperty().bind(compositionManager.getUndoEmptyProperty());
     }
 }
