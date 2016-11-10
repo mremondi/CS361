@@ -401,6 +401,7 @@ public class CompositionController {
 
     /**
      * Creates and adds the drag box to the view.
+     *
      * @param x X location of the box.
      * @param y Y location of the box.
      */

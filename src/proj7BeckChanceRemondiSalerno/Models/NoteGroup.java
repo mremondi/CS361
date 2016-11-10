@@ -188,7 +188,6 @@ public class NoteGroup implements NoteGroupable {
         try {
             clone = (NoteGroup)super.clone();
         } catch (CloneNotSupportedException e) {
-            System.out.println(e);
             return null;
         }
         ArrayList<NoteGroupable> clonedNotes = new ArrayList<>();

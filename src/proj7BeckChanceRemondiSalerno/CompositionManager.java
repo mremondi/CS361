@@ -351,7 +351,6 @@ public class CompositionManager {
         for (NoteGroupable noteGroupable : getGroupables()) {
             selectGroupable(noteGroupable);
         }
-
         SelectAction selectAction = new SelectAction(newlySelectedNotes, this);
         compositionActionManager.actionCompleted(selectAction);
     }
