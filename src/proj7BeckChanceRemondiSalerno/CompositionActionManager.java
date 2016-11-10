@@ -51,6 +51,7 @@ public class CompositionActionManager {
     public void actionCompleted(CompositionAction action) {
         undoActions.push(action);
         redoActions.removeAllElements();
+        updateEmptyProperties();
     }
 
     /**
