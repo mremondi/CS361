@@ -14,9 +14,16 @@ import proj7BeckChanceRemondiSalerno.Models.Note;
 import javax.sound.midi.ShortMessage;
 import java.util.ArrayList;
 
+
 /**
  * This class controls all the Actions directly related to the MidiPlayer
+ *
+ * @author Graham Chance
+ * @author Charlie Beck
+ * @author Ryan Salerno
+ * @author Mike Remondi
  */
+
 public class CompositionPlayer {
 
     /**

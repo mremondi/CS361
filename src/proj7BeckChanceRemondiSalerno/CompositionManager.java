@@ -34,8 +34,6 @@ import java.util.*;
  * Deals with adding and manipulating all the data
  * regarding the composition
  *
- * Singleton
- *
  * @author Graham Chance
  * @author Charlie Beck
  * @author Ryan Salerno
