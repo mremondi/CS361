@@ -671,6 +671,15 @@ public class CompositionManager {
         }
     }
 
+    public void saveCompositionAsNew() {
+        Composition composition = new Composition(new ArrayList<>(notesMapProperty.keySet()));
+        try {
+            compositionFileManager.saveCompositionAsNew(composition);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
     public void openComposition() {
         deleteGroupables(getGroupables());
         Optional<Composition> composition = Optional.empty();

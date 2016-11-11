@@ -9,6 +9,7 @@
          fx:controller="proj7BeckChanceRemondiSalerno.Controllers.MenuBarController">
     <Menu text="File">
         <MenuItem accelerator="Shortcut+S" onAction="#handleSave" text="Save" fx:id="saveItem"/>
+        <MenuItem accelerator="Shift+Shortcut+S" onAction="#handleSaveAs" text="Save" fx:id="saveAsItem"/>
         <MenuItem accelerator="Shortcut+O" onAction="#handleOpen" text="Open"/>
         <MenuItem accelerator="Shortcut+Q" onAction="#handleExit" text="Exit"/>
     </Menu>

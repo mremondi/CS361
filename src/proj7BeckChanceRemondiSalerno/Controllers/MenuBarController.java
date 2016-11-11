@@ -86,6 +86,9 @@ public class MenuBarController {
     @FXML
     private MenuItem saveItem;
 
+    @FXML
+    private MenuItem saveAsItem;
+
 
     /**
      * The composition manager for forwarded menu actions to
@@ -208,6 +211,12 @@ public class MenuBarController {
     @FXML protected  void handleSave(ActionEvent event) { compositionManager.saveComposition(); }
 
     /**
+     * Saves the current composition in a new file
+     * @param event
+     */
+    @FXML protected  void handleSaveAs(ActionEvent event) { compositionManager.saveCompositionAsNew(); }
+
+    /**
      * Opens a composition from a file
      * @param event
      */
@@ -229,5 +238,6 @@ public class MenuBarController {
         undoItem.disableProperty().bind(compositionManager.getUndoEmptyProperty());
         redoItem.disableProperty().bind(compositionManager.getRedoEmptyProperty());
         saveItem.disableProperty().bind(compositionManager.getNotesEmptyProperty());
+        saveAsItem.disableProperty().bind(compositionManager.getNotesEmptyProperty());
     }
 }

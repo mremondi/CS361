@@ -32,30 +32,49 @@ public class CompositionFileManager {
 
     private JAXBContext jc;
     private final FileChooser fileChooser = new FileChooser();
+    private Optional<String> currentSavePath = Optional.empty();
+    private Marshaller marshaller;
+    private Unmarshaller unmarshaller;
 
     /**
      * Constructor
      */
     public CompositionFileManager() {
-        FileChooser.ExtensionFilter fileExtensions = new FileChooser.ExtensionFilter("xml files (*.xml)", "xml");
-        fileChooser.getExtensionFilters().add(fileExtensions);
+//        FileChooser.ExtensionFilter fileExtensions = new FileChooser.ExtensionFilter("xml files (*.xml)", "xml");
+//        fileChooser.getExtensionFilters().add(fileExtensions);
         try {
             jc = JAXBContext.newInstance(Note.class,NoteGroup.class, Composition.class);
+            marshaller = jc.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            unmarshaller = jc.createUnmarshaller();
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
     /**
-     * Saves a composition to a file of the user's choice
+     * Saves a composition to either the current saved composition or new file if there is none
      * @param composition The composition to save
      * @throws Exception Thrown if saving fails
      */
     public void saveComposition(Composition composition) throws Exception {
-        Marshaller marshaller = jc.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        if (currentSavePath.isPresent()) {
+            File file = new File(currentSavePath.get());
+            marshaller.marshal(composition, file);
+        } else {
+            saveCompositionAsNew(composition);
+        }
+    }
+
+    /**
+     * Saves a composition to a new file of the user's choice
+     * @param composition The composition to save
+     * @throws Exception Thrown if saving fails
+     */
+    public void saveCompositionAsNew(Composition composition) throws Exception {
         File file = fileChooser.showSaveDialog(null);
         marshaller.marshal(composition, file);
+        currentSavePath = Optional.of(file.getAbsolutePath());
     }
 
     /**
@@ -66,7 +85,6 @@ public class CompositionFileManager {
     public Optional<Composition> openComposition() throws Exception {
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile!=null) {
-            Unmarshaller unmarshaller = jc.createUnmarshaller();
             Composition composition = (Composition)unmarshaller.unmarshal(selectedFile);
             return Optional.of(composition);
         }
