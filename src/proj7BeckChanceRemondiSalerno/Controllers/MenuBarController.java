@@ -86,6 +86,7 @@ public class MenuBarController {
     @FXML
     private MenuItem saveItem;
 
+
     /**
      * The composition manager for forwarded menu actions to
      */
@@ -205,6 +206,12 @@ public class MenuBarController {
      * @param event
      */
     @FXML protected  void handleSave(ActionEvent event) { compositionManager.saveComposition(); }
+
+    /**
+     * Opens a composition from a file
+     * @param event
+     */
+    @FXML protected  void handleOpen(ActionEvent event) { compositionManager.openComposition(); }
 
     /**
      * Binds menu item disabled states with properties

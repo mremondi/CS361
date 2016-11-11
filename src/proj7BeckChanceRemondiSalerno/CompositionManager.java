@@ -431,7 +431,7 @@ public class CompositionManager {
      *
      * @param groupables the ArrayList of NoteGroupables to delete
      */
-    public void deleteGroupables(ArrayList<NoteGroupable> groupables) {
+    public void deleteGroupables(Collection<NoteGroupable> groupables) {
         for (NoteGroupable noteGroupable : groupables) {
             deleteGroupable(noteGroupable);
         }
@@ -666,6 +666,20 @@ public class CompositionManager {
         try {
             compositionFileManager.saveComposition(composition);
         } catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
+    public void openComposition() {
+        try {
+            Optional<Composition> composition = compositionFileManager.openComposition();
+            if (composition.isPresent()) {
+                deleteGroupables(getGroupables());
+                for (NoteGroupable noteGroupable : composition.get().getNotes()) {
+                    addGroupable(noteGroupable);
+                }
+            }
+        } catch (Exception e) {
             System.out.println(e);
         }
     }

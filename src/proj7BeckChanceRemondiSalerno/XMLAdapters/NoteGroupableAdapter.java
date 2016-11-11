@@ -10,7 +10,6 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 public class NoteGroupableAdapter extends XmlAdapter<Object, NoteGroupable> {
     @Override
     public NoteGroupable unmarshal(Object v) throws Exception {
-        System.out.println("USING \n\n\n");
         return (NoteGroupable)v;
     }
 

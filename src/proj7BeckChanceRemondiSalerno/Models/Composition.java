@@ -25,4 +25,7 @@ public class Composition {
 
     }
 
+    public ArrayList<NoteGroupable> getNotes() {
+        return notes;
+    }
 }
