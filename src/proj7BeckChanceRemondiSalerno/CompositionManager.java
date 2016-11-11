@@ -9,6 +9,7 @@
 package proj7BeckChanceRemondiSalerno;
 
 
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleMapProperty;
@@ -443,9 +444,11 @@ public class CompositionManager {
      * @param noteGroupable the NoteGroupable to delete
      */
     public void deleteGroupable(NoteGroupable noteGroupable) {
-        NoteGroupablePane groupPane = noteGroupableRectsMap.get(noteGroupable);
-        compositionController.removeNotePane(groupPane);
-        noteGroupableRectsMap.remove(noteGroupable);
+        Platform.runLater(() -> { // avoids ConcurrentModificationException if iterating over notes to delete
+            NoteGroupablePane groupPane = noteGroupableRectsMap.get(noteGroupable);
+            compositionController.removeNotePane(groupPane);
+            noteGroupableRectsMap.remove(noteGroupable);
+        });
     }
 
     /**
@@ -671,16 +674,15 @@ public class CompositionManager {
     }
 
     public void openComposition() {
+        deleteGroupables(getGroupables());
+        Optional<Composition> composition = Optional.empty();
         try {
-            Optional<Composition> composition = compositionFileManager.openComposition();
-            if (composition.isPresent()) {
-                deleteGroupables(getGroupables());
-                for (NoteGroupable noteGroupable : composition.get().getNotes()) {
-                    addGroupable(noteGroupable);
-                }
-            }
+            composition = compositionFileManager.openComposition();
         } catch (Exception e) {
             System.out.println(e);
+        }
+        if (composition.isPresent()) {
+            composition.get().getNotes().forEach(this::addGroupable);
         }
     }
 }
