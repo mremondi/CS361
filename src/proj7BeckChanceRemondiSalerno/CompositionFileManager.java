@@ -86,6 +86,7 @@ public class CompositionFileManager {
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile!=null) {
             Composition composition = (Composition)unmarshaller.unmarshal(selectedFile);
+            currentSavePath = Optional.of(selectedFile.getAbsolutePath());
             return Optional.of(composition);
         }
         return Optional.empty();
