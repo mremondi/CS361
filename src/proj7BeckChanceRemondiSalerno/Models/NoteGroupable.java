@@ -10,6 +10,11 @@
 package proj7BeckChanceRemondiSalerno.Models;
 
 
+import proj7BeckChanceRemondiSalerno.XMLAdapters.NoteGroupableAdapter;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -21,7 +26,10 @@ import java.util.ArrayList;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
+@XmlRootElement
+@XmlJavaTypeAdapter(NoteGroupableAdapter.class)
 public interface NoteGroupable extends Cloneable, Serializable {
+
     /**
      * Returns all of the notes in the Groupable object
      * @return an ArrayList of Notes

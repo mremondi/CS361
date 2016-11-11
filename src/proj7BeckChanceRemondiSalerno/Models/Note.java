@@ -8,6 +8,7 @@
 
 package proj7BeckChanceRemondiSalerno.Models;
 
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 
 /**
@@ -18,6 +19,8 @@ import java.util.ArrayList;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
+@XmlRootElement(name="note")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Note implements NoteGroupable {
 
     /**
@@ -33,31 +36,37 @@ public class Note implements NoteGroupable {
     /**
      * The instrument for the note.
      */
+    @XmlAttribute
     private int channel;
 
     /**
      * The track index of the note.
      */
+    @XmlAttribute
     private int trackIndex;
 
     /**
      * The pitch of the note
      */
+    @XmlAttribute
     private int pitch;
 
     /**
      * the start tick of the note
      */
+    @XmlAttribute
     private int startTick;
 
     /**
      * the time duration of the note
      */
+    @XmlAttribute
     private double duration;
 
     /**
      * A boolean indicator of whether the note is currently selected
      */
+    @XmlAttribute
     private boolean selected;
 
     /**
@@ -71,6 +80,10 @@ public class Note implements NoteGroupable {
         this.duration = duration;
         this.channel = channel;
         this.trackIndex = 0;
+    }
+
+    public Note() {
+
     }
 
     /**

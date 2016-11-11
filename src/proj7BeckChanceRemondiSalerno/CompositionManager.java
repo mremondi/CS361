@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import proj7BeckChanceRemondiSalerno.CompositionActions.*;
 import proj7BeckChanceRemondiSalerno.Controllers.*;
+import proj7BeckChanceRemondiSalerno.Models.Composition;
 import proj7BeckChanceRemondiSalerno.Models.Note;
 import proj7BeckChanceRemondiSalerno.Models.NoteGroup;
 import proj7BeckChanceRemondiSalerno.Models.NoteGroupable;
@@ -96,6 +97,8 @@ public class CompositionManager {
      * Manager for copying, cutting, and pasting notes
      */
     private NotesClipboardManager notesClipboardManager;
+
+    private CompositionFileManager compositionFileManager = new CompositionFileManager();
 
 
     /**
@@ -656,5 +659,14 @@ public class CompositionManager {
         cannotGroupProperty.set(selectedCount<2);
         cannotUngroupProperty.set(!(getSelectedNotes().size() == 1
                 && getSelectedNotes().get(0) instanceof NoteGroup));
+    }
+
+    public void saveComposition() {
+        Composition composition = new Composition(new ArrayList<>(notesMapProperty.keySet()));
+        try {
+            compositionFileManager.saveComposition(composition);
+        } catch (Exception e){
+            System.out.println(e);
+        }
     }
 }

@@ -9,21 +9,29 @@
 
 package proj7BeckChanceRemondiSalerno.Models;
 
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 
 /**
  * Created by mremondi on 10/20/16.
  */
+@XmlRootElement(name="group")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class NoteGroup implements NoteGroupable {
 
     /**
      * the groupables contained in the group
      */
-    ArrayList<NoteGroupable> noteGroupables;
+    @XmlElements({
+            @XmlElement(name="note", type=Note.class),
+            @XmlElement(name="group", type=NoteGroup.class)
+    })
+    private ArrayList<NoteGroupable> noteGroupables;
 
     /**
      * current selection state of the group
      */
+    @XmlAttribute
     private boolean isSelected = false;
 
     /**
@@ -34,6 +42,9 @@ public class NoteGroup implements NoteGroupable {
         this.noteGroupables = noteGroupables;
     }
 
+    public NoteGroup() {
+
+    }
     /**
      * Gets all notes contained within the group
      *

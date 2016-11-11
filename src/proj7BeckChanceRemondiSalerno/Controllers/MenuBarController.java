@@ -83,6 +83,9 @@ public class MenuBarController {
     @FXML
     private MenuItem pasteItem;
 
+    @FXML
+    private MenuItem saveItem;
+
     /**
      * The composition manager for forwarded menu actions to
      */
@@ -197,6 +200,11 @@ public class MenuBarController {
         compositionManager.pasteNotes();
     }
 
+    /**
+     * Saves the current composition
+     * @param event
+     */
+    @FXML protected  void handleSave(ActionEvent event) { compositionManager.saveComposition(); }
 
     /**
      * Binds menu item disabled states with properties
@@ -213,5 +221,6 @@ public class MenuBarController {
         pasteItem.disableProperty().bind(compositionManager.getClipboardEmptyProperty());
         undoItem.disableProperty().bind(compositionManager.getUndoEmptyProperty());
         redoItem.disableProperty().bind(compositionManager.getRedoEmptyProperty());
+        saveItem.disableProperty().bind(compositionManager.getNotesEmptyProperty());
     }
 }
