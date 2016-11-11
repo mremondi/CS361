@@ -31,7 +31,6 @@ public class NoteGroup implements NoteGroupable {
     /**
      * current selection state of the group
      */
-    @XmlAttribute
     private boolean isSelected = false;
 
     /**
