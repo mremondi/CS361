@@ -17,6 +17,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableMap;
 import javafx.geometry.Bounds;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import proj7BeckChanceRemondiSalerno.CompositionActions.*;
@@ -99,6 +102,7 @@ public class CompositionManager {
 
     private CompositionFileManager compositionFileManager = new CompositionFileManager();
 
+    private boolean changeSinceLastSave = false;
 
     /**
      * constructor
@@ -113,6 +117,7 @@ public class CompositionManager {
             @Override
             public void onChanged(Change change) {
                 updateProperties();
+                changeSinceLastSave = true;
             }
         });
     }
@@ -591,6 +596,7 @@ public class CompositionManager {
      * @param action The completed CompositionAction
      */
     public void actionCompleted(CompositionAction action){
+        changeSinceLastSave = true;
         this.compositionActionManager.actionCompleted(action);
     }
 
@@ -663,6 +669,7 @@ public class CompositionManager {
     }
 
     public void saveComposition() {
+        changeSinceLastSave = false;
         Composition composition = new Composition(new ArrayList<>(notesMapProperty.keySet()));
         try {
             compositionFileManager.saveComposition(composition);
@@ -672,6 +679,7 @@ public class CompositionManager {
     }
 
     public void saveCompositionAsNew() {
+        changeSinceLastSave = false;
         Composition composition = new Composition(new ArrayList<>(notesMapProperty.keySet()));
         try {
             compositionFileManager.saveCompositionAsNew(composition);
@@ -681,6 +689,7 @@ public class CompositionManager {
     }
 
     public void openComposition() {
+        changeSinceLastSave = false;
         deleteGroupables(getGroupables());
         Optional<Composition> composition = Optional.empty();
         try {
@@ -691,5 +700,43 @@ public class CompositionManager {
         if (composition.isPresent()) {
             composition.get().getNotes().forEach(this::addGroupable);
         }
+    }
+
+    public void confirmCreateNewComposition() {
+        if (changeSinceLastSave) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION.CONFIRMATION);
+            alert.setTitle("Save Changes");
+            alert.setHeaderText("Would you like to save your changes before creating a new composition?");
+            alert.setContentText("Your changes will be lost if you do not save.");
+
+            ButtonType yesButton = new ButtonType("Yes");
+            ButtonType noButton = new ButtonType("No");
+            ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(yesButton, noButton, buttonTypeCancel);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == yesButton){
+                saveComposition();
+                removeCurrentComposition();
+            } else if (result.get() == noButton) {
+                removeCurrentComposition();
+            }
+        }
+    }
+
+    public void createNewComposition() {
+        if (changeSinceLastSave) {
+            confirmCreateNewComposition();
+        } else {
+            removeCurrentComposition();
+        }
+    }
+
+
+    private void removeCurrentComposition() {
+        deleteGroupables(getGroupables());
+        compositionFileManager.removeCurrentSavePath();
+        changeSinceLastSave = false;
     }
 }

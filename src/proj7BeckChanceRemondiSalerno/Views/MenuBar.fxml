@@ -8,6 +8,7 @@
          xmlns:fx="http://javafx.com/fxml/1"
          fx:controller="proj7BeckChanceRemondiSalerno.Controllers.MenuBarController">
     <Menu text="File">
+        <MenuItem accelerator="Shortcut+N" onAction="#handleNew" text="New" fx:id="newItem"/>
         <MenuItem accelerator="Shortcut+S" onAction="#handleSave" text="Save" fx:id="saveItem"/>
         <MenuItem accelerator="Shift+Shortcut+S" onAction="#handleSaveAs" text="Save" fx:id="saveAsItem"/>
         <MenuItem accelerator="Shortcut+O" onAction="#handleOpen" text="Open"/>

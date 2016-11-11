@@ -92,4 +92,7 @@ public class CompositionFileManager {
         return Optional.empty();
     }
 
+    public void removeCurrentSavePath() {
+        currentSavePath = Optional.empty();
+    }
 }
