@@ -689,8 +689,7 @@ public class CompositionManager {
     }
 
     public void openComposition() {
-        changeSinceLastSave = false;
-        deleteGroupables(getGroupables());
+        confirmRemoveCurrentComposition();
         Optional<Composition> composition = Optional.empty();
         try {
             composition = compositionFileManager.openComposition();
@@ -702,7 +701,7 @@ public class CompositionManager {
         }
     }
 
-    public void confirmCreateNewComposition() {
+    public void confirmRemoveCurrentComposition() {
         if (changeSinceLastSave) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION.CONFIRMATION);
             alert.setTitle("Save Changes");
@@ -722,15 +721,13 @@ public class CompositionManager {
             } else if (result.get() == noButton) {
                 removeCurrentComposition();
             }
+        } else {
+            removeCurrentComposition();
         }
     }
 
     public void createNewComposition() {
-        if (changeSinceLastSave) {
-            confirmCreateNewComposition();
-        } else {
-            removeCurrentComposition();
-        }
+        confirmRemoveCurrentComposition();
     }
 
 
