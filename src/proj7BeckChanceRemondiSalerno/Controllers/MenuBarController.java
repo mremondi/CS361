@@ -11,6 +11,7 @@ package proj7BeckChanceRemondiSalerno.Controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import proj7BeckChanceRemondiSalerno.CompositionManager;
 
@@ -230,6 +231,15 @@ public class MenuBarController {
      * @param event
      */
     @FXML protected  void handleNew(ActionEvent event) { compositionManager.createNewComposition(); }
+
+    @FXML protected void handleAbout(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("CS361 Project 8");
+        alert.setHeaderText(null);
+        alert.setContentText("Authors: Charlie Beck, Graham Chance, Mike Remondi, & Ryan Salerno");
+        alert.showAndWait();
+    }
+
 
     /**
      * Binds menu item disabled states with properties
