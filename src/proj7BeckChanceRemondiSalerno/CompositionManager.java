@@ -689,19 +689,21 @@ public class CompositionManager {
     }
 
     public void openComposition() {
-        confirmRemoveCurrentComposition();
-        Optional<Composition> composition = Optional.empty();
-        try {
-            composition = compositionFileManager.openComposition();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        if (composition.isPresent()) {
-            composition.get().getNotes().forEach(this::addGroupable);
+        if (canDiscardComposition()) {
+            removeCurrentComposition();
+            Optional<Composition> composition = Optional.empty();
+            try {
+                composition = compositionFileManager.openComposition();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            if (composition.isPresent()) {
+                composition.get().getNotes().forEach(this::addGroupable);
+            }
         }
     }
 
-    public void confirmRemoveCurrentComposition() {
+    public boolean canDiscardComposition() {
         if (changeSinceLastSave) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Save Changes");
@@ -717,17 +719,21 @@ public class CompositionManager {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == yesButton){
                 saveComposition();
-                removeCurrentComposition();
+                return true;
             } else if (result.get() == noButton) {
-                removeCurrentComposition();
+                return true;
+            } else {
+                return false;
             }
         } else {
-            removeCurrentComposition();
+            return true;
         }
     }
 
     public void createNewComposition() {
-        confirmRemoveCurrentComposition();
+        if (canDiscardComposition()) {
+            removeCurrentComposition();
+        }
     }
 
 

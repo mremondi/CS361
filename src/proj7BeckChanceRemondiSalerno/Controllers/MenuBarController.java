@@ -147,7 +147,9 @@ public class MenuBarController {
      */
     @FXML
     protected void handleExit(ActionEvent event) {
-        System.exit(0);
+        if (compositionManager.canDiscardComposition()) {
+            System.exit(0);
+        }
     }
 
     /**
