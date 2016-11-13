@@ -66,6 +66,7 @@ public class Note implements NoteGroupable {
     /**
      * A boolean indicator of whether the note is currently selected
      */
+    @XmlTransient
     private boolean selected;
 
     /**
