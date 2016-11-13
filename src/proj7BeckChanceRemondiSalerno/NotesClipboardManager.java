@@ -49,7 +49,7 @@ public class NotesClipboardManager {
      * @param compositionManager The composition manager
      */
     NotesClipboardManager(CompositionManager compositionManager) {
-        clipboardEmptyProperty.set(true);
+        clipboardEmptyProperty.set(getClipboardContent()==null);
         this.compositionManager = compositionManager;
     }
 
@@ -60,7 +60,7 @@ public class NotesClipboardManager {
     public void cutNotes(ArrayList<NoteGroupable> notes) {
         copyNotes(notes);
         compositionManager.deleteGroupables(notes);
-        clipboardEmptyProperty.set(false);
+        clipboardEmptyProperty.set(getClipboardContent()==null);
     }
 
     /**
@@ -71,14 +71,14 @@ public class NotesClipboardManager {
         ClipboardContent content = new ClipboardContent();
         content.put(notesClipboardKey, notes);
         Clipboard.getSystemClipboard().setContent(content);
-        clipboardEmptyProperty.set(false);
+        clipboardEmptyProperty.set(getClipboardContent()==null);
     }
 
     /**
      * Adds the notes on the clipboard to to the composition.
      */
     public void pasteNotes() {
-        Object content = Clipboard.getSystemClipboard().getContent(notesClipboardKey);
+        Object content = getClipboardContent();
         if (content != null) {
             compositionManager.deselectAllNotes();
             ArrayList<NoteGroupable> notes = (ArrayList<NoteGroupable>)content;
@@ -91,6 +91,10 @@ public class NotesClipboardManager {
             PasteAction pasteAction = new PasteAction(pastedNotes, compositionManager);
             compositionManager.actionCompleted(pasteAction);
         }
+    }
+
+    private Object getClipboardContent() {
+        return Clipboard.getSystemClipboard().getContent(notesClipboardKey);
     }
 
 
