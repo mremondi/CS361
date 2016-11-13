@@ -26,6 +26,8 @@ import java.io.IOException;
  */
 public class Main extends Application {
 
+    public static Stage primaryStage;
+
     /**
      * Sets up the main GUI to play a scale.
      * Player contains a menu bar:
@@ -45,10 +47,11 @@ public class Main extends Application {
             e.printStackTrace();
             System.exit(1);
         }
-        primaryStage.setTitle("Composition Sheet");
+        primaryStage.setTitle("New Composition");
         primaryStage.setScene(new Scene(root, 800, 500));
         primaryStage.setOnCloseRequest(event -> System.exit(0));
         primaryStage.show();
+        Main.primaryStage = primaryStage;
     }
 
     /**

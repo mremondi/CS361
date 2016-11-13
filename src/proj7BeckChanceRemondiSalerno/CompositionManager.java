@@ -703,7 +703,7 @@ public class CompositionManager {
 
     public void confirmRemoveCurrentComposition() {
         if (changeSinceLastSave) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION.CONFIRMATION);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Save Changes");
             alert.setHeaderText("Would you like to save your changes before creating a new composition?");
             alert.setContentText("Your changes will be lost if you do not save.");
@@ -732,6 +732,7 @@ public class CompositionManager {
 
 
     private void removeCurrentComposition() {
+        Main.primaryStage.setTitle("New Composition");
         deleteGroupables(getGroupables());
         compositionFileManager.removeCurrentSavePath();
         changeSinceLastSave = false;
