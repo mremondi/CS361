@@ -49,7 +49,6 @@ public class PasteAction extends CompositionAction {
     @Override
     public void redo() {
         for (NoteGroupable noteGroupable : pastedNotes) {
-            compositionManager.addGroupable(noteGroupable.clone());
             compositionManager.addGroupable(noteGroupable);
         }
     }
