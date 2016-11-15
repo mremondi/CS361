@@ -12,7 +12,7 @@
         <SeparatorMenuItem/>
         <MenuItem accelerator="Shortcut+N" onAction="#handleNew" text="New" fx:id="newItem"/>
         <MenuItem accelerator="Shortcut+S" onAction="#handleSave" text="Save" fx:id="saveItem"/>
-        <MenuItem accelerator="Shift+Shortcut+S" onAction="#handleSaveAs" text="Save" fx:id="saveAsItem"/>
+        <MenuItem accelerator="Shift+Shortcut+S" onAction="#handleSaveAs" text="Save As" fx:id="saveAsItem"/>
         <MenuItem accelerator="Shortcut+O" onAction="#handleOpen" text="Open"/>
         <SeparatorMenuItem/>
         <MenuItem accelerator="Shortcut+Q" onAction="#handleExit" text="Exit"/>
