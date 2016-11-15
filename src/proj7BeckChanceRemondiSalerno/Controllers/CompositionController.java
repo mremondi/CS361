@@ -321,7 +321,7 @@ public class CompositionController {
         for (NoteGroupable note: outOfRangeNotes){
             compositionManager.deleteGroupable(note);
         }
-
+        // new move action with dx, dy, and manager
         MoveAction moveAction = new MoveAction(movedNotes,
                 lastDragLocation.getX() - dragStartLocation.getX(),
                 lastDragLocation.getY() - dragStartLocation.getY(), compositionManager);
