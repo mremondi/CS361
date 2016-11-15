@@ -214,25 +214,33 @@ public class MenuBarController {
      * Saves the current composition
      * @param event
      */
-    @FXML protected  void handleSave(ActionEvent event) { compositionManager.saveComposition(); }
+    @FXML protected  void handleSave(ActionEvent event) {
+        compositionManager.saveComposition();
+    }
 
     /**
      * Saves the current composition in a new file
      * @param event
      */
-    @FXML protected  void handleSaveAs(ActionEvent event) { compositionManager.saveCompositionAsNew(); }
+    @FXML protected  void handleSaveAs(ActionEvent event) {
+        compositionManager.saveCompositionAsNew();
+    }
 
     /**
      * Opens a composition from a file
      * @param event
      */
-    @FXML protected  void handleOpen(ActionEvent event) { compositionManager.openComposition(); }
+    @FXML protected  void handleOpen(ActionEvent event) {
+        compositionManager.openComposition();
+    }
 
     /**
      * creates a new composition
      * @param event
      */
-    @FXML protected  void handleNew(ActionEvent event) { compositionManager.createNewComposition(); }
+    @FXML protected  void handleNew(ActionEvent event) {
+        compositionManager.createNewComposition();
+    }
 
     @FXML protected void handleAbout(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

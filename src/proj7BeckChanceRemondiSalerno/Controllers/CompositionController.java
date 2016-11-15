@@ -300,11 +300,11 @@ public class CompositionController {
         ArrayList<NoteGroupable> outOfRangeNotes = new ArrayList<>();
         for (NoteGroupable note : compositionManager.getGroupables()) {
             if(note.isSelected()) {
-                double pitchdy = (dragStartLocation.getY() - lastDragLocation.getY())/10;
+                double pitchdy = ((int)dragStartLocation.getY() - (int)lastDragLocation.getY())/10;
                 double startTickdy = lastDragLocation.getX() - dragStartLocation.getX();
                 note.changePitch(pitchdy);
                 note.changeStartTick(startTickdy);
-                compositionManager.getGroupPane(note).roundToNearestYLocation();
+                compositionManager.getGroupPane(note).roundUpYLocation();
                 movedNotes.add(note);
                 if (note.getStartTick() < 0 || note.getStartTick() > 2000){
                     // remove note completely

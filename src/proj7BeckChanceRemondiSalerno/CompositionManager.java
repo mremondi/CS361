@@ -737,7 +737,6 @@ public class CompositionManager {
         }
     }
 
-
     private void removeCurrentComposition() {
         Main.primaryStage.setTitle("New Composition");
         deleteGroupables(getGroupables());

@@ -138,12 +138,8 @@ public class NoteGroupablePane extends Pane implements NoteView {
      * Rounds the y coordinate of the note's rectangle in order to snap to a
      * space between two horizontal bars.
      */
-    public void roundToNearestYLocation() {
-        if (getLayoutY() % 10 < 5) {
-            setLayoutY(getLayoutY() - (getLayoutY() % 10));
-        } else {
-            setLayoutY(getLayoutY() + (getLayoutY() % 10));
-        }
+    public void roundUpYLocation() {
+        setLayoutY(getLayoutY() - (getLayoutY() % 10));
     }
 }
 
