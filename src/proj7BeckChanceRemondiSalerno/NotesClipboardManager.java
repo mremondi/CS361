@@ -84,12 +84,9 @@ public class NotesClipboardManager {
             ArrayList<NoteGroupable> notes = (ArrayList<NoteGroupable>)content;
             ArrayList<NoteGroupable> pastedNotes = new ArrayList<>();
             for (NoteGroupable noteGroupable : notes) {
-                compositionManager.addGroupable(noteGroupable);
-                pastedNotes.add(noteGroupable);
-                // why clone??
-//                NoteGroupable noteClone = noteGroupable.clone();
-//                compositionManager.addGroupable(noteClone);
-//                pastedNotes.add(noteClone);
+                NoteGroupable noteClone = noteGroupable.clone();
+                compositionManager.addGroupable(noteClone);
+                pastedNotes.add(noteClone);
             }
             PasteAction pasteAction = new PasteAction(pastedNotes, compositionManager);
             compositionManager.actionCompleted(pasteAction);

@@ -50,6 +50,7 @@ public class PasteAction extends CompositionAction {
     public void redo() {
         for (NoteGroupable noteGroupable : pastedNotes) {
             compositionManager.addGroupable(noteGroupable.clone());
+            compositionManager.addGroupable(noteGroupable);
         }
     }
 }

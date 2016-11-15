@@ -334,8 +334,6 @@ public class CompositionManager {
         noteGroupable.setSelected(false);
         noteGroupableRectsMap.get(noteGroupable).setSelected(false);
         updateProperties();
-        DeselectAction deselectAction = new DeselectAction(noteGroupable,this);
-        actionCompleted(deselectAction);
     }
 
     /**
