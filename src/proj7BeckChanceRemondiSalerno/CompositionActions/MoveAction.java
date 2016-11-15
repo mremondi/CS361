@@ -49,7 +49,11 @@ public class MoveAction extends CompositionAction {
         this.compositionManager = compositionManager;
         this.movedNotes = movedNotes;
         this.dx = dx;
-        this.dy = dy - (dy % 10); // round to nearest Y
+        if (dy % 10 < 5) {
+            this.dy = dy - (dy % 10);
+        } else{
+            this.dy = dy - 10 - (dy % 10);
+        }
     }
 
     /**
