@@ -698,7 +698,8 @@ public class CompositionManager {
                 System.out.println(e);
             }
             if (composition.isPresent()) {
-                composition.get().getNotes().forEach(this::addGroupable);
+                if (composition.get().getNotes() != null)
+                    composition.get().getNotes().forEach(this::addGroupable);
             }
         }
     }
