@@ -54,8 +54,8 @@ public class CompositionFileManager {
      * Constructor
      */
     public CompositionFileManager() {
-//        FileChooser.ExtensionFilter fileExtensions = new FileChooser.ExtensionFilter("xml files (*.xml)", "xml");
-//        fileChooser.getExtensionFilters().add(fileExtensions);
+        FileChooser.ExtensionFilter fileExtensions = new FileChooser.ExtensionFilter("XML Files (.xml)", "*.xml");
+        fileChooser.getExtensionFilters().add(fileExtensions);
         try {
             JAXBContext context = JAXBContext.newInstance(Note.class,NoteGroup.class, Composition.class);
             marshaller = context.createMarshaller();
