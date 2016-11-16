@@ -757,7 +757,7 @@ public class CompositionManager {
      * Removes all notes from the composition
      */
     private void clearComposition() {
-        Main.primaryStage.setTitle("New Composition");
+        Main.setPrimaryStageTitle("New Composition");
         deleteGroupables(getGroupables());
         compositionFileManager.removeCurrentSavePath();
         changeSinceLastSave = false;

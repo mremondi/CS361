@@ -29,7 +29,16 @@ public class Main extends Application {
     /**
      * The primary stage of the application
      */
-    public static Stage primaryStage;
+    private static Stage primaryStage;
+
+    /**
+     * Sets the main stage title
+     * @param title The new title
+     */
+    public static void setPrimaryStageTitle(String title) {
+        Main.primaryStage.setTitle(title);
+    }
+
 
     /**
      * Sets up the main GUI to play a scale.

@@ -75,7 +75,7 @@ public class CompositionFileManager {
         File file = fileChooser.showSaveDialog(null);
         marshaller.marshal(composition, file);
         currentSavePath = Optional.of(file.getAbsolutePath());
-        Main.primaryStage.setTitle(file.getName());
+        Main.setPrimaryStageTitle(file.getName());
     }
 
     /**
@@ -88,7 +88,7 @@ public class CompositionFileManager {
         if (selectedFile!=null) {
             Composition composition = (Composition)unmarshaller.unmarshal(selectedFile);
             currentSavePath = Optional.of(selectedFile.getAbsolutePath());
-            Main.primaryStage.setTitle(selectedFile.getName());
+            Main.setPrimaryStageTitle(selectedFile.getName());
             return Optional.of(composition);
         }
         return Optional.empty();
