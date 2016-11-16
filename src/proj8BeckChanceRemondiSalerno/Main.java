@@ -26,6 +26,9 @@ import java.io.IOException;
  */
 public class Main extends Application {
 
+    /**
+     * The primary stage of the application
+     */
     public static Stage primaryStage;
 
     /**
