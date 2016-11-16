@@ -30,10 +30,24 @@ import java.util.Optional;
  */
 public class CompositionFileManager {
 
-    private JAXBContext jc;
+    /**
+     * The file chooser for opening files
+     */
     private final FileChooser fileChooser = new FileChooser();
+
+    /**
+     * The current save path of the current file. Empty if there is none.
+     */
     private Optional<String> currentSavePath = Optional.empty();
+
+    /**
+     * Used for marshalling compositions
+     */
     private Marshaller marshaller;
+
+    /**
+     * Used for unmarshalling compositions
+     */
     private Unmarshaller unmarshaller;
 
     /**
@@ -43,10 +57,10 @@ public class CompositionFileManager {
 //        FileChooser.ExtensionFilter fileExtensions = new FileChooser.ExtensionFilter("xml files (*.xml)", "xml");
 //        fileChooser.getExtensionFilters().add(fileExtensions);
         try {
-            jc = JAXBContext.newInstance(Note.class,NoteGroup.class, Composition.class);
-            marshaller = jc.createMarshaller();
+            JAXBContext context = JAXBContext.newInstance(Note.class,NoteGroup.class, Composition.class);
+            marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            unmarshaller = jc.createUnmarshaller();
+            unmarshaller = context.createUnmarshaller();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -94,6 +108,9 @@ public class CompositionFileManager {
         return Optional.empty();
     }
 
+    /**
+     * Removes the current save path (sets it to empty)
+     */
     public void removeCurrentSavePath() {
         currentSavePath = Optional.empty();
     }
