@@ -43,6 +43,16 @@ public class CompositionActionManager {
     }
 
     /**
+     * Clears both the undo and redo stack
+     */
+    public void clearActions() {
+        undoActions.clear();
+        redoActions.clear();
+        redoEmptyProperty.set(true);
+        undoEmptyProperty.set(true);
+    }
+
+    /**
      * Adds the given CompositionAction to the undoActions stack and
      * empties the redo stack.
      *

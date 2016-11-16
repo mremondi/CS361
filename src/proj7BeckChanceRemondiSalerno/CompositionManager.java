@@ -761,5 +761,6 @@ public class CompositionManager {
         deleteGroupables(getGroupables());
         compositionFileManager.removeCurrentSavePath();
         changeSinceLastSave = false;
+        compositionActionManager.clearActions();
     }
 }
