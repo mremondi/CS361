@@ -15,7 +15,6 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
 import proj7BeckChanceRemondiSalerno.CompositionActions.PasteAction;
 import proj7BeckChanceRemondiSalerno.Models.NoteGroupable;
-
 import java.util.ArrayList;
 
 /**
@@ -49,7 +48,7 @@ public class NotesClipboardManager {
      * @param compositionManager The composition manager
      */
     NotesClipboardManager(CompositionManager compositionManager) {
-        clipboardEmptyProperty.set(getClipboardContent()==null);
+        clipboardEmptyProperty.set(getNotesOnClipboard().isEmpty());
         this.compositionManager = compositionManager;
     }
 
@@ -60,7 +59,7 @@ public class NotesClipboardManager {
     public void cutNotes(ArrayList<NoteGroupable> notes) {
         copyNotes(notes);
         compositionManager.deleteGroupables(notes);
-        clipboardEmptyProperty.set(getClipboardContent()==null);
+        clipboardEmptyProperty.set(getNotesOnClipboard().isEmpty());
     }
 
     /**
@@ -71,19 +70,18 @@ public class NotesClipboardManager {
         ClipboardContent content = new ClipboardContent();
         content.put(notesClipboardKey, notes);
         Clipboard.getSystemClipboard().setContent(content);
-        clipboardEmptyProperty.set(getClipboardContent()==null);
+        clipboardEmptyProperty.set(getNotesOnClipboard().isEmpty());
     }
 
     /**
      * Adds the notes on the clipboard to to the composition.
      */
     public void pasteNotes() {
-        Object content = getClipboardContent();
-        if (content != null) {
+        ArrayList<NoteGroupable> notesToPaste = getNotesOnClipboard();
+        if (!notesToPaste.isEmpty()) {
             compositionManager.deselectAllNotes();
-            ArrayList<NoteGroupable> notes = (ArrayList<NoteGroupable>)content;
             ArrayList<NoteGroupable> pastedNotes = new ArrayList<>();
-            for (NoteGroupable noteGroupable : notes) {
+            for (NoteGroupable noteGroupable : notesToPaste) {
                 NoteGroupable noteClone = noteGroupable.clone();
                 compositionManager.addGroupable(noteClone);
                 pastedNotes.add(noteClone);
@@ -93,8 +91,20 @@ public class NotesClipboardManager {
         }
     }
 
-    private Object getClipboardContent() {
-        return Clipboard.getSystemClipboard().getContent(notesClipboardKey);
+    /**
+     * Gets a list of notes currently on the clipboard
+     * @return An array list of notes from the clipboard.
+     */
+    private ArrayList<NoteGroupable> getNotesOnClipboard() {
+        Object content = Clipboard.getSystemClipboard().getContent(notesClipboardKey);
+        try {
+            ArrayList<NoteGroupable> notes = (ArrayList<NoteGroupable>)content;
+            if (notes != null) {
+                return notes;
+            }
+        } catch (Exception e) {}
+
+        return new ArrayList<NoteGroupable>(); // return empty list
     }
 
 
