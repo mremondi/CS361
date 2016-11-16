@@ -10,7 +10,7 @@
     <Menu text="File">
         <MenuItem onAction="#handleAbout" text="About"/>
         <SeparatorMenuItem/>
-        <MenuItem accelerator="Shortcut+N" onAction="#handleNew" text="New" fx:id="newItem"/>
+        <MenuItem accelerator="Shortcut+N" onAction="#handleNew" text="New"/>
         <MenuItem accelerator="Shortcut+S" onAction="#handleSave" text="Save" fx:id="saveItem"/>
         <MenuItem accelerator="Shift+Shortcut+S" onAction="#handleSaveAs" text="Save As" fx:id="saveAsItem"/>
         <MenuItem accelerator="Shortcut+O" onAction="#handleOpen" text="Open"/>

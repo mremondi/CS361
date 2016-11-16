@@ -84,14 +84,17 @@ public class MenuBarController {
     @FXML
     private MenuItem pasteItem;
 
+    /**
+     * The save menu item
+     */
     @FXML
     private MenuItem saveItem;
 
+    /**
+     * The save as menu item
+     */
     @FXML
     private MenuItem saveAsItem;
-
-    @FXML
-    private MenuItem newItem;
 
 
     /**
@@ -242,6 +245,10 @@ public class MenuBarController {
         compositionManager.createNewComposition();
     }
 
+    /**
+     * Shows the about dialog
+     * @param event
+     */
     @FXML protected void handleAbout(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("CS361 Project 8");

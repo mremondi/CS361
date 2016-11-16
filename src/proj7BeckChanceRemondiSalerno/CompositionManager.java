@@ -668,6 +668,9 @@ public class CompositionManager {
                 && getSelectedNotes().get(0) instanceof NoteGroup));
     }
 
+    /**
+     * Saves the current composition
+     */
     public void saveComposition() {
         changeSinceLastSave = false;
         Composition composition = new Composition(new ArrayList<>(notesMapProperty.keySet()));
@@ -678,6 +681,9 @@ public class CompositionManager {
         }
     }
 
+    /**
+     * Saves the current composition as a new file
+     */
     public void saveCompositionAsNew() {
         changeSinceLastSave = false;
         Composition composition = new Composition(new ArrayList<>(notesMapProperty.keySet()));
@@ -688,9 +694,12 @@ public class CompositionManager {
         }
     }
 
+    /**
+     * Opens a composition from a file
+     */
     public void openComposition() {
         if (canDiscardComposition()) {
-            removeCurrentComposition();
+            clearComposition();
             Optional<Composition> composition = Optional.empty();
             try {
                 composition = compositionFileManager.openComposition();
@@ -704,6 +713,10 @@ public class CompositionManager {
         }
     }
 
+    /**
+     * Determines whether the current composition can be discarded
+     * @return whether the current composition can be discarded
+     */
     public boolean canDiscardComposition() {
         if (changeSinceLastSave) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -731,13 +744,19 @@ public class CompositionManager {
         }
     }
 
+    /**
+     * Starts a new composition
+     */
     public void createNewComposition() {
         if (canDiscardComposition()) {
-            removeCurrentComposition();
+            clearComposition();
         }
     }
 
-    private void removeCurrentComposition() {
+    /**
+     * Removes all notes from the composition
+     */
+    private void clearComposition() {
         Main.primaryStage.setTitle("New Composition");
         deleteGroupables(getGroupables());
         compositionFileManager.removeCurrentSavePath();
