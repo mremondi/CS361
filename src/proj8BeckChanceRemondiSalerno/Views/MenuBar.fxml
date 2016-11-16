@@ -1,0 +1,36 @@
+<!--File: Composition.java
+    Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
+    Class: CS361
+    Project: 6
+    Date: November 1, 2016-->
+<?import javafx.scene.control.*?>
+<MenuBar xmlns="http://javafx.com/javafx/8.0.65"
+         xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="proj8BeckChanceRemondiSalerno.Controllers.MenuBarController">
+    <Menu text="File">
+        <MenuItem onAction="#handleAbout" text="About"/>
+        <SeparatorMenuItem/>
+        <MenuItem accelerator="Shortcut+N" onAction="#handleNew" text="New"/>
+        <MenuItem accelerator="Shortcut+S" onAction="#handleSave" text="Save" fx:id="saveItem"/>
+        <MenuItem accelerator="Shift+Shortcut+S" onAction="#handleSaveAs" text="Save As" fx:id="saveAsItem"/>
+        <MenuItem accelerator="Shortcut+O" onAction="#handleOpen" text="Open"/>
+        <SeparatorMenuItem/>
+        <MenuItem accelerator="Shortcut+Q" onAction="#handleExit" text="Exit"/>
+    </Menu>
+    <Menu text="Edit">
+        <MenuItem accelerator="Shortcut+A" onAction="#handleSelectAll" text="Select All" fx:id="selectAllItem"/>
+        <MenuItem accelerator="Shortcut+Delete" onAction="#handleDelete" text="Delete" fx:id="deleteItem"/>
+        <MenuItem accelerator="Shortcut+G" onAction="#handleGroup" text="Group" fx:id="groupItem"/>
+        <MenuItem accelerator="Shortcut+U" onAction="#handleUngroup" text="Ungroup" fx:id="ungroupItem"/>
+        <MenuItem accelerator="Shortcut+Z" onAction="#handleUndo" text="Undo" fx:id="undoItem"/>
+        <MenuItem accelerator="Shift+Shortcut+Z" onAction="#handleRedo" text="Redo" fx:id="redoItem"/>
+        <MenuItem accelerator="Shortcut+C" onAction="#handleCopy" text="Copy" fx:id="copyItem"/>
+        <MenuItem accelerator="Shortcut+X" onAction="#handleCut" text="Cut" fx:id="cutItem"/>
+        <MenuItem accelerator="Shortcut+V" onAction="#handlePaste" text="Paste" fx:id="pasteItem"/>
+
+    </Menu>
+    <Menu text="Actions">
+        <MenuItem accelerator="Shortcut+P" onAction="#handlePlayMidi" text="Play" fx:id="playItem"/>
+        <MenuItem accelerator="Shortcut+T" onAction="#handleStopMusic" text="Stop"/>
+    </Menu>
+</MenuBar>
