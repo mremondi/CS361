@@ -31,6 +31,6 @@
     </Menu>
     <Menu text="Actions">
         <MenuItem accelerator="Shortcut+P" onAction="#handlePlayMidi" text="Play" fx:id="playItem"/>
-        <MenuItem accelerator="Shortcut+S" onAction="#handleStopMusic" text="Stop"/>
+        <MenuItem accelerator="Shortcut+T" onAction="#handleStopMusic" text="Stop"/>
     </Menu>
 </MenuBar>
