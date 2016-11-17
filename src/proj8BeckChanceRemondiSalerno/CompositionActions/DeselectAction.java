@@ -12,7 +12,7 @@ import proj8BeckChanceRemondiSalerno.CompositionManager;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
 
 /**
- * This class implements the CompositionAction interface and represents the action
+ * This class extends the CompositionAction abstract class and represents the action
  * of deselecting a note in the Composition.
  *
  * @author Graham Chance

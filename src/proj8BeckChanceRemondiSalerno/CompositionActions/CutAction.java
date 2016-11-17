@@ -14,6 +14,15 @@ import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj8BeckChanceRemondiSalerno.NotesClipboardManager;
 import java.util.ArrayList;
 
+/**
+ * This class extends the CompositionAction abstract class and represents the action
+ * of cutting a NoteGroupable or several NoteGroupables from the Composition.
+ *
+ * @author Graham Chance
+ * @author Charlie Beck
+ * @author Ryan Salerno
+ * @author Mike Remondi
+ */
 public class CutAction extends CompositionAction {
 
     /**

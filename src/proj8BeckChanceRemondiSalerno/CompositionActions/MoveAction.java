@@ -10,11 +10,10 @@ package proj8BeckChanceRemondiSalerno.CompositionActions;
 
 import proj8BeckChanceRemondiSalerno.CompositionManager;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
-
 import java.util.ArrayList;
 
 /**
- * This class implements the CompositionAction interface and represents the action
+ * This class extends the CompositionAction abstract class and represents the action
  * of moving notes in the Composition.
  *
  * @author Graham Chance

@@ -14,7 +14,13 @@ import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
 import java.util.ArrayList;
 
 /**
- * Created by Graham on 11/5/16.
+ * This class extends the CompositionAction abstract class and represents the action
+ * of pasting a NoteGroupable or NoteGroupables to the Composition.
+ *
+ * @author Graham Chance
+ * @author Charlie Beck
+ * @author Ryan Salerno
+ * @author Mike Remondi
  */
 public class PasteAction extends CompositionAction {
 

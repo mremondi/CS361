@@ -14,7 +14,7 @@ import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
 import java.util.ArrayList;
 
 /**
- * This class implements the CompositionAction interface and represents the action
+ * This class extends the CompositionAction abstract class and represents the action
  * of resizing notes in the Composition.
  *
  * @author Graham Chance

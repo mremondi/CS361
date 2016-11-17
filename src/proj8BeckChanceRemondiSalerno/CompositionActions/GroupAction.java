@@ -13,7 +13,7 @@ import proj8BeckChanceRemondiSalerno.Models.NoteGroup;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
 
 /**
- * This class implements the CompositionAction interface and represents the action
+ * This class extends the CompositionAction abstract class and represents the action
  * of Grouping notes in the Composition.
  *
  * @author Graham Chance

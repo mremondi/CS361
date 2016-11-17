@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * This class implements the CompositionAction interface and represents the action
+ * This class extends the CompositionAction abstract class and represents the action
  * of selecting a note in the Composition.
  *
  * @author Graham Chance

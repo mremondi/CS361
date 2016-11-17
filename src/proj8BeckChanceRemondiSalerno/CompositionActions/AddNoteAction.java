@@ -8,15 +8,13 @@
 
 package proj8BeckChanceRemondiSalerno.CompositionActions;
 
-
 import proj8BeckChanceRemondiSalerno.CompositionManager;
 import proj8BeckChanceRemondiSalerno.Models.Note;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
-
 import java.util.ArrayList;
 
 /**
- * This class implements the CompositionAction interface and represents the action
+ * This class extends the CompositionAction abstract class and represents the action
  * of adding a Note to the Composition.
  *
  * @author Graham Chance
@@ -31,6 +29,9 @@ public class AddNoteAction extends CompositionAction {
      */
     private Note note;
 
+    /**
+     * The notes that were unselected when the new note was added.
+     */
     private ArrayList<NoteGroupable> deselectedNotes;
 
     /**

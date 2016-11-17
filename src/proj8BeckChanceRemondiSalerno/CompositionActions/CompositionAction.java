@@ -11,7 +11,7 @@ package proj8BeckChanceRemondiSalerno.CompositionActions;
 import proj8BeckChanceRemondiSalerno.CompositionManager;
 
 /**
- * This interface is implemented to allow for the undoing/redoing of actions.
+ * This abstract class was made to allow for the undoing/redoing of actions.
  *
  * @author Graham Chance
  * @author Charlie Beck
