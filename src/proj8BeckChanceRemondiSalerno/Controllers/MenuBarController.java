@@ -251,9 +251,9 @@ public class MenuBarController {
      */
     @FXML protected void handleAbout(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("CS361 Project 8");
-        alert.setHeaderText(null);
-        alert.setContentText("Authors: Charlie Beck, Graham Chance, Mike Remondi, & Ryan Salerno");
+        alert.setTitle("MIDI Composer");
+        alert.setHeaderText("MIDI Composer");
+        alert.setContentText("\tAuthors\n\n\tCharlie Beck\n\tGraham Chance\n\tMike Remondi\n\tRyan Salerno");
         alert.showAndWait();
     }
 

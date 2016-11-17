@@ -35,12 +35,21 @@ public class Controller {
     @FXML
     private Pane tempoLineContainerPane;
 
+    /**
+     * The MenuBarController loaded by the FXML Loader
+     */
     @FXML
     private MenuBarController menuBarController;
 
+    /**
+     * The InstrumentPaneController loaded by the FXML Loader
+     */
     @FXML
     private InstrumentPaneController instrumentPaneController;
 
+    /**
+     * The CompositionController loaded by the FXML Loader
+     */
     @FXML
     private CompositionController compositionController;
 

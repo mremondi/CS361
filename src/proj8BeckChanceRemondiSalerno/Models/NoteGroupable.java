@@ -6,9 +6,7 @@
  * Due Date: November 18, 2016
  */
 
-
 package proj8BeckChanceRemondiSalerno.Models;
-
 
 import proj8BeckChanceRemondiSalerno.XMLAdapters.NoteGroupableAdapter;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -104,5 +102,10 @@ public interface NoteGroupable extends Cloneable, Serializable {
      */
     void changeStartTick(double dx);
 
+    /**
+     * Clones the NoteGroupable
+     *
+     * @return the cloned NoteGroupable
+     */
     NoteGroupable clone();
 }

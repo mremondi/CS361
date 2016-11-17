@@ -82,10 +82,6 @@ public class Note implements NoteGroupable {
         this.trackIndex = 0;
     }
 
-    public Note() {
-
-    }
-
     /**
      * Accessor method for pitch
      *

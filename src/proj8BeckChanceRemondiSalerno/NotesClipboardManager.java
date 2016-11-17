@@ -107,7 +107,6 @@ public class NotesClipboardManager {
         return new ArrayList<NoteGroupable>(); // return empty list
     }
 
-
     /**
      * Getter for clipboardEmptyProperty
      * @return clipboardEmptyProperty
@@ -115,6 +114,4 @@ public class NotesClipboardManager {
     public SimpleBooleanProperty getClipboardEmptyProperty() {
         return clipboardEmptyProperty;
     }
-
-
 }

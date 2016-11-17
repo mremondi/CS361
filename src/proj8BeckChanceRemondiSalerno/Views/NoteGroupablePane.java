@@ -108,7 +108,6 @@ public class NoteGroupablePane extends Pane implements NoteView {
         return xInBounds && yInBounds;
     }
 
-
     /**
      * Checks whether the coordinates of a mouse click are within 5 pixels
      * of the right side of the note's rectangle.

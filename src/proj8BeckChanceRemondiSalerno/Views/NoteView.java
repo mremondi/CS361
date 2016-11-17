@@ -16,7 +16,6 @@ package proj8BeckChanceRemondiSalerno.Views;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
-
 public interface NoteView {
 
     /**

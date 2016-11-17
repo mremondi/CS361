@@ -32,10 +32,19 @@ public class CompositionActionManager {
      */
     private  Stack<CompositionAction> undoActions = new Stack<>();
 
+    /**
+     * The Boolean Property for binding to the undoStack
+     */
     private SimpleBooleanProperty undoEmptyProperty = new SimpleBooleanProperty();
 
+    /**
+     * The Boolean Property for binding to the redoStack
+     */
     private SimpleBooleanProperty redoEmptyProperty = new SimpleBooleanProperty();
 
+    /**
+     * Constructor that initializes the two boolean properties
+     */
     public CompositionActionManager() {
         super();
         undoEmptyProperty.set(true);
@@ -85,15 +94,28 @@ public class CompositionActionManager {
         updateEmptyProperties();
     }
 
+    /**
+     * Updates the properties based on the state of the stacks
+     */
     private void updateEmptyProperties() {
         redoEmptyProperty.set(redoActions.isEmpty());
         undoEmptyProperty.set(undoActions.isEmpty());
     }
 
+    /**
+     * Gets the undoEmptyProperty field
+     *
+     * @return a SimpleBooleanProperty
+     */
     public SimpleBooleanProperty getUndoEmptyProperty() {
         return undoEmptyProperty;
     }
 
+    /**
+     * Gets the redoEmptyProperty field
+     *
+     * @return a SimpleBooleanProperty
+     */
     public SimpleBooleanProperty getRedoEmptyProperty() {
         return redoEmptyProperty;
     }

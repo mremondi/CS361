@@ -19,7 +19,6 @@ import javafx.scene.shape.Rectangle;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
-
 public class NoteRectangle extends Rectangle implements NoteView {
 
     /**

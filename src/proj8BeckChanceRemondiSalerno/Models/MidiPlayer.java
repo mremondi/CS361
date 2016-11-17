@@ -113,10 +113,6 @@ public class MidiPlayer {
         sequencer.start();
     }
 
-    public boolean getIsPlaying() {
-        return sequencer.isRunning();
-    }
-
     /**
      * stops all the Midi events currently playing or yet to be played
      */

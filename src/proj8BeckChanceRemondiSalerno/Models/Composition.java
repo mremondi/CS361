@@ -6,7 +6,6 @@
  * Due Date: November 18, 2016
  */
 
-
 package proj8BeckChanceRemondiSalerno.Models;
 
 import javax.xml.bind.annotation.*;
@@ -42,6 +41,9 @@ public class Composition {
         this.notes = notes;
     }
 
+    /**
+     * Empty Constructor
+     */
     public Composition() {}
 
     /**

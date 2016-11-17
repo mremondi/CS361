@@ -12,7 +12,6 @@ package proj8BeckChanceRemondiSalerno.Controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleGroup;
 
-
 /**
  * This class models a controller for the instrument pane.
  *
@@ -29,7 +28,11 @@ public class InstrumentPaneController {
     @FXML
     private ToggleGroup instrumentGroup;
 
-
+    /**
+     * Getter method for the currently selected instrument
+     *
+     * @return an int index corresponding to a given instrument
+     */
     public int getCurrentInstrumentIndex() {
         return instrumentGroup.getToggles().indexOf(instrumentGroup.getSelectedToggle());
     }

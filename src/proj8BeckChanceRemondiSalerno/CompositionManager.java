@@ -100,8 +100,14 @@ public class CompositionManager {
      */
     private NotesClipboardManager notesClipboardManager;
 
+    /**
+     * The CompositionFileManager for saving and loading files
+     */
     private CompositionFileManager compositionFileManager = new CompositionFileManager();
 
+    /**
+     * A boolean indicator of any changes made
+     */
     private boolean changeSinceLastSave = false;
 
     /**
@@ -196,7 +202,6 @@ public class CompositionManager {
         }
         return Optional.empty();
     }
-
 
     /**
      * Creates a note group from current selected groupables

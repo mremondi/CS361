@@ -13,7 +13,12 @@ import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 
 /**
- * Created by mremondi on 10/20/16.
+ * This class models a group of musical notes
+ *
+ * @author Graham Chance
+ * @author Charlie Beck
+ * @author Ryan Salerno
+ * @author Mike Remondi
  */
 @XmlRootElement(name="group")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -26,6 +31,10 @@ public class NoteGroup implements NoteGroupable {
             @XmlElement(name="note", type=Note.class),
             @XmlElement(name="group", type=NoteGroup.class)
     })
+
+    /**
+     * an arraylist of the noteGroupables contained in this NoteGroupable
+     */
     private ArrayList<NoteGroupable> noteGroupables;
 
     /**
@@ -41,9 +50,6 @@ public class NoteGroup implements NoteGroupable {
         this.noteGroupables = noteGroupables;
     }
 
-    public NoteGroup() {
-
-    }
     /**
      * Gets all notes contained within the group
      *
@@ -192,6 +198,11 @@ public class NoteGroup implements NoteGroupable {
         }
     }
 
+    /**
+     * Clones method that clones this note groupable
+     *
+     * @return a clone of this NoteGroupable
+     */
     @Override
     public NoteGroup clone() {
         NoteGroup clone;
