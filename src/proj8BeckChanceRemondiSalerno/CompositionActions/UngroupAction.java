@@ -9,7 +9,7 @@
 package proj8BeckChanceRemondiSalerno.CompositionActions;
 
 
-import Cproj8BeckChanceRemondiSalerno.CompositionManager;
+import proj8BeckChanceRemondiSalerno.CompositionManager;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroup;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
 
