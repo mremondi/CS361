@@ -719,9 +719,7 @@ public class CompositionManager {
                 .keySet()));
         try {
             compositionFileManager.saveComposition(composition);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        } catch (Exception e) { }
     }
 
     /**
@@ -733,9 +731,7 @@ public class CompositionManager {
                 .keySet()));
         try {
             compositionFileManager.saveCompositionAsNew(composition);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        } catch (Exception e) { }
     }
 
     /**
@@ -747,9 +743,7 @@ public class CompositionManager {
             Optional<Composition> composition = Optional.empty();
             try {
                 composition = compositionFileManager.openComposition();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+            } catch (Exception e) { }
             if (composition.isPresent()) {
                 if (composition.get().getNotes() != null)
                     composition.get().getNotes().forEach(this::addGroupable);

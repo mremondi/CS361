@@ -83,6 +83,11 @@ public class Note implements NoteGroupable {
     }
 
     /**
+     * No argument constructor for the compiler
+     */
+    public Note(){}
+
+    /**
      * Accessor method for pitch
      *
      * @return Pitch of the note

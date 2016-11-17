@@ -62,9 +62,7 @@ public class CompositionFileManager {
             marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             unmarshaller = context.createUnmarshaller();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        } catch (Exception e) { }
     }
 
     /**

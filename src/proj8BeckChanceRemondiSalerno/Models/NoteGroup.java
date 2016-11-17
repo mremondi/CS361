@@ -52,6 +52,11 @@ public class NoteGroup implements NoteGroupable {
     }
 
     /**
+     * No argument constructor for the compiler
+     */
+    public NoteGroup(){}
+
+    /**
      * Gets all notes contained within the group
      *
      * @return the notes in the group

@@ -9,7 +9,6 @@
 package proj8BeckChanceRemondiSalerno.Models;
 
 import proj8BeckChanceRemondiSalerno.XMLAdapters.NoteGroupableAdapter;
-
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
