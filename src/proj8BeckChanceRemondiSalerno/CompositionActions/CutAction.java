@@ -2,8 +2,8 @@
  * File: CutAction.java
  * Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
  * Class: CS361
- * Project: 7
- * Due Date: November 10, 2016
+ * Project: 8
+ * Due Date: November 18, 2016
  */
 
 
@@ -14,9 +14,6 @@ import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj8BeckChanceRemondiSalerno.NotesClipboardManager;
 import java.util.ArrayList;
 
-/**
- * Created by Graham on 11/5/16.
- */
 public class CutAction extends CompositionAction {
 
     /**

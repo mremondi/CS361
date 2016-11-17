@@ -1,9 +1,9 @@
 /*
- * File: Controller.java
+ * File: CompositionManager.java
  * Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
  * Class: CS361
- * Project: 7
- * Due Date: November 10, 2016
+ * Project: 8
+ * Due Date: November 18, 2016
  */
 
 package proj8BeckChanceRemondiSalerno;

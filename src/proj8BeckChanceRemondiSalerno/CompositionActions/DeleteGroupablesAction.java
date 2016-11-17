@@ -2,15 +2,14 @@
  * File: DeleteGroupableAction.java
  * Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
  * Class: CS361
- * Project: 6
- * Due Date: November 1, 2016
+ * Project: 8
+ * Due Date: November 18, 2016
  */
 
 package proj8BeckChanceRemondiSalerno.CompositionActions;
 
 import proj8BeckChanceRemondiSalerno.CompositionManager;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
-
 import java.util.ArrayList;
 
 /**

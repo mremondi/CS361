@@ -18,8 +18,6 @@ import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.util.Optional;
 
-
-
 /**
  * This class models an object that can save and load compositions from files
  *

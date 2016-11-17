@@ -1,16 +1,15 @@
 /*
- * File: Controller.java
+ * File: CompositionPlayer.java
  * Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
  * Class: CS361
- * Project: 6
- * Due Date: November 1, 2016
+ * Project: 8
+ * Due Date: November 18, 2016
  */
 
 package proj8BeckChanceRemondiSalerno;
 
 import proj8BeckChanceRemondiSalerno.Models.MidiPlayer;
 import proj8BeckChanceRemondiSalerno.Models.Note;
-
 import javax.sound.midi.ShortMessage;
 import java.util.ArrayList;
 
