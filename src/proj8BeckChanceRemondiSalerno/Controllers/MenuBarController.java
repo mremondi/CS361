@@ -104,6 +104,7 @@ public class MenuBarController {
 
     /**
      * Setter for the composition manager
+     *
      * @param compositionManager the new composition manager
      */
     public void setCompositionManager(CompositionManager compositionManager) {
@@ -157,6 +158,7 @@ public class MenuBarController {
 
     /**
      * Creates a new note group
+     *
      * @param event
      */
     @FXML
@@ -166,6 +168,7 @@ public class MenuBarController {
 
     /**
      * Ungroups notes.
+     *
      * @param event
      */
     @FXML
@@ -175,100 +178,124 @@ public class MenuBarController {
 
     /**
      * Redoes the last action
+     *
      * @param event
      */
-    @FXML protected  void handleRedo(ActionEvent event) {
+    @FXML
+    protected void handleRedo(ActionEvent event) {
         compositionManager.redoLastUndoneAction();
     }
 
     /**
      * Undoes the last action
+     *
      * @param event
      */
-    @FXML protected  void handleUndo(ActionEvent event) {
+    @FXML
+    protected void handleUndo(ActionEvent event) {
         compositionManager.undoLastAction();
     }
 
     /**
      * Cuts selected notes
+     *
      * @param event
      */
-    @FXML protected  void handleCut(ActionEvent event) {
+    @FXML
+    protected void handleCut(ActionEvent event) {
         compositionManager.cutSelectedNotes();
     }
 
     /**
      * Copies selected notes
+     *
      * @param event
      */
-    @FXML protected  void handleCopy(ActionEvent event) {
+    @FXML
+    protected void handleCopy(ActionEvent event) {
         compositionManager.copySelectedNotes();
     }
 
     /**
      * Pastes notes from clipboard
+     *
      * @param event
      */
-    @FXML protected  void handlePaste(ActionEvent event) {
+    @FXML
+    protected void handlePaste(ActionEvent event) {
         compositionManager.pasteNotes();
     }
 
     /**
      * Saves the current composition
+     *
      * @param event
      */
-    @FXML protected  void handleSave(ActionEvent event) {
+    @FXML
+    protected void handleSave(ActionEvent event) {
         compositionManager.saveComposition();
     }
 
     /**
      * Saves the current composition in a new file
+     *
      * @param event
      */
-    @FXML protected  void handleSaveAs(ActionEvent event) {
+    @FXML
+    protected void handleSaveAs(ActionEvent event) {
         compositionManager.saveCompositionAsNew();
     }
 
     /**
      * Opens a composition from a file
+     *
      * @param event
      */
-    @FXML protected  void handleOpen(ActionEvent event) {
+    @FXML
+    protected void handleOpen(ActionEvent event) {
         compositionManager.openComposition();
     }
 
     /**
      * creates a new composition
+     *
      * @param event
      */
-    @FXML protected  void handleNew(ActionEvent event) {
+    @FXML
+    protected void handleNew(ActionEvent event) {
         compositionManager.createNewComposition();
     }
 
     /**
      * Shows the about dialog
+     *
      * @param event
      */
-    @FXML protected void handleAbout(ActionEvent event) {
+    @FXML
+    protected void handleAbout(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("MIDI Composer");
         alert.setHeaderText("MIDI Composer");
-        alert.setContentText("\tAuthors\n\n\tCharlie Beck\n\tGraham Chance\n\tMike Remondi\n\tRyan Salerno");
+        alert.setContentText("\tAuthors\n\n\tCharlie Beck\n\tGraham Chance\n\tMike " +
+                "Remondi\n\tRyan Salerno");
         alert.showAndWait();
     }
 
 
     /**
      * Binds menu item disabled states with properties
+     *
      * @param compositionManager The composition manager to use for binding
      */
     private void bindWithCompositionManager(CompositionManager compositionManager) {
-        deleteItem.disableProperty().bind(compositionManager.getIsNothingSelectedProperty());
+        deleteItem.disableProperty().bind(compositionManager
+                .getIsNothingSelectedProperty());
         groupItem.disableProperty().bind(compositionManager.getCannotGroupProperty());
         ungroupItem.disableProperty().bind(compositionManager.getCannotUngroupProperty());
         selectAllItem.disableProperty().bind(compositionManager.getNotesEmptyProperty());
         playItem.disableProperty().bind(compositionManager.getNotesEmptyProperty());
-        copyItem.disableProperty().bind(compositionManager.getIsNothingSelectedProperty());
+        copyItem.disableProperty().bind(compositionManager.getIsNothingSelectedProperty
+                ());
         cutItem.disableProperty().bind(compositionManager.getIsNothingSelectedProperty());
         pasteItem.disableProperty().bind(compositionManager.getClipboardEmptyProperty());
         undoItem.disableProperty().bind(compositionManager.getUndoEmptyProperty());

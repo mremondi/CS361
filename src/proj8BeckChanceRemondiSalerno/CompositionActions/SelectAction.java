@@ -34,7 +34,8 @@ public class SelectAction extends CompositionAction {
      *
      * @param selected the selected notes
      */
-    public SelectAction(Collection<NoteGroupable> selected, CompositionManager compositionManager) {
+    public SelectAction(Collection<NoteGroupable> selected, CompositionManager
+            compositionManager) {
         this.compositionManager = compositionManager;
         this.selected = selected;
     }

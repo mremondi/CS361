@@ -13,7 +13,6 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 /**
- *
  * This class models a pane containing notes
  *
  * @author Graham Chance
@@ -101,9 +100,11 @@ public class NoteGroupablePane extends Pane implements NoteView {
     public boolean getIsInRectangleBounds(double rectXMin, double rectYMin,
                                           double rectXMax, double rectYMax) {
         Bounds bounds = getBoundsInParent();
-        boolean xInBounds = (bounds.getMinX() < rectXMax && bounds.getMinX() > rectXMin) ||
+        boolean xInBounds = (bounds.getMinX() < rectXMax && bounds.getMinX() >
+                rectXMin) ||
                 (bounds.getMaxX() > rectXMin && bounds.getMaxX() < rectXMax);
-        boolean yInBounds = (bounds.getMinY() > rectYMin && bounds.getMinY() < rectYMax) ||
+        boolean yInBounds = (bounds.getMinY() > rectYMin && bounds.getMinY() <
+                rectYMax) ||
                 (bounds.getMaxY() > rectYMin && bounds.getMaxY() < rectYMax);
         return xInBounds && yInBounds;
     }

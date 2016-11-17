@@ -37,9 +37,10 @@ public class ResizeAction extends CompositionAction {
      * Constructor
      *
      * @param resizedNotes the notes that were resized
-     * @param dx the change in the x direction
+     * @param dx           the change in the x direction
      */
-    public ResizeAction(ArrayList<NoteGroupable> resizedNotes, double dx, CompositionManager compositionManager) {
+    public ResizeAction(ArrayList<NoteGroupable> resizedNotes, double dx,
+                        CompositionManager compositionManager) {
         this.compositionManager = compositionManager;
         this.resizedNotes = resizedNotes;
         this.dx = dx;

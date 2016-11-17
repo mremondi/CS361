@@ -20,6 +20,7 @@ public interface NoteView {
 
     /**
      * Sets the note rectangle to selected
+     *
      * @param selected a boolean indicator of whether the note is selected
      */
     void setSelected(boolean selected);

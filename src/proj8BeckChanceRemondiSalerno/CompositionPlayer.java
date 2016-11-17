@@ -10,6 +10,7 @@ package proj8BeckChanceRemondiSalerno;
 
 import proj8BeckChanceRemondiSalerno.Models.MidiPlayer;
 import proj8BeckChanceRemondiSalerno.Models.Note;
+
 import javax.sound.midi.ShortMessage;
 import java.util.ArrayList;
 
@@ -39,6 +40,7 @@ public class CompositionPlayer {
 
     /**
      * Plays a song with given notes.
+     *
      * @param notes Notes to play.
      */
     public void play(ArrayList<Note> notes) {
@@ -57,19 +59,22 @@ public class CompositionPlayer {
 
     /**
      * Builds a song with given notes and adds them to the midiplayer.
+     *
      * @param notes Notes to build the song with
      */
     private void buildSong(ArrayList<Note> notes) {
         addProgramChanges(midiPlayer);
         for (Note note : notes) {
-            midiPlayer.addNote(note.getPitch(), note.getVolume(), note.getStartTick(), note.getDuration(),
+            midiPlayer.addNote(note.getPitch(), note.getVolume(), note.getStartTick(),
+                    note.getDuration(),
                     note.getChannel(), note.getTrackIndex());
         }
     }
 
     /**
      * Maps instruments to a given channel in the MIDI sounds player
-     *f
+     * f
+     *
      * @param midiPlayer MIDI sounds player
      */
     private void addProgramChanges(MidiPlayer midiPlayer) {

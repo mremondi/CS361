@@ -18,6 +18,7 @@ import proj8BeckChanceRemondiSalerno.CompositionActions.*;
 import proj8BeckChanceRemondiSalerno.CompositionManager;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj8BeckChanceRemondiSalerno.Views.NoteGroupablePane;
+
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -75,6 +76,7 @@ public class CompositionController {
 
     /**
      * Setter for the composition manager
+     *
      * @param compositionManager The new composition manager
      */
     public void setCompositionManager(CompositionManager compositionManager) {
@@ -91,8 +93,9 @@ public class CompositionController {
     public void handleMousePressed(MouseEvent mouseEvent) {
         lastDragLocation.x = mouseEvent.getX();
         lastDragLocation.y = mouseEvent.getY();
-        dragStartLocation = (Point2D.Double)lastDragLocation.clone();
-        handleDragStartedAtLocation(mouseEvent.getX(), mouseEvent.getY(), mouseEvent.isControlDown());
+        dragStartLocation = (Point2D.Double) lastDragLocation.clone();
+        handleDragStartedAtLocation(mouseEvent.getX(), mouseEvent.getY(), mouseEvent
+                .isControlDown());
     }
 
     /**
@@ -132,7 +135,7 @@ public class CompositionController {
 
     /**
      * Handles the drag movement of the mouse.
-     *
+     * <p>
      * Responds to mouse drag movement by moving the selected notes,
      * resizing the selected notes, or creates a DragBox and selects
      * and unselects the corresponding notes.
@@ -146,7 +149,7 @@ public class CompositionController {
         } else if (isResizing) {
             resizeSelectedNotes(dx);
         } else {
-            if (!controlDrag){
+            if (!controlDrag) {
                 compositionManager.clearSelectedNotes();
             }
             this.dragBox.setWidth(this.dragBox.getWidth() + dx);
@@ -181,8 +184,8 @@ public class CompositionController {
      */
     private void resizeSelectedNotes(double dx) {
         for (NoteGroupable noteGroupable : compositionManager.getGroupables()) {
-            if (noteGroupable.isSelected()){
-                resizeNote(noteGroupable,dx);
+            if (noteGroupable.isSelected()) {
+                resizeNote(noteGroupable, dx);
             }
         }
     }
@@ -190,8 +193,9 @@ public class CompositionController {
     /**
      * Resizes the specified note by changing both its duration
      * and the physical width of its corresponding rectangle.
+     *
      * @param note the note to resize
-     * @param dx the change in the x direction
+     * @param dx   the change in the x direction
      */
     public void resizeNote(NoteGroupable note, double dx) {
         note.changeNoteDurations(dx);
@@ -200,7 +204,7 @@ public class CompositionController {
 
     /**
      * Handles the start of the drag motion of the mouse.
-     *
+     * <p>
      * Checks if the mouse is on a note, if it is, it checks whether to
      * move the note(s) or to resize them, if it is not on a note, it creates
      * a DragBox.
@@ -209,10 +213,13 @@ public class CompositionController {
      * @param y
      */
     private void handleDragStartedAtLocation(double x, double y, boolean controlDrag) {
-        if (controlDrag) { return; }
+        if (controlDrag) {
+            return;
+        }
         isResizing = false;
         isMovingNotes = false;
-        Optional<NoteGroupable> optionalNote = compositionManager.getGroupableAtPoint(x, y);
+        Optional<NoteGroupable> optionalNote = compositionManager.getGroupableAtPoint
+                (x, y);
         // if the click is on a note
         if (optionalNote.isPresent()) {
             NoteGroupable note = optionalNote.get();
@@ -247,8 +254,8 @@ public class CompositionController {
      */
     private void moveSelectedNotes(double dx, double dy) {
         for (NoteGroupable note : compositionManager.getGroupables()) {
-            if (note.isSelected()){
-                moveNote(note,dx,dy);
+            if (note.isSelected()) {
+                moveNote(note, dx, dy);
             }
         }
     }
@@ -257,8 +264,8 @@ public class CompositionController {
      * Moves the note the specified note
      *
      * @param note the note to move
-     * @param dx the change in the x direction
-     * @param dy the change in the y direction
+     * @param dx   the change in the x direction
+     * @param dy   the change in the y direction
      */
     public void moveNote(NoteGroupable note, double dx, double dy) {
         NoteGroupablePane noteGroupablePane = compositionManager.getGroupPane(note);
@@ -268,19 +275,20 @@ public class CompositionController {
 
     /**
      * Handles the release of the drag motion of the mouse.
-     *
+     * <p>
      * Responds to the end of the drag movement of the mouse by releasing
      * the moving/resizing notes if there are any and sets all of our
      * corresponding pieces back to their resting state.
      */
     private void handleDragEnded() {
-        if(isMovingNotes) {
+        if (isMovingNotes) {
             releaseMovedNotes();
         } else if (isResizing) {
             releaseResizedNotes();
         } else {
             Bounds bounds = this.dragBox.getBoundsInParent();
-            ArrayList<NoteGroupable> selected = compositionManager.selectNotesIntersectingRectangle(bounds);
+            ArrayList<NoteGroupable> selected = compositionManager
+                    .selectNotesIntersectingRectangle(bounds);
             if (selected.size() > 0) {
                 CompositionAction action = new SelectAction(selected, compositionManager);
                 compositionManager.actionCompleted(action);
@@ -299,26 +307,27 @@ public class CompositionController {
         ArrayList<NoteGroupable> movedNotes = new ArrayList<>();
         ArrayList<NoteGroupable> outOfRangeNotes = new ArrayList<>();
         for (NoteGroupable note : compositionManager.getGroupables()) {
-            if(note.isSelected()) {
-                double pitchdy = ((int)dragStartLocation.getY() - (int)lastDragLocation.getY())/10;
+            if (note.isSelected()) {
+                double pitchdy = ((int) dragStartLocation.getY() - (int)
+                        lastDragLocation.getY()) / 10;
                 double startTickdy = lastDragLocation.getX() - dragStartLocation.getX();
                 note.changePitch(pitchdy);
                 note.changeStartTick(startTickdy);
                 compositionManager.getGroupPane(note).roundUpYLocation();
                 movedNotes.add(note);
-                if (note.getStartTick() < 0 || note.getStartTick() > 2000){
+                if (note.getStartTick() < 0 || note.getStartTick() > 2000) {
                     // remove note completely
                     movedNotes.remove(note);
                     outOfRangeNotes.add(note);
                 }
-                if (note.getMinPitch() < 0 || note.getMaxPitch() > 127){
+                if (note.getMinPitch() < 0 || note.getMaxPitch() > 127) {
                     // remove note completely
                     movedNotes.remove(note);
                     outOfRangeNotes.add(note);
                 }
             }
         }
-        for (NoteGroupable note: outOfRangeNotes){
+        for (NoteGroupable note : outOfRangeNotes) {
             compositionManager.deleteGroupable(note);
         }
         // new move action with dx, dy, and manager
@@ -334,17 +343,18 @@ public class CompositionController {
     private void releaseResizedNotes() {
         ArrayList<NoteGroupable> resizedNotes = new ArrayList<>();
         for (NoteGroupable note : compositionManager.getGroupables()) {
-            if(note.isSelected()) {
+            if (note.isSelected()) {
                 resizedNotes.add(note);
             }
         }
-        ResizeAction resizeAction = new ResizeAction(resizedNotes, lastDragLocation.getX() - dragStartLocation.getX(), compositionManager);
+        ResizeAction resizeAction = new ResizeAction(resizedNotes, lastDragLocation
+                .getX() - dragStartLocation.getX(), compositionManager);
         compositionManager.actionCompleted(resizeAction);
     }
 
     /**
      * Handles the control click of the mouse.
-     *
+     * <p>
      * Responds to the control click of the mouse and selects/unselects
      * the appropriate notes.
      *
@@ -352,31 +362,34 @@ public class CompositionController {
      * @param y the y location of the mouse click on the pane
      */
     private void handleControlClickAt(double x, double y) {
-        Optional<NoteGroupable> noteAtClickLocation = compositionManager.getGroupableAtPoint(x, y);
+        Optional<NoteGroupable> noteAtClickLocation = compositionManager
+                .getGroupableAtPoint(x, y);
         // if there is a note at the click location
         if (noteAtClickLocation.isPresent()) {
             // if this note is already selected, unselect it
-            if (noteAtClickLocation.get().isSelected()){
+            if (noteAtClickLocation.get().isSelected()) {
                 compositionManager.deselectNote(noteAtClickLocation.get());
-                CompositionAction action = new DeselectAction(noteAtClickLocation.get(), compositionManager);
+                CompositionAction action = new DeselectAction(noteAtClickLocation.get()
+                        , compositionManager);
                 compositionManager.actionCompleted(action);
             }
             // if it is not selected, select it
             else {
                 compositionManager.selectGroupable(noteAtClickLocation.get());
-                CompositionAction action = new SelectAction(noteAtClickLocation.get(), compositionManager);
+                CompositionAction action = new SelectAction(noteAtClickLocation.get(),
+                        compositionManager);
                 compositionManager.actionCompleted(action);
             }
         }
         // add a new note
-        else{
+        else {
             compositionManager.addNoteToComposition(x, y);
         }
     }
 
     /**
      * Handles the click of the mouse.
-     *
+     * <p>
      * Responds to the click of the mouse and selects/unselects the appropriate notes.
      *
      * @param x the x location of the mouse click on the pane
@@ -384,11 +397,13 @@ public class CompositionController {
      */
     private void handleClickAt(double x, double y) {
         compositionManager.stop();
-        Optional<NoteGroupable> noteAtClickLocation = compositionManager.getGroupableAtPoint(x, y);
+        Optional<NoteGroupable> noteAtClickLocation = compositionManager
+                .getGroupableAtPoint(x, y);
         if (noteAtClickLocation.isPresent()) {
-            if (!noteAtClickLocation.get().isSelected()){
+            if (!noteAtClickLocation.get().isSelected()) {
                 compositionManager.clearSelectedNotes();
-                SelectAction selectAction = new SelectAction(noteAtClickLocation.get(), compositionManager);
+                SelectAction selectAction = new SelectAction(noteAtClickLocation.get(),
+                        compositionManager);
                 compositionManager.actionCompleted(selectAction);
                 compositionManager.selectGroupable(noteAtClickLocation.get());
             }
@@ -399,10 +414,11 @@ public class CompositionController {
 
     /**
      * Creates and adds the drag box to the view.
+     *
      * @param x X location of the box.
      * @param y Y location of the box.
      */
-    private void createDragBox(double x, double y){
+    private void createDragBox(double x, double y) {
         this.dragBox = new Rectangle(0, 0);
         this.dragBox.setX(x);
         this.dragBox.setY(y);

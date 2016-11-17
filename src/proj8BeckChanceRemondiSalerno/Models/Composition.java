@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
-@XmlRootElement(name="composition")
+@XmlRootElement(name = "composition")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Composition {
 
@@ -28,13 +28,14 @@ public class Composition {
      * The notes in the composition
      */
     @XmlElements({
-            @XmlElement(name="note", type=Note.class),
-            @XmlElement(name="group", type=NoteGroup.class)
+            @XmlElement(name = "note", type = Note.class),
+            @XmlElement(name = "group", type = NoteGroup.class)
     })
     private ArrayList<NoteGroupable> notes;
 
     /**
      * Constructor
+     *
      * @param notes Notes to be in the composition
      */
     public Composition(ArrayList<NoteGroupable> notes) {
@@ -44,10 +45,12 @@ public class Composition {
     /**
      * Empty Constructor
      */
-    public Composition() {}
+    public Composition() {
+    }
 
     /**
      * Getter for the notes in the composition
+     *
      * @return The notes in the composition
      */
     public ArrayList<NoteGroupable> getNotes() {

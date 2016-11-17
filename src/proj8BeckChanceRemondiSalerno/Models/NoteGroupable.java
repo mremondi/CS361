@@ -9,13 +9,15 @@
 package proj8BeckChanceRemondiSalerno.Models;
 
 import proj8BeckChanceRemondiSalerno.XMLAdapters.NoteGroupableAdapter;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * This interface models something that can be grouped with other groupables on a composition
+ * This interface models something that can be grouped with other groupables on a
+ * composition
  *
  * @author Graham Chance
  * @author Charlie Beck
@@ -28,6 +30,7 @@ public interface NoteGroupable extends Cloneable, Serializable {
 
     /**
      * Returns all of the notes in the Groupable object
+     *
      * @return an ArrayList of Notes
      */
     ArrayList<Note> getNotes();

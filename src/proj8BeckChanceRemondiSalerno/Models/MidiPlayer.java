@@ -76,7 +76,7 @@ public class MidiPlayer {
         ShortMessage message = new ShortMessage();
         try {
             message.setMessage(status, data1, data2);
-            MidiEvent event = new MidiEvent(message, (long)startTick);
+            MidiEvent event = new MidiEvent(message, (long) startTick);
             track.add(event);
         } catch (InvalidMidiDataException e) {
             e.printStackTrace();

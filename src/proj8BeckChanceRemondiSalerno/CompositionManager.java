@@ -23,14 +23,20 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import proj8BeckChanceRemondiSalerno.CompositionActions.*;
-import proj8BeckChanceRemondiSalerno.Controllers.*;
+import proj8BeckChanceRemondiSalerno.Controllers.CompositionController;
+import proj8BeckChanceRemondiSalerno.Controllers.InstrumentPaneController;
+import proj8BeckChanceRemondiSalerno.Controllers.TempoLineController;
 import proj8BeckChanceRemondiSalerno.Models.Composition;
 import proj8BeckChanceRemondiSalerno.Models.Note;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroup;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj8BeckChanceRemondiSalerno.Views.NoteGroupablePane;
 import proj8BeckChanceRemondiSalerno.Views.NoteRectangle;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * This class models a composition sheet manager.
@@ -47,7 +53,8 @@ public class CompositionManager {
     /**
      * The map for matching note models to their views
      */
-    private ObservableMap<NoteGroupable, NoteGroupablePane> noteGroupableRectsMap = FXCollections.observableHashMap();
+    private ObservableMap<NoteGroupable, NoteGroupablePane> noteGroupableRectsMap =
+            FXCollections.observableHashMap();
 
     /**
      * The controller for the tempo line
@@ -72,12 +79,14 @@ public class CompositionManager {
     /**
      * Manager for the performed composition actions
      */
-    private CompositionActionManager compositionActionManager = new CompositionActionManager();
+    private CompositionActionManager compositionActionManager = new
+            CompositionActionManager();
 
     /**
      * The property for the notes map
      */
-    private SimpleMapProperty<NoteGroupable, NoteGroupablePane> notesMapProperty = new SimpleMapProperty<>();
+    private SimpleMapProperty<NoteGroupable, NoteGroupablePane> notesMapProperty = new
+            SimpleMapProperty<>();
 
     /**
      * The property for whether nothing is selected
@@ -131,17 +140,20 @@ public class CompositionManager {
 
     /**
      * Setter for tempo line controller
+     *
      * @param tempoLineControllerontroller the new tempo line controller
      */
-    public void setTempoLineController(TempoLineController tempoLineControllerontroller){
+    public void setTempoLineController(TempoLineController tempoLineControllerontroller) {
         this.tempoLineController = tempoLineControllerontroller;
     }
 
     /**
      * Setter for the instrument controller
+     *
      * @param instrumentPaneController The new instrument controller
      */
-    public void setInstrumentPaneController(InstrumentPaneController instrumentPaneController) {
+    public void setInstrumentPaneController(InstrumentPaneController
+                                                    instrumentPaneController) {
         this.instrumentPaneController = instrumentPaneController;
     }
 
@@ -150,7 +162,7 @@ public class CompositionManager {
      *
      * @param compositionController the new composition controller
      */
-    public void setCompositionController(CompositionController compositionController){
+    public void setCompositionController(CompositionController compositionController) {
         this.compositionController = compositionController;
     }
 
@@ -187,13 +199,14 @@ public class CompositionManager {
      *
      * @param xPos the input x position of the note
      * @param yPos the input y position of the note
-     *
      * @return the note added
      */
     public Optional<Note> addNoteToComposition(double xPos, double yPos) {
         if (yPos >= 0 && yPos < 1280) {
-            Note note = new Note(xPos, yPos, 100, instrumentPaneController.getCurrentInstrumentIndex());
-            AddNoteAction addNoteAction = new AddNoteAction(note, getSelectedNotes(), this);
+            Note note = new Note(xPos, yPos, 100, instrumentPaneController
+                    .getCurrentInstrumentIndex());
+            AddNoteAction addNoteAction = new AddNoteAction(note, getSelectedNotes(),
+                    this);
             compositionActionManager.actionCompleted(addNoteAction);
             clearSelectedNotes();
             addGroupable(note);
@@ -205,6 +218,7 @@ public class CompositionManager {
 
     /**
      * Creates a note group from current selected groupables
+     *
      * @return
      */
     public Optional<NoteGroup> createNoteGroupWithSelectedNotes() {
@@ -238,14 +252,14 @@ public class CompositionManager {
      * Delegates the moving of notes to the Composition Controller.
      *
      * @param notes an ArrayList of notes to move
-     * @param dx the change in x
-     * @param dy the change in y
+     * @param dx    the change in x
+     * @param dy    the change in y
      */
     public void moveNotes(ArrayList<NoteGroupable> notes, double dx, double dy) {
         for (NoteGroupable note : notes) {
             compositionController.moveNote(note, dx, dy);
             note.changeStartTick(dx);
-            note.changePitch(-dy/10);
+            note.changePitch(-dy / 10);
         }
     }
 
@@ -253,7 +267,7 @@ public class CompositionManager {
      * Delegates the resizing of notes to the Composition Controller.
      *
      * @param notes an ArrayList of notes to resize
-     * @param dx the change in x
+     * @param dx    the change in x
      */
     public void resizeNotes(ArrayList<NoteGroupable> notes, double dx) {
         for (NoteGroupable note : notes) {
@@ -272,8 +286,10 @@ public class CompositionManager {
             }
         }
 
-        if (groupsToUnGroup.size() != 1) { return; }
-        NoteGroup group = (NoteGroup)groupsToUnGroup.get(0);
+        if (groupsToUnGroup.size() != 1) {
+            return;
+        }
+        NoteGroup group = (NoteGroup) groupsToUnGroup.get(0);
         ungroup(group);
         UngroupAction ungroupAction = new UngroupAction(group, this);
         compositionActionManager.actionCompleted(ungroupAction);
@@ -285,7 +301,8 @@ public class CompositionManager {
      * @param group the NoteGroup to ungroup
      */
     public void ungroup(NoteGroup group) {
-        ArrayList<NoteGroupable> subNoteGroupables = ((NoteGroup) group).getNoteGroupables();
+        ArrayList<NoteGroupable> subNoteGroupables = ((NoteGroup) group)
+                .getNoteGroupables();
 
         compositionController.removeNotePane(noteGroupableRectsMap.get(group));
         noteGroupableRectsMap.remove(group);
@@ -314,6 +331,7 @@ public class CompositionManager {
 
     /**
      * Getter for the groupable models
+     *
      * @return All groupable models in composition
      */
     public Set<NoteGroupable> getGroupables() {
@@ -323,6 +341,7 @@ public class CompositionManager {
 
     /**
      * Selects a note groupable
+     *
      * @param noteGroupable The groupable to select
      */
     public void selectGroupable(NoteGroupable noteGroupable) {
@@ -333,9 +352,10 @@ public class CompositionManager {
 
     /**
      * Deselects a note groupable
+     *
      * @param noteGroupable The groupable to deselect
      */
-    public void deselectNote(NoteGroupable noteGroupable){
+    public void deselectNote(NoteGroupable noteGroupable) {
         noteGroupable.setSelected(false);
         noteGroupableRectsMap.get(noteGroupable).setSelected(false);
         updateProperties();
@@ -343,10 +363,11 @@ public class CompositionManager {
 
     /**
      * Getter for group pane corresponding to a groupable
+     *
      * @param noteGroupable The groupable to get the view for
      * @return The view for the groupable
      */
-    public NoteGroupablePane getGroupPane(NoteGroupable noteGroupable){
+    public NoteGroupablePane getGroupPane(NoteGroupable noteGroupable) {
         return noteGroupableRectsMap.get(noteGroupable);
     }
 
@@ -359,7 +380,8 @@ public class CompositionManager {
     public ArrayList<NoteGroupable> selectNotesIntersectingRectangle(Bounds bounds) {
         ArrayList<NoteGroupable> selectedNotes = new ArrayList();
         for (NoteGroupable noteGroupable : getGroupables()) {
-            if (getGroupPane(noteGroupable).getIsInRectangleBounds(bounds.getMinX(), bounds.getMinY(),
+            if (getGroupPane(noteGroupable).getIsInRectangleBounds(bounds.getMinX(),
+                    bounds.getMinY(),
                     bounds.getMaxX(), bounds.getMaxY())) {
                 selectGroupable(noteGroupable);
                 selectedNotes.add(noteGroupable);
@@ -392,7 +414,7 @@ public class CompositionManager {
      */
     public void clearSelectedNotes() {
         for (NoteGroupable noteGroupable : noteGroupableRectsMap.keySet()) {
-            if (noteGroupable.isSelected()){
+            if (noteGroupable.isSelected()) {
                 this.deselectNote(noteGroupable);
             }
         }
@@ -401,7 +423,7 @@ public class CompositionManager {
     /**
      * Plays the sequence of notes and animates the TempoLine.
      */
-    public void play(){
+    public void play() {
         compositionPlayer.play(getNotes());
         double stopTime = this.calculateStopTime();
         this.tempoLineController.updateTempoLine(stopTime);
@@ -411,7 +433,7 @@ public class CompositionManager {
     /**
      * Stops the midiPlayer and hides the tempoLine.
      */
-    public void stop(){
+    public void stop() {
         compositionPlayer.stop();
         this.tempoLineController.stopAnimation();
         this.tempoLineController.hideTempoLine();
@@ -431,7 +453,8 @@ public class CompositionManager {
 
         deleteGroupables(groupablesToDelete);
 
-        DeleteGroupablesAction deleteGroupableAction = new DeleteGroupablesAction(groupablesToDelete, this);
+        DeleteGroupablesAction deleteGroupableAction = new DeleteGroupablesAction
+                (groupablesToDelete, this);
         compositionActionManager.actionCompleted(deleteGroupableAction);
     }
 
@@ -452,7 +475,8 @@ public class CompositionManager {
      * @param noteGroupable the NoteGroupable to delete
      */
     public void deleteGroupable(NoteGroupable noteGroupable) {
-        Platform.runLater(() -> { // avoids ConcurrentModificationException if iterating over notes to delete
+        Platform.runLater(() -> { // avoids ConcurrentModificationException if
+            // iterating over notes to delete
             NoteGroupablePane groupPane = noteGroupableRectsMap.get(noteGroupable);
             compositionController.removeNotePane(groupPane);
             noteGroupableRectsMap.remove(noteGroupable);
@@ -463,7 +487,7 @@ public class CompositionManager {
      * Deselects all notes on the composition
      */
     public void deselectAllNotes() {
-        for (NoteGroupable noteGroupable: getGroupables()) {
+        for (NoteGroupable noteGroupable : getGroupables()) {
             deselectNote(noteGroupable);
         }
     }
@@ -495,6 +519,7 @@ public class CompositionManager {
 
     /**
      * Adds a
+     *
      * @param noteGroupable
      */
     public void addGroupable(NoteGroupable noteGroupable) {
@@ -551,12 +576,14 @@ public class CompositionManager {
 
     /**
      * Creates a new NoteGroupablePane based on a group
+     *
      * @param noteGroupable The groupable to create a pane for
      * @return the new groupable pane
      */
     private NoteGroupablePane createNoteGroupablePane(NoteGroupable noteGroupable) {
         NoteGroupablePane groupablePane = new NoteGroupablePane();
-        groupablePane.setMinHeight(noteGroupable.getMaxPitch() - noteGroupable.getMinPitch() + 10);
+        groupablePane.setMinHeight(noteGroupable.getMaxPitch() - noteGroupable
+                .getMinPitch() + 10);
         int x = noteGroupable.getStartTick();
         int y = (127 - noteGroupable.getMaxPitch()) * 10;
         groupablePane.setLayoutX(x);
@@ -564,7 +591,7 @@ public class CompositionManager {
 
         if (noteGroupable instanceof Note) {
             Note note = (Note) noteGroupable;
-            NoteRectangle noteBox = new NoteRectangle(noteGroupable.getDuration(),0,0);
+            NoteRectangle noteBox = new NoteRectangle(noteGroupable.getDuration(), 0, 0);
             noteBox.setFill(getInstrumentColor(note.getChannel()));
             groupablePane.getChildren().add(noteBox);
             groupablePane.setContainsSingleNote(true);
@@ -572,9 +599,12 @@ public class CompositionManager {
         } else {
             NoteGroup group = (NoteGroup) noteGroupable;
             for (NoteGroupable subNoteGroupable : group.getNoteGroupables()) {
-                NoteGroupablePane subGroupRect = createNoteGroupablePane(subNoteGroupable);
-                subGroupRect.setLayoutX(subGroupRect.getLayoutX()-groupablePane.getLayoutX());
-                subGroupRect.setLayoutY(subGroupRect.getLayoutY()-groupablePane.getLayoutY());
+                NoteGroupablePane subGroupRect = createNoteGroupablePane
+                        (subNoteGroupable);
+                subGroupRect.setLayoutX(subGroupRect.getLayoutX() - groupablePane
+                        .getLayoutX());
+                subGroupRect.setLayoutY(subGroupRect.getLayoutY() - groupablePane
+                        .getLayoutY());
                 groupablePane.getChildren().add(subGroupRect);
             }
             return groupablePane;
@@ -584,14 +614,14 @@ public class CompositionManager {
     /**
      * Tells the ActionManager to redo the last undone action.
      */
-    public void redoLastUndoneAction(){
+    public void redoLastUndoneAction() {
         this.compositionActionManager.redoLastUndoneAction();
     }
 
     /**
      * Tells the ActionManager to undo the last action.
      */
-    public void undoLastAction(){
+    public void undoLastAction() {
         this.compositionActionManager.undoLastAction();
     }
 
@@ -600,7 +630,7 @@ public class CompositionManager {
      *
      * @param action The completed CompositionAction
      */
-    public void actionCompleted(CompositionAction action){
+    public void actionCompleted(CompositionAction action) {
         changeSinceLastSave = true;
         this.compositionActionManager.actionCompleted(action);
     }
@@ -608,6 +638,7 @@ public class CompositionManager {
 
     /**
      * Getter for emptyProperty of notesMapProperty
+     *
      * @return emptyProperty of notesMapProperty
      */
     public ReadOnlyBooleanProperty getNotesEmptyProperty() {
@@ -616,6 +647,7 @@ public class CompositionManager {
 
     /**
      * Getter for isNothingSelectedProperty
+     *
      * @return isNothingSelectedProperty
      */
     public SimpleBooleanProperty getIsNothingSelectedProperty() {
@@ -624,6 +656,7 @@ public class CompositionManager {
 
     /**
      * Getter for clipboardEmptyProperty
+     *
      * @return clipboardEmptyProperty
      */
     public SimpleBooleanProperty getClipboardEmptyProperty() {
@@ -632,6 +665,7 @@ public class CompositionManager {
 
     /**
      * Getter for undoEmptyProperty
+     *
      * @return undoEmptyProperty
      */
     public SimpleBooleanProperty getUndoEmptyProperty() {
@@ -640,6 +674,7 @@ public class CompositionManager {
 
     /**
      * Getter for redoEmptyProperty
+     *
      * @return redoEmptyProperty
      */
     public SimpleBooleanProperty getRedoEmptyProperty() {
@@ -648,6 +683,7 @@ public class CompositionManager {
 
     /**
      * Getter for cannotGroupProperty
+     *
      * @return cannotGroupProperty
      */
     public SimpleBooleanProperty getCannotGroupProperty() {
@@ -656,6 +692,7 @@ public class CompositionManager {
 
     /**
      * Getter for cannotUngroupProperty
+     *
      * @return cannotUngroupProperty
      */
     public SimpleBooleanProperty getCannotUngroupProperty() {
@@ -667,8 +704,8 @@ public class CompositionManager {
      */
     private void updateProperties() {
         int selectedCount = getSelectedNotes().size();
-        isNothingSelectedProperty.set(selectedCount==0);
-        cannotGroupProperty.set(selectedCount<2);
+        isNothingSelectedProperty.set(selectedCount == 0);
+        cannotGroupProperty.set(selectedCount < 2);
         cannotUngroupProperty.set(!(getSelectedNotes().size() == 1
                 && getSelectedNotes().get(0) instanceof NoteGroup));
     }
@@ -678,10 +715,11 @@ public class CompositionManager {
      */
     public void saveComposition() {
         changeSinceLastSave = false;
-        Composition composition = new Composition(new ArrayList<>(notesMapProperty.keySet()));
+        Composition composition = new Composition(new ArrayList<>(notesMapProperty
+                .keySet()));
         try {
             compositionFileManager.saveComposition(composition);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -691,10 +729,11 @@ public class CompositionManager {
      */
     public void saveCompositionAsNew() {
         changeSinceLastSave = false;
-        Composition composition = new Composition(new ArrayList<>(notesMapProperty.keySet()));
+        Composition composition = new Composition(new ArrayList<>(notesMapProperty
+                .keySet()));
         try {
             compositionFileManager.saveCompositionAsNew(composition);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -720,23 +759,26 @@ public class CompositionManager {
 
     /**
      * Determines whether the current composition can be discarded
+     *
      * @return whether the current composition can be discarded
      */
     public boolean canDiscardComposition() {
         if (changeSinceLastSave) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Save Changes");
-            alert.setHeaderText("Would you like to save your changes before creating a new composition?");
+            alert.setHeaderText("Would you like to save your changes before creating a " +
+                    "new composition?");
             alert.setContentText("Your changes will be lost if you do not save.");
 
             ButtonType yesButton = new ButtonType("Yes");
             ButtonType noButton = new ButtonType("No");
-            ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+            ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData
+                    .CANCEL_CLOSE);
 
             alert.getButtonTypes().setAll(yesButton, noButton, buttonTypeCancel);
 
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == yesButton){
+            if (result.get() == yesButton) {
                 saveComposition();
                 return true;
             } else if (result.get() == noButton) {

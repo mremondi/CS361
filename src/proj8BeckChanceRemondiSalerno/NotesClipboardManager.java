@@ -15,10 +15,10 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
 import proj8BeckChanceRemondiSalerno.CompositionActions.PasteAction;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
+
 import java.util.ArrayList;
 
 /**
- *
  * This class models a manager for cutting, copying, and pasting notes
  *
  * @author Graham Chance
@@ -45,6 +45,7 @@ public class NotesClipboardManager {
 
     /**
      * Constructor
+     *
      * @param compositionManager The composition manager
      */
     NotesClipboardManager(CompositionManager compositionManager) {
@@ -54,6 +55,7 @@ public class NotesClipboardManager {
 
     /**
      * Copies the given notes to the clipboard and removes them from the composition
+     *
      * @param notes notes to cut
      */
     public void cutNotes(ArrayList<NoteGroupable> notes) {
@@ -64,6 +66,7 @@ public class NotesClipboardManager {
 
     /**
      * Copies the given notes to the clipboard
+     *
      * @param notes notes to copy
      */
     public void copyNotes(ArrayList<NoteGroupable> notes) {
@@ -93,22 +96,25 @@ public class NotesClipboardManager {
 
     /**
      * Gets a list of notes currently on the clipboard
+     *
      * @return An array list of notes from the clipboard.
      */
     private ArrayList<NoteGroupable> getNotesOnClipboard() {
         Object content = Clipboard.getSystemClipboard().getContent(notesClipboardKey);
         try {
-            ArrayList<NoteGroupable> notes = (ArrayList<NoteGroupable>)content;
+            ArrayList<NoteGroupable> notes = (ArrayList<NoteGroupable>) content;
             if (notes != null) {
                 return notes;
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
 
         return new ArrayList<NoteGroupable>(); // return empty list
     }
 
     /**
      * Getter for clipboardEmptyProperty
+     *
      * @return clipboardEmptyProperty
      */
     public SimpleBooleanProperty getClipboardEmptyProperty() {

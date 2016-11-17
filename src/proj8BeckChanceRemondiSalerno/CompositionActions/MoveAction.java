@@ -10,6 +10,7 @@ package proj8BeckChanceRemondiSalerno.CompositionActions;
 
 import proj8BeckChanceRemondiSalerno.CompositionManager;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
+
 import java.util.ArrayList;
 
 /**
@@ -41,16 +42,17 @@ public class MoveAction extends CompositionAction {
      * Constructor
      *
      * @param movedNotes an ArrayList of moved notes
-     * @param dx the change in the x direction
-     * @param dy the change in the y direction
+     * @param dx         the change in the x direction
+     * @param dy         the change in the y direction
      */
-    public MoveAction(ArrayList<NoteGroupable> movedNotes, double dx, double dy, CompositionManager compositionManager) {
+    public MoveAction(ArrayList<NoteGroupable> movedNotes, double dx, double dy,
+                      CompositionManager compositionManager) {
         this.compositionManager = compositionManager;
         this.movedNotes = movedNotes;
         this.dx = dx;
         if (dy % 10 < 5) {
             this.dy = dy - (dy % 10);
-        } else{
+        } else {
             this.dy = dy - 10 - (dy % 10);
         }
     }

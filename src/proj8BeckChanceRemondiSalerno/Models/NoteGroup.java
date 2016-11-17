@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
-@XmlRootElement(name="group")
+@XmlRootElement(name = "group")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class NoteGroup implements NoteGroupable {
 
@@ -28,8 +28,8 @@ public class NoteGroup implements NoteGroupable {
      * the groupables contained in the group
      */
     @XmlElements({
-            @XmlElement(name="note", type=Note.class),
-            @XmlElement(name="group", type=NoteGroup.class)
+            @XmlElement(name = "note", type = Note.class),
+            @XmlElement(name = "group", type = NoteGroup.class)
     })
 
     /**
@@ -44,6 +44,7 @@ public class NoteGroup implements NoteGroupable {
 
     /**
      * Constructor
+     *
      * @param noteGroupables groupables
      */
     public NoteGroup(ArrayList<NoteGroupable> noteGroupables) {
@@ -68,6 +69,7 @@ public class NoteGroup implements NoteGroupable {
 
     /**
      * Getter for current selection state
+     *
      * @return Whether the group is selected.
      */
     @Override
@@ -77,6 +79,7 @@ public class NoteGroup implements NoteGroupable {
 
     /**
      * Setter for selected
+     *
      * @param selected new selection state
      */
     @Override
@@ -86,6 +89,7 @@ public class NoteGroup implements NoteGroupable {
 
     /**
      * Getter for duration
+     *
      * @return the duration of the group
      */
     @Override
@@ -95,11 +99,14 @@ public class NoteGroup implements NoteGroupable {
 
     /**
      * Getter for the start tick
+     *
      * @return The start tick of the group
      */
     @Override
     public int getStartTick() {
-        if (getNotes().isEmpty()) { return 0; }
+        if (getNotes().isEmpty()) {
+            return 0;
+        }
         int minStartTick = noteGroupables.get(0).getStartTick();
         for (NoteGroupable noteGroupable : noteGroupables) {
             if (noteGroupable.getStartTick() < minStartTick) {
@@ -111,11 +118,14 @@ public class NoteGroup implements NoteGroupable {
 
     /**
      * getter for end tick
+     *
      * @return the end tick of the group
      */
     @Override
     public int getEndTick() {
-        if (getNotes().isEmpty()) { return 0; }
+        if (getNotes().isEmpty()) {
+            return 0;
+        }
         int maxEndTick = noteGroupables.get(0).getEndTick();
         for (NoteGroupable noteGroupable : noteGroupables) {
             if (noteGroupable.getEndTick() > maxEndTick) {
@@ -127,6 +137,7 @@ public class NoteGroup implements NoteGroupable {
 
     /**
      * Changes all the note durations in the group
+     *
      * @param dx how much to change it by
      */
     @Override
@@ -138,11 +149,14 @@ public class NoteGroup implements NoteGroupable {
 
     /**
      * Getter for the max pitch
+     *
      * @return The max pitch in the group
      */
     @Override
     public int getMaxPitch() {
-        if (getNotes().isEmpty()) { return 0; }
+        if (getNotes().isEmpty()) {
+            return 0;
+        }
         int maxPitch = noteGroupables.get(0).getMaxPitch();
         for (NoteGroupable noteGroupable : noteGroupables) {
             if (noteGroupable.getMaxPitch() > maxPitch) {
@@ -154,11 +168,14 @@ public class NoteGroup implements NoteGroupable {
 
     /**
      * Getter for min pitch
+     *
      * @return The min pitch for the group
      */
     @Override
     public int getMinPitch() {
-        if (getNotes().isEmpty()) { return 0; }
+        if (getNotes().isEmpty()) {
+            return 0;
+        }
         int minPitch = noteGroupables.get(0).getMinPitch();
         for (NoteGroupable noteGroupable : noteGroupables) {
             if (noteGroupable.getMinPitch() < minPitch) {
@@ -170,6 +187,7 @@ public class NoteGroup implements NoteGroupable {
 
     /**
      * Gets the groupables contained in the group
+     *
      * @return all sub groupables of the group
      */
     public ArrayList<NoteGroupable> getNoteGroupables() {
@@ -178,6 +196,7 @@ public class NoteGroup implements NoteGroupable {
 
     /**
      * Changes the start tick of the group
+     *
      * @param dx changes the start tick of the group
      */
     @Override
@@ -189,6 +208,7 @@ public class NoteGroup implements NoteGroupable {
 
     /**
      * Changes the pitches of all the sub groups
+     *
      * @param dy how much to change the pitches by
      */
     @Override
@@ -207,7 +227,7 @@ public class NoteGroup implements NoteGroupable {
     public NoteGroup clone() {
         NoteGroup clone;
         try {
-            clone = (NoteGroup)super.clone();
+            clone = (NoteGroup) super.clone();
         } catch (CloneNotSupportedException e) {
             System.out.println(e);
             return null;

@@ -21,15 +21,15 @@
             text="Harpsichord"
             textFill="green"
             toggleGroup="$instrumentGroup"/>
-    <RadioButton layoutX="10.0" layoutY="90.0"  text="Marimba" textFill="blue"
+    <RadioButton layoutX="10.0" layoutY="90.0" text="Marimba" textFill="blue"
                  toggleGroup="$instrumentGroup"/>
-    <RadioButton layoutX="10.0" layoutY="130.0"  text="Organ"
+    <RadioButton layoutX="10.0" layoutY="130.0" text="Organ"
                  textFill="goldenrod" toggleGroup="$instrumentGroup"/>
-    <RadioButton layoutX="10.0" layoutY="170.0"  text="Accordion"
+    <RadioButton layoutX="10.0" layoutY="170.0" text="Accordion"
                  textFill="magenta" toggleGroup="$instrumentGroup"/>
-    <RadioButton layoutX="10.0" layoutY="210.0"  text="Guitar"
+    <RadioButton layoutX="10.0" layoutY="210.0" text="Guitar"
                  textFill="deepskyblue" toggleGroup="$instrumentGroup"/>
-    <RadioButton layoutX="10.0" layoutY="250.0"  text="Violin"
+    <RadioButton layoutX="10.0" layoutY="250.0" text="Violin"
                  textFill="black" toggleGroup="$instrumentGroup"/>
     <RadioButton layoutX="10.0" layoutY="290.0" text="French Horn"
                  textFill="brown" toggleGroup="$instrumentGroup"/>

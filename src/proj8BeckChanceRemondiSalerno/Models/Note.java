@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
-@XmlRootElement(name="note")
+@XmlRootElement(name = "note")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Note implements NoteGroupable {
 
@@ -72,10 +72,10 @@ public class Note implements NoteGroupable {
     /**
      * Constructor
      *
-     * @param channel    the channel that the note belongs to
+     * @param channel the channel that the note belongs to
      */
     public Note(double x, double y, int duration, int channel) {
-        setPitch((int)y);
+        setPitch((int) y);
         setStartTick((int) x);
         this.duration = duration;
         this.channel = channel;
@@ -93,9 +93,10 @@ public class Note implements NoteGroupable {
 
     /**
      * Setter for pitch
+     *
      * @param y the new pitch
      */
-    private void setPitch(int y){
+    private void setPitch(int y) {
         this.pitch = 127 - ((int) y / 10);
     }
 
@@ -121,9 +122,10 @@ public class Note implements NoteGroupable {
 
     /**
      * Setter for start tick
+     *
      * @param x the new start tick
      */
-    private void setStartTick(int x){
+    private void setStartTick(int x) {
         this.startTick = x;
     }
 
@@ -141,7 +143,7 @@ public class Note implements NoteGroupable {
      *
      * @param duration the new duration
      */
-    private void setDuration(double duration){
+    private void setDuration(double duration) {
         this.duration = duration;
     }
 
@@ -189,6 +191,7 @@ public class Note implements NoteGroupable {
 
     /**
      * Updates the selected state
+     *
      * @param selected new selected state
      */
     public void setSelected(boolean selected) {
@@ -209,16 +212,18 @@ public class Note implements NoteGroupable {
 
     /**
      * Gets the end tick of the note
+     *
      * @return the end tick
      */
     @Override
     public int getEndTick() {
-        return startTick + (int)duration;
+        return startTick + (int) duration;
     }
 
 
     /**
      * Gets the end tick of the note
+     *
      * @return the end tick
      */
     @Override
@@ -228,6 +233,7 @@ public class Note implements NoteGroupable {
 
     /**
      * Gets the min pitch of the note
+     *
      * @return the min pitch
      */
     @Override
@@ -238,6 +244,7 @@ public class Note implements NoteGroupable {
 
     /**
      * Changes the pitch of the note
+     *
      * @param dy how much to change the pitch by
      */
     @Override
@@ -247,6 +254,7 @@ public class Note implements NoteGroupable {
 
     /**
      * Changes the start tick of the note
+     *
      * @param dx how much to change the start tick by
      */
     @Override
@@ -257,7 +265,7 @@ public class Note implements NoteGroupable {
     @Override
     public Note clone() {
         try {
-            return (Note)super.clone();
+            return (Note) super.clone();
         } catch (CloneNotSupportedException e) {
             System.out.println(e);
             return null;

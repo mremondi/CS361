@@ -10,6 +10,7 @@ package proj8BeckChanceRemondiSalerno.CompositionActions;
 
 import proj8BeckChanceRemondiSalerno.CompositionManager;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
+
 import java.util.ArrayList;
 
 /**
@@ -32,7 +33,8 @@ public class DeleteGroupablesAction extends CompositionAction {
      *
      * @param groupables the NoteGroupables to be deleted
      */
-    public DeleteGroupablesAction(ArrayList<NoteGroupable> groupables, CompositionManager compositionManager) {
+    public DeleteGroupablesAction(ArrayList<NoteGroupable> groupables,
+                                  CompositionManager compositionManager) {
         this.compositionManager = compositionManager;
         this.groupables = groupables;
     }

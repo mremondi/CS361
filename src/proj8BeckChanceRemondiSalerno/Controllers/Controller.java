@@ -63,7 +63,8 @@ public class Controller {
         compositionController.setCompositionManager(compositionManager);
         compositionManager.setCompositionController(compositionController);
         compositionManager.setInstrumentPaneController(instrumentPaneController);
-        compositionManager.setTempoLineController(new TempoLineController(tempoLineContainerPane));
+        compositionManager.setTempoLineController(new TempoLineController
+                (tempoLineContainerPane));
         menuBarController.setCompositionManager(compositionManager);
     }
 

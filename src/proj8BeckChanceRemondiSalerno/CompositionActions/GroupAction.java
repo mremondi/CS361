@@ -41,7 +41,7 @@ public class GroupAction extends CompositionAction {
      * Redoes the grouping of the specified NoteGroup.
      */
     public void redo() {
-        for (NoteGroupable noteGroupable: group.getNoteGroupables()) {
+        for (NoteGroupable noteGroupable : group.getNoteGroupables()) {
             compositionManager.deleteGroupable(noteGroupable);
         }
         compositionManager.addGroupable(group);

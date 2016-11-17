@@ -12,6 +12,7 @@ import javafx.stage.FileChooser;
 import proj8BeckChanceRemondiSalerno.Models.Composition;
 import proj8BeckChanceRemondiSalerno.Models.Note;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroup;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
@@ -52,10 +53,12 @@ public class CompositionFileManager {
      * Constructor
      */
     public CompositionFileManager() {
-        FileChooser.ExtensionFilter fileExtensions = new FileChooser.ExtensionFilter("XML Files (.xml)", "*.xml");
+        FileChooser.ExtensionFilter fileExtensions = new FileChooser.ExtensionFilter
+                ("XML Files (.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(fileExtensions);
         try {
-            JAXBContext context = JAXBContext.newInstance(Note.class,NoteGroup.class, Composition.class);
+            JAXBContext context = JAXBContext.newInstance(Note.class, NoteGroup.class,
+                    Composition.class);
             marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             unmarshaller = context.createUnmarshaller();
@@ -65,7 +68,9 @@ public class CompositionFileManager {
     }
 
     /**
-     * Saves a composition to either the current saved composition or new file if there is none
+     * Saves a composition to either the current saved composition or new file if there
+     * is none
+     *
      * @param composition The composition to save
      * @throws Exception Thrown if saving fails
      */
@@ -80,6 +85,7 @@ public class CompositionFileManager {
 
     /**
      * Saves a composition to a new file of the user's choice
+     *
      * @param composition The composition to save
      * @throws Exception Thrown if saving fails
      */
@@ -92,13 +98,14 @@ public class CompositionFileManager {
 
     /**
      * Loads a composition from a file of the user's choice
+     *
      * @return The loaded composition
      * @throws Exception Thrown if loading fails
      */
     public Optional<Composition> openComposition() throws Exception {
         File selectedFile = fileChooser.showOpenDialog(null);
-        if (selectedFile!=null) {
-            Composition composition = (Composition)unmarshaller.unmarshal(selectedFile);
+        if (selectedFile != null) {
+            Composition composition = (Composition) unmarshaller.unmarshal(selectedFile);
             currentSavePath = Optional.of(selectedFile.getAbsolutePath());
             Main.setPrimaryStageTitle(selectedFile.getName());
             return Optional.of(composition);

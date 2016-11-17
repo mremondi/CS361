@@ -10,6 +10,7 @@ package proj8BeckChanceRemondiSalerno;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import proj8BeckChanceRemondiSalerno.CompositionActions.CompositionAction;
+
 import java.util.Stack;
 
 /**
@@ -30,7 +31,7 @@ public class CompositionActionManager {
     /**
      * The stack for remembering each CompositionAction for undoing.
      */
-    private  Stack<CompositionAction> undoActions = new Stack<>();
+    private Stack<CompositionAction> undoActions = new Stack<>();
 
     /**
      * The Boolean Property for binding to the undoStack

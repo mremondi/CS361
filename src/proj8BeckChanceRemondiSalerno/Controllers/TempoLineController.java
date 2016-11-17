@@ -43,6 +43,7 @@ public class TempoLineController {
 
     /**
      * Constructor
+     *
      * @param tempoLineContainerPane The main pane to create the tempo line in.
      */
     public TempoLineController(Pane tempoLineContainerPane) {
@@ -93,6 +94,7 @@ public class TempoLineController {
 
     /**
      * Creates the tempo line and adds it to the container pane.
+     *
      * @return
      */
     private Line createTempoLine() {

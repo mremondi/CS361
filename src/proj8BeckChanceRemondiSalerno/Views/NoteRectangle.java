@@ -33,9 +33,10 @@ public class NoteRectangle extends Rectangle implements NoteView {
 
     /**
      * Constructor
+     *
      * @param width width of the note
-     * @param x x location
-     * @param y y location
+     * @param x     x location
+     * @param y     y location
      */
     public NoteRectangle(double width, double x, double y) {
         super(width, 10);
@@ -45,6 +46,7 @@ public class NoteRectangle extends Rectangle implements NoteView {
 
     /**
      * Setter for selected state
+     *
      * @param selected new selected state
      */
     public void setSelected(boolean selected) {
@@ -60,10 +62,11 @@ public class NoteRectangle extends Rectangle implements NoteView {
 
     /**
      * Changes the width of the pane
+     *
      * @param dx How much to change the width by
      */
     public void changeWidth(double dx) {
-        if (this.getWidth() + dx < MINIMUM_WIDTH){
+        if (this.getWidth() + dx < MINIMUM_WIDTH) {
             setWidth(MINIMUM_WIDTH);
         } else {
             setWidth(getWidth() + dx);

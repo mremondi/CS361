@@ -33,6 +33,7 @@ public class Main extends Application {
 
     /**
      * Sets the main stage title
+     *
      * @param title The new title
      */
     public static void setPrimaryStageTitle(String title) {
@@ -52,7 +53,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         BorderPane root = null;
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Views/Main.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Views/Main" +
+                    ".fxml"));
             root = fxmlLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
