@@ -121,7 +121,9 @@ public class CompositionController {
     public void handleMouseReleased(MouseEvent mouseEvent) {
         handleDragEnded();
         if (!isDragging) {
-            if (mouseEvent.isControlDown()) {
+            if (mouseEvent.isSecondaryButtonDown()) {
+                handleRightClick(mouseEvent.getX(), mouseEvent.getY());
+            } else if (mouseEvent.isControlDown()) {
                 handleControlClickAt(mouseEvent.getX(), mouseEvent.getY());
             } else {
                 handleClickAt(mouseEvent.getX(), mouseEvent.getY());
@@ -130,6 +132,27 @@ public class CompositionController {
         lastDragLocation.x = mouseEvent.getX();
         lastDragLocation.y = mouseEvent.getY();
         isDragging = false;
+    }
+
+    /**
+     * Handles a right mouse click
+     * @param x x location of click
+     * @param y y location of click
+     */
+    private void handleRightClick(double x, double y) {
+        Optional<NoteGroupable> noteAtClickLocation = compositionManager
+                .getGroupableAtPoint(x, y);
+
+        if (noteAtClickLocation.isPresent()) {
+            // if it is not selected, select it
+            if (!noteAtClickLocation.get().isSelected()) {
+                compositionManager.selectGroupable(noteAtClickLocation.get());
+                CompositionAction action = new SelectAction(noteAtClickLocation.get(),
+                        compositionManager);
+                compositionManager.actionCompleted(action);
+            }
+        }
+
     }
 
 
