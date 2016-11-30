@@ -9,8 +9,13 @@
 
 package proj8BeckChanceRemondiSalerno.Controllers;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
+import javafx.geometry.Side;
+import javafx.scene.Parent;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
@@ -20,6 +25,7 @@ import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj8BeckChanceRemondiSalerno.Views.NoteGroupablePane;
 
 import java.awt.geom.Point2D;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -38,6 +44,9 @@ public class CompositionController {
      */
     @FXML
     private Pane composition;
+
+    @FXML
+    private ContextMenu contextMenu;
 
     /**
      * Accesses the CompositionManager shared instance.
@@ -84,6 +93,16 @@ public class CompositionController {
         compositionManager.setCompositionController(this);
     }
 
+    public void initialize() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Views/CompositionContextMenu" +
+                    ".fxml"));
+            contextMenu = fxmlLoader.load();
+        } catch(IOException e) {
+            System.out.println(e);
+        }
+    }
+
     /**
      * Handles the GUI's mousePressed event.
      *
@@ -91,11 +110,17 @@ public class CompositionController {
      */
     @FXML
     public void handleMousePressed(MouseEvent mouseEvent) {
-        lastDragLocation.x = mouseEvent.getX();
-        lastDragLocation.y = mouseEvent.getY();
-        dragStartLocation = (Point2D.Double) lastDragLocation.clone();
-        handleDragStartedAtLocation(mouseEvent.getX(), mouseEvent.getY(), mouseEvent
-                .isControlDown());
+
+        if(mouseEvent.isSecondaryButtonDown()) {
+            handleRightClick(mouseEvent.getX(), mouseEvent.getY());
+        } else {
+            lastDragLocation.x = mouseEvent.getX();
+            lastDragLocation.y = mouseEvent.getY();
+            dragStartLocation = (Point2D.Double) lastDragLocation.clone();
+            handleDragStartedAtLocation(mouseEvent.getX(), mouseEvent.getY(), mouseEvent
+                    .isControlDown());
+        }
+
     }
 
     /**
@@ -119,7 +144,6 @@ public class CompositionController {
      */
     @FXML
     public void handleMouseReleased(MouseEvent mouseEvent) {
-        handleDragEnded();
         if (!isDragging) {
             if (mouseEvent.isSecondaryButtonDown()) {
                 handleRightClick(mouseEvent.getX(), mouseEvent.getY());
@@ -128,6 +152,8 @@ public class CompositionController {
             } else {
                 handleClickAt(mouseEvent.getX(), mouseEvent.getY());
             }
+        } else {
+            handleDragEnded();
         }
         lastDragLocation.x = mouseEvent.getX();
         lastDragLocation.y = mouseEvent.getY();
@@ -144,6 +170,8 @@ public class CompositionController {
                 .getGroupableAtPoint(x, y);
 
         if (noteAtClickLocation.isPresent()) {
+            contextMenu.show(compositionManager.getGroupPane(noteAtClickLocation.get()), Side.BOTTOM, 0, 0);
+
             // if it is not selected, select it
             if (!noteAtClickLocation.get().isSelected()) {
                 compositionManager.selectGroupable(noteAtClickLocation.get());
