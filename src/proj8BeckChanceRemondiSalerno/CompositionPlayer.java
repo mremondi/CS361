@@ -13,6 +13,7 @@ import proj8BeckChanceRemondiSalerno.Models.Note;
 
 import javax.sound.midi.ShortMessage;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 /**
@@ -43,7 +44,7 @@ public class CompositionPlayer {
      *
      * @param notes Notes to play.
      */
-    public void play(ArrayList<Note> notes) {
+    public void play(Iterable<Note> notes) {
         midiPlayer.stop();
         midiPlayer.clear();
         buildSong(notes);
@@ -62,7 +63,7 @@ public class CompositionPlayer {
      *
      * @param notes Notes to build the song with
      */
-    private void buildSong(ArrayList<Note> notes) {
+    private void buildSong(Iterable<Note> notes) {
         addProgramChanges(midiPlayer);
         for (Note note : notes) {
             midiPlayer.addNote(note.getPitch(), note.getVolume(), note.getStartTick(),

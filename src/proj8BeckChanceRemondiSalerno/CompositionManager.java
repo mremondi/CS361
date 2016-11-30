@@ -421,10 +421,24 @@ public class CompositionManager {
     }
 
     /**
-     * Plays the sequence of notes and animates the TempoLine.
+     * Plays the sequence of all notes and animates the TempoLine.
      */
     public void play() {
-        compositionPlayer.play(getNotes());
+        play(getGroupables());
+    }
+
+    /**
+     * Plays the sequence of given notes and animates the TempoLine.
+     * @param noteGroupables Notes to play
+     */
+    public void play(Iterable<NoteGroupable> noteGroupables) {
+        ArrayList<Note> notes = new ArrayList<>();
+        for(NoteGroupable groupable: noteGroupables) {
+            for (Note note: groupable.getNotes()) {
+                notes.add(note);
+            }
+        }
+        compositionPlayer.play(notes);
         double stopTime = this.calculateStopTime();
         this.tempoLineController.updateTempoLine(stopTime);
         this.tempoLineController.playAnimation();

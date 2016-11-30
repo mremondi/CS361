@@ -3,11 +3,12 @@
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.MenuItem?>
 
-<ContextMenu xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<ContextMenu xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="proj8BeckChanceRemondiSalerno.Controllers.CompositionContextMenuController">
   <items>
-    <MenuItem mnemonicParsing="false" text="Delete" />
-      <MenuItem mnemonicParsing="false" text="Play" />
-      <MenuItem mnemonicParsing="false" text="Set Instrument" />
-      <MenuItem mnemonicParsing="false" text="Set Volume" />
+    <MenuItem mnemonicParsing="false" text="Delete" onAction="#handleDelete"/>
+      <MenuItem mnemonicParsing="false" text="Play" onAction="#handlePlay"/>
+      <MenuItem mnemonicParsing="false" text="Set Instrument" onAction="#handleSetInstrument"/>
+      <MenuItem mnemonicParsing="false" text="Set Volume" onAction="#handleSetVolume"/>
   </items>
 </ContextMenu>

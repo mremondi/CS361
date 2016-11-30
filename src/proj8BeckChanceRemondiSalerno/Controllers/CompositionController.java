@@ -9,12 +9,10 @@
 
 package proj8BeckChanceRemondiSalerno.Controllers;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.geometry.Side;
-import javafx.scene.Parent;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -45,8 +43,15 @@ public class CompositionController {
     @FXML
     private Pane composition;
 
-    @FXML
+    /**
+     * The context menu for right clicking on notes
+     */
     private ContextMenu contextMenu;
+
+    /**
+     * The controller for the context menu for right clicking notes
+     */
+    private CompositionContextMenuController noteContextMenuController;
 
     /**
      * Accesses the CompositionManager shared instance.
@@ -91,6 +96,7 @@ public class CompositionController {
     public void setCompositionManager(CompositionManager compositionManager) {
         this.compositionManager = compositionManager;
         compositionManager.setCompositionController(this);
+        noteContextMenuController.setCompositionManager(compositionManager);
     }
 
     public void initialize() {
@@ -98,6 +104,8 @@ public class CompositionController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Views/CompositionContextMenu" +
                     ".fxml"));
             contextMenu = fxmlLoader.load();
+            noteContextMenuController = fxmlLoader.getController();
+            noteContextMenuController.setCompositionManager(this.compositionManager);
         } catch(IOException e) {
             System.out.println(e);
         }
