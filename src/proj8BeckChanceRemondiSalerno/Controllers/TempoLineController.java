@@ -40,6 +40,15 @@ public class TempoLineController {
      */
     private TranslateTransition tempoAnimation = new TranslateTransition();
 
+    /**
+     * The stop time of the animation
+     */
+    private double stopTime = 0;
+
+    /**
+     * The start time of the animation
+     */
+    private double startTime = 0;
 
     /**
      * Constructor
@@ -65,16 +74,32 @@ public class TempoLineController {
     /**
      * Updates the information in the tempo line and animation for
      * the reproduction of a composition
-     *
-     * @param stopTime this is the stop location (e.g time) which is the
-     *                 location of the right edge of the final note to be played
      */
-    public void updateTempoLine(double stopTime) {
+    private void updateAnimation() {
         this.tempoAnimation.stop();
-        this.tempoLine.setTranslateX(0);
-        this.tempoAnimation.setDuration(new Duration(stopTime * 10));
+        this.tempoLine.setTranslateX(startTime);
+        this.tempoAnimation.setDuration(new Duration(stopTime * 10 - startTime * 10));
         this.tempoAnimation.setToX(stopTime);
         this.tempoLine.setVisible(true);
+    }
+
+
+    /**
+     * Setter for stop time
+     * @param stopTime New stop time
+     */
+    public void setStopTime(double stopTime) {
+        this.stopTime = stopTime;
+        updateAnimation();
+    }
+
+    /**
+     * Setter for start time
+     * @param startTime New start time
+     */
+    public void setStartTime(double startTime) {
+        this.startTime = startTime;
+        updateAnimation();
     }
 
     /**
