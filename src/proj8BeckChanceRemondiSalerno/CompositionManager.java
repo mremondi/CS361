@@ -439,7 +439,7 @@ public class CompositionManager {
             }
         }
         compositionPlayer.play(notes);
-        double stopTime = this.calculateStopTime();
+        double stopTime = this.calculateStopTime(notes);
         this.tempoLineController.updateTempoLine(stopTime);
         this.tempoLineController.playAnimation();
     }
@@ -579,9 +579,9 @@ public class CompositionManager {
      *
      * @return stopTime
      */
-    private double calculateStopTime() {
+    private double calculateStopTime(Iterable<Note> notes) {
         double stopTime = 0.0;
-        for (Note note : this.getNotes()) {
+        for (Note note : notes) {
             if (stopTime < note.getStartTick() + note.getDuration()) {
                 stopTime = note.getStartTick() + note.getDuration();
             }
