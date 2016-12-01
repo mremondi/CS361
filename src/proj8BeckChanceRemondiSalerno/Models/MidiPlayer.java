@@ -51,6 +51,14 @@ public class MidiPlayer {
     }
 
     /**
+     * Sets the current tick position
+     * @param tickPosition New tick position
+     */
+    public void setTickPosition(long tickPosition) {
+        sequencer.setTickPosition(tickPosition);
+    }
+
+    /**
      * @return the number of ticks per beat
      */
     public int getResolution() {

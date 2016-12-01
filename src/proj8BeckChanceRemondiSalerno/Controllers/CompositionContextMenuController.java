@@ -62,7 +62,7 @@ public class CompositionContextMenuController {
      */
     @FXML
     public void handlePlay(ActionEvent event) {
-        compositionManager.play(compositionManager.getSelectedNotes());
+        compositionManager.play(compositionManager.getSelectedNotes(), true);
     }
 
     /**

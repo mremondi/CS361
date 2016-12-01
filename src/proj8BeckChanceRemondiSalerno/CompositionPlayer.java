@@ -43,11 +43,13 @@ public class CompositionPlayer {
      * Plays a song with given notes.
      *
      * @param notes Notes to play.
+     * @param startTick The start location to play from
      */
-    public void play(Iterable<Note> notes) {
+    public void play(Iterable<Note> notes, long startTick) {
         midiPlayer.stop();
         midiPlayer.clear();
         buildSong(notes);
+        midiPlayer.setTickPosition(startTick);
         midiPlayer.play();
     }
 

@@ -424,23 +424,25 @@ public class CompositionManager {
      * Plays the sequence of all notes and animates the TempoLine.
      */
     public void play() {
-        play(getGroupables());
+        play(getGroupables(), false);
     }
 
     /**
      * Plays the sequence of given notes and animates the TempoLine.
      * @param noteGroupables Notes to play
+     * @param playFromFirstNote Whether to play starting at the left most note
      */
-    public void play(Iterable<NoteGroupable> noteGroupables) {
+    public void play(Iterable<NoteGroupable> noteGroupables, boolean playFromFirstNote) {
         ArrayList<Note> notes = new ArrayList<>();
         for(NoteGroupable groupable: noteGroupables) {
             for (Note note: groupable.getNotes()) {
                 notes.add(note);
             }
         }
-        compositionPlayer.play(notes);
+        double startTime = playFromFirstNote ? calculateStartTime(notes) : 0;
+        compositionPlayer.play(notes, (long)startTime);
         this.tempoLineController.setStopTime(calculateStopTime(notes));
-        this.tempoLineController.setStartTime(calculateStartTime(notes));
+        this.tempoLineController.setStartTime(startTime);
         this.tempoLineController.playAnimation();
     }
 
