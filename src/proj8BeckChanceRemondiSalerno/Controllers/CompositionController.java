@@ -17,6 +17,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Scale;
 import proj8BeckChanceRemondiSalerno.CompositionActions.*;
 import proj8BeckChanceRemondiSalerno.CompositionManager;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
@@ -42,6 +43,7 @@ public class CompositionController {
      */
     @FXML
     private Pane composition;
+
 
     /**
      * The context menu for right clicking on notes
@@ -331,6 +333,8 @@ public class CompositionController {
         noteGroupablePane.setLayoutX(noteGroupablePane.getLayoutX() + dx);
         noteGroupablePane.setLayoutY(noteGroupablePane.getLayoutY() + dy);
     }
+
+
 
     /**
      * Handles the release of the drag motion of the mouse.

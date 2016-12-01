@@ -9,6 +9,7 @@
 package proj8BeckChanceRemondiSalerno.Controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import proj8BeckChanceRemondiSalerno.CompositionManager;
@@ -23,17 +24,7 @@ import proj8BeckChanceRemondiSalerno.CompositionManager;
  * @author Mike Remondi
  */
 public class Controller {
-    /**
-     * The pane containing the composition sheet lines.
-     */
-    @FXML
-    private Pane linePane;
 
-    /**
-     * The container pane for the tempo line
-     */
-    @FXML
-    private Pane tempoLineContainerPane;
 
     /**
      * The MenuBarController loaded by the FXML Loader
@@ -47,38 +38,25 @@ public class Controller {
     @FXML
     private InstrumentPaneController instrumentPaneController;
 
-    /**
-     * The CompositionController loaded by the FXML Loader
-     */
+
+
     @FXML
-    private CompositionController compositionController;
+    private CompositionContainerController compositionContainerController;
 
     /**
      * Seeds our CompositionPaneManager and TempoLine objects with the
      * fields from the FXML file after the FXML has been initialized
      */
     public void initialize() {
-        createLinePane();
         CompositionManager compositionManager = new CompositionManager();
-        compositionController.setCompositionManager(compositionManager);
-        compositionManager.setCompositionController(compositionController);
+        compositionContainerController.setCompositionManager(compositionManager);
         compositionManager.setInstrumentPaneController(instrumentPaneController);
         compositionManager.setTempoLineController(new TempoLineController
-                (tempoLineContainerPane));
+                (compositionContainerController.getTempoLineContainerPane()));
         menuBarController.setCompositionManager(compositionManager);
+        menuBarController.setCompositionContainerController(compositionContainerController);
     }
 
 
-    /**
-     * Creates a visual representation of a composition panel
-     * similar to a staff lined workbook
-     */
-    private void createLinePane() {
-        Line staffLine;
-        for (int i = 0; i < 127; i++) {
-            staffLine = new Line(0, i * 10, 2000, i * 10);
-            staffLine.getStyleClass().add("staffLine");
-            linePane.getChildren().add(staffLine);
-        }
-    }
+
 }

@@ -558,6 +558,7 @@ public class CompositionManager {
         return selectedNotes;
     }
 
+
     /**
      * Gets the list of notes.
      *

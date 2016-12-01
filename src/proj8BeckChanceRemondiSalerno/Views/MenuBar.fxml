@@ -27,6 +27,9 @@
         <MenuItem accelerator="Shortcut+C" onAction="#handleCopy" text="Copy" fx:id="copyItem"/>
         <MenuItem accelerator="Shortcut+X" onAction="#handleCut" text="Cut" fx:id="cutItem"/>
         <MenuItem accelerator="Shortcut+V" onAction="#handlePaste" text="Paste" fx:id="pasteItem"/>
+        <SeparatorMenuItem/>
+        <MenuItem accelerator="Shortcut+O" onAction="#handleZoomIn" text="Zoom In"/>
+        <MenuItem accelerator="Shortcut+I" onAction="#handleZoomOut" text="Zoom Out"/>
 
     </Menu>
     <Menu text="Actions">

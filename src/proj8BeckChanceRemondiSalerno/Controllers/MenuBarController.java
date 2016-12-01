@@ -102,6 +102,8 @@ public class MenuBarController {
      */
     CompositionManager compositionManager;
 
+    CompositionContainerController compositionContainerController;
+
     /**
      * Setter for the composition manager
      *
@@ -110,6 +112,10 @@ public class MenuBarController {
     public void setCompositionManager(CompositionManager compositionManager) {
         this.compositionManager = compositionManager;
         this.bindWithCompositionManager(compositionManager);
+    }
+
+    public void setCompositionContainerController(CompositionContainerController compositionContainerController) {
+        this.compositionContainerController = compositionContainerController;
     }
 
     /**
@@ -281,6 +287,15 @@ public class MenuBarController {
         alert.showAndWait();
     }
 
+    @FXML
+    protected void handleZoomIn(ActionEvent event) {
+        compositionContainerController.zoomIn();
+    }
+
+    @FXML
+    protected void handleZoomOut(ActionEvent event) {
+        compositionContainerController.zoomOut();
+    }
 
     /**
      * Binds menu item disabled states with properties
