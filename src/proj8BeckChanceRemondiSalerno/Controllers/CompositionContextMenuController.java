@@ -92,7 +92,7 @@ public class CompositionContextMenuController {
             DialogPane dialogPane = new DialogPane();
             dialogPane.setContent(instrumentsRoot);
             alert.setDialogPane(dialogPane);
-            ButtonType confirmButton = new ButtonType("Set Instrument", ButtonBar.ButtonData.APPLY);
+            ButtonType confirmButton = new ButtonType("Ok", ButtonBar.ButtonData.APPLY);
             ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData
                     .CANCEL_CLOSE);
             alert.getButtonTypes().setAll(confirmButton, buttonTypeCancel);
@@ -112,6 +112,33 @@ public class CompositionContextMenuController {
      */
     @FXML
     public void handleSetVolume(ActionEvent event) {
+        ArrayList<NoteGroupable> noteGroupables = compositionManager.getSelectedNotes();
+        int currentVolume = noteGroupables.size()==1 && noteGroupables.get(0) instanceof Note ?
+                            ((Note) noteGroupables.get(0)).getVolume() : 100;
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Views/Volume.fxml"));
+            Parent instrumentsRoot =fxmlLoader.load();
+            Alert alert = new Alert(Alert.AlertType.NONE);
+            DialogPane dialogPane = new DialogPane();
+            dialogPane.setContent(instrumentsRoot);
+            alert.setDialogPane(dialogPane);
+            ButtonType confirmButton = new ButtonType("Ok", ButtonBar.ButtonData.APPLY);
+            ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData
+                    .CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(confirmButton, buttonTypeCancel);
+            VolumeController volumeController = fxmlLoader.getController();
+            volumeController.setCurrentVolume(currentVolume);
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.isPresent() && result.get() == confirmButton) {
+                int newVolume = volumeController.getVolume();
+                for(NoteGroupable noteGroupable: compositionManager.getSelectedNotes()) {
+                    noteGroupable.setVolume(newVolume);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println(e);
+        }
 
     }
 

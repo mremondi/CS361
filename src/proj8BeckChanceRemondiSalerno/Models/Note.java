@@ -31,7 +31,7 @@ public class Note implements NoteGroupable {
     /**
      * The audio volume of the note.
      */
-    private static final int VOLUME = 100;
+    private int volume = 100;
 
     /**
      * The instrument for the note.
@@ -111,7 +111,16 @@ public class Note implements NoteGroupable {
      * @return Volume of the note
      */
     public int getVolume() {
-        return this.VOLUME;
+        return volume;
+    }
+
+
+    /**
+     * Setter for volume
+     * @param volume New volume
+     */
+    public void setVolume(int volume) {
+        this.volume = volume;
     }
 
     /**

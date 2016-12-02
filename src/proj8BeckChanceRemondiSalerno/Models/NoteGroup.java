@@ -245,10 +245,25 @@ public class NoteGroup implements NoteGroupable {
         return clone;
     }
 
+    /**
+     * Setter for channel
+     * @param channel New channel
+     */
     @Override
     public void setChannel(int channel) {
         for(NoteGroupable noteGroupable: noteGroupables) {
             noteGroupable.setChannel(channel);
+        }
+    }
+
+    /**
+     * Setter for channel
+     * @param volume New volume
+     */
+    @Override
+    public void setVolume(int volume) {
+        for (NoteGroupable noteGroupable: noteGroupables) {
+            noteGroupable.setVolume(volume);
         }
     }
 }
