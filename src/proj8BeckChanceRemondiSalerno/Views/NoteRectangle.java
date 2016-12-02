@@ -9,6 +9,7 @@
 package proj8BeckChanceRemondiSalerno.Views;
 
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -71,5 +72,13 @@ public class NoteRectangle extends Rectangle implements NoteView {
         } else {
             setWidth(getWidth() + dx);
         }
+    }
+
+    /**
+     * Sets the note color
+     * @param color
+     */
+    public void setNoteFill(Paint color) {
+        setFill(color);
     }
 }

@@ -8,6 +8,8 @@
 
 package proj8BeckChanceRemondiSalerno.Views;
 
+import javafx.scene.paint.Paint;
+
 /**
  * This interface models a view that represents a note view on a composition
  *
@@ -32,4 +34,9 @@ public interface NoteView {
      */
     void changeWidth(double dx);
 
+    /**
+     * Sets the note color
+     * @param color
+     */
+    void setNoteFill(Paint color);
 }

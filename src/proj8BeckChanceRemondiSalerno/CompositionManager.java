@@ -825,6 +825,8 @@ public class CompositionManager {
     public void setChannelForNotes(Iterable<NoteGroupable> notes, int channel) {
         for (NoteGroupable note: notes) {
             note.setChannel(channel);
+            NoteGroupablePane noteGroupablePane = getGroupPane(note);
+            noteGroupablePane.setNoteFill(getInstrumentColor(channel));
         }
     }
 

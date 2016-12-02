@@ -11,6 +11,8 @@ package proj8BeckChanceRemondiSalerno.Views;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 /**
  * This class models a pane containing notes
@@ -49,6 +51,16 @@ public class NoteGroupablePane extends Pane implements NoteView {
             if (node instanceof NoteView) {
                 ((NoteView) node).changeWidth(dx);
             }
+        }
+    }
+
+    /**
+     * Sets the note color
+     * @param color
+     */
+    public void setNoteFill(Paint color) {
+        for(Node child: getChildren()) {
+            ((NoteView)child).setNoteFill(color);
         }
     }
 
