@@ -818,6 +818,17 @@ public class CompositionManager {
     }
 
     /**
+     * Changes the channels of notes
+     * @param notes Notes to change the channel of
+     * @param channel new instrument channel
+     */
+    public void setChannelForNotes(Iterable<NoteGroupable> notes, int channel) {
+        for (NoteGroupable note: notes) {
+            note.setChannel(channel);
+        }
+    }
+
+    /**
      * Starts a new composition
      */
     public void createNewComposition() {

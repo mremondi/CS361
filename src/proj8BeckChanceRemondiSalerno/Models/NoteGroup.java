@@ -244,4 +244,11 @@ public class NoteGroup implements NoteGroupable {
         clone.noteGroupables = clonedNotes;
         return clone;
     }
+
+    @Override
+    public void setChannel(int channel) {
+        for(NoteGroupable noteGroupable: noteGroupables) {
+            noteGroupable.setChannel(channel);
+        }
+    }
 }

@@ -110,4 +110,11 @@ public interface NoteGroupable extends Cloneable, Serializable {
      * @return the cloned NoteGroupable
      */
     NoteGroupable clone();
+
+    /**
+     * Setter for channel
+     * @param channel New channel
+     */
+    void setChannel(int channel);
+
 }

@@ -162,6 +162,14 @@ public class Note implements NoteGroupable {
     }
 
     /**
+     * Setter for channel
+     * @param channel New channel
+     */
+    public void setChannel(int channel) {
+        this.channel = channel;
+    }
+
+    /**
      * Resizes the note's rectangle in the right direction.
      *
      * @param dx the distance to move the right edge

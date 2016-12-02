@@ -11,8 +11,21 @@ package proj8BeckChanceRemondiSalerno.Controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ContextMenu;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import proj8BeckChanceRemondiSalerno.CompositionManager;
+import proj8BeckChanceRemondiSalerno.Models.Note;
+import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
+
+import java.awt.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Optional;
+
 
 /**
  * This class models a controller for a CompositionContextMenu
@@ -72,7 +85,25 @@ public class CompositionContextMenuController {
      */
     @FXML
     public void handleSetInstrument(ActionEvent event) {
-
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Views/InstrumentPane.fxml"));
+            Parent instrumentsRoot =fxmlLoader.load();
+            Alert alert = new Alert(Alert.AlertType.NONE);
+            DialogPane dialogPane = new DialogPane();
+            dialogPane.setContent(instrumentsRoot);
+            alert.setDialogPane(dialogPane);
+            ButtonType confirmButton = new ButtonType("Set Instrument", ButtonBar.ButtonData.APPLY);
+            ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData
+                    .CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(confirmButton, buttonTypeCancel);
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.isPresent() && result.get() == confirmButton) {
+                int selectedIndex = ((InstrumentPaneController)fxmlLoader.getController()).getCurrentInstrumentIndex();
+                compositionManager.setChannelForNotes(compositionManager.getSelectedNotes(), selectedIndex);
+            }
+        } catch (IOException e) {
+            System.out.println(e);
+        }
     }
 
     /**
