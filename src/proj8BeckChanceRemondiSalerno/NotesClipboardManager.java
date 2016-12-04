@@ -106,7 +106,8 @@ public class NotesClipboardManager {
             if (notes != null) {
                 return notes;
             }
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
+            // Catch the possible class cast exception
         }
 
         return new ArrayList<NoteGroupable>(); // return empty list

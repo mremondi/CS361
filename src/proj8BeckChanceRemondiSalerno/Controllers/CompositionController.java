@@ -17,7 +17,6 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Scale;
 import proj8BeckChanceRemondiSalerno.CompositionActions.*;
 import proj8BeckChanceRemondiSalerno.CompositionManager;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
@@ -184,6 +183,7 @@ public class CompositionController {
 
             // if it is not selected, select it
             if (!noteAtClickLocation.get().isSelected()) {
+                compositionManager.deselectAllNotes();
                 compositionManager.selectGroupable(noteAtClickLocation.get());
                 CompositionAction action = new SelectAction(noteAtClickLocation.get(),
                         compositionManager);

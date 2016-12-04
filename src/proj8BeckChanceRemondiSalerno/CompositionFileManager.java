@@ -13,9 +13,7 @@ import proj8BeckChanceRemondiSalerno.Models.Composition;
 import proj8BeckChanceRemondiSalerno.Models.Note;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroup;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.*;
 import java.io.File;
 import java.util.Optional;
 
@@ -62,7 +60,13 @@ public class CompositionFileManager {
             marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             unmarshaller = context.createUnmarshaller();
-        } catch (Exception e) { }
+        } catch (PropertyException e) {
+            System.out.println("HERE");
+            // Catch the potential JAXB Exception
+        } catch (JAXBException e) {
+            System.out.println("HERE2");
+            // Catch the potential JAXB Exception
+        }
     }
 
     /**
