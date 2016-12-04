@@ -315,7 +315,5 @@ public class MenuBarController {
         pasteItem.disableProperty().bind(compositionManager.getClipboardEmptyProperty());
         undoItem.disableProperty().bind(compositionManager.getUndoEmptyProperty());
         redoItem.disableProperty().bind(compositionManager.getRedoEmptyProperty());
-        saveItem.disableProperty().bind(compositionManager.getNotesEmptyProperty());
-        saveAsItem.disableProperty().bind(compositionManager.getNotesEmptyProperty());
     }
 }
