@@ -61,10 +61,8 @@ public class CompositionFileManager {
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             unmarshaller = context.createUnmarshaller();
         } catch (PropertyException e) {
-            System.out.println("HERE");
             // Catch the potential JAXB Exception
         } catch (JAXBException e) {
-            System.out.println("HERE2");
             // Catch the potential JAXB Exception
         }
     }
@@ -74,28 +72,35 @@ public class CompositionFileManager {
      * is none
      *
      * @param composition The composition to save
-     * @throws Exception Thrown if saving fails
+     * @throws JAXBException Thrown if saving fails
+     * @return a boolean indicating whether the save operation was cancelled or not
      */
-    public void saveComposition(Composition composition) throws Exception {
+    public boolean saveComposition(Composition composition) throws JAXBException {
         if (currentSavePath.isPresent()) {
             File file = new File(currentSavePath.get());
             marshaller.marshal(composition, file);
         } else {
-            saveCompositionAsNew(composition);
+            return saveCompositionAsNew(composition);
         }
+        return true;
     }
 
     /**
      * Saves a composition to a new file of the user's choice
      *
      * @param composition The composition to save
-     * @throws Exception Thrown if saving fails
+     * @throws JAXBException Thrown if saving fails
+     * @return a boolean indicating whether the save operation was cancelled or not
      */
-    public void saveCompositionAsNew(Composition composition) throws Exception {
+    public boolean saveCompositionAsNew(Composition composition) throws JAXBException {
         File file = fileChooser.showSaveDialog(null);
         marshaller.marshal(composition, file);
         currentSavePath = Optional.of(file.getAbsolutePath());
         Main.setPrimaryStageTitle(file.getName());
+        if (currentSavePath.isPresent()){
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -104,7 +109,7 @@ public class CompositionFileManager {
      * @return The loaded composition
      * @throws Exception Thrown if loading fails
      */
-    public Optional<Composition> openComposition() throws Exception {
+    public Optional<Composition> openComposition() throws JAXBException {
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             Composition composition = (Composition) unmarshaller.unmarshal(selectedFile);

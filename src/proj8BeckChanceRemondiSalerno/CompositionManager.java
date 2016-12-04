@@ -746,12 +746,13 @@ public class CompositionManager {
      * Saves the current composition
      */
     public void saveComposition() {
-        changeSinceLastSave = false;
         Composition composition = new Composition(new ArrayList<>(notesMapProperty
                 .keySet()));
         try {
-            compositionFileManager.saveComposition(composition);
-        } catch (Exception e) { }
+            changeSinceLastSave = compositionFileManager.saveComposition(composition);
+        } catch (Exception e) {
+            // Catch the potential Exception
+        }
     }
 
     /**
@@ -763,7 +764,9 @@ public class CompositionManager {
                 .keySet()));
         try {
             compositionFileManager.saveCompositionAsNew(composition);
-        } catch (Exception e) { }
+        } catch (Exception e) {
+            // Catch the potential Exception
+        }
     }
 
     /**

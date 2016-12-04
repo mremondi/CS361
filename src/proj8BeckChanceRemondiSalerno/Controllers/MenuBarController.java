@@ -309,8 +309,8 @@ public class MenuBarController {
         ungroupItem.disableProperty().bind(compositionManager.getCannotUngroupProperty());
         selectAllItem.disableProperty().bind(compositionManager.getNotesEmptyProperty());
         playItem.disableProperty().bind(compositionManager.getNotesEmptyProperty());
-        copyItem.disableProperty().bind(compositionManager.getIsNothingSelectedProperty
-                ());
+        copyItem.disableProperty().bind(compositionManager.
+                getIsNothingSelectedProperty());
         cutItem.disableProperty().bind(compositionManager.getIsNothingSelectedProperty());
         pasteItem.disableProperty().bind(compositionManager.getClipboardEmptyProperty());
         undoItem.disableProperty().bind(compositionManager.getUndoEmptyProperty());
