@@ -38,11 +38,13 @@ public class VolumeController {
      */
     public void initialize() {
         updateVolumeLabel();
-        volumeSlider.valueProperty().addListener((arg0, arg1, arg2) -> updateVolumeLabel());
+        volumeSlider.valueProperty().addListener((arg0, arg1, arg2) ->
+                updateVolumeLabel());
     }
 
     /**
      * Set a new volume
+     *
      * @param volume new volume
      */
     public void setCurrentVolume(int volume) {
@@ -56,14 +58,14 @@ public class VolumeController {
      * @return the int value of the volume slider
      */
     public int getVolume() {
-        return (int)Math.round(volumeSlider.getValue());
+        return (int) Math.round(volumeSlider.getValue());
     }
 
     /**
      * Updates the volume label text
      */
     private void updateVolumeLabel() {
-        volumeLabel.setText("Volume: " + (int)volumeSlider.getValue());
+        volumeLabel.setText("Volume: " + (int) volumeSlider.getValue());
     }
 
 }

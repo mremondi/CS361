@@ -31,6 +31,7 @@ import proj8BeckChanceRemondiSalerno.Models.NoteGroup;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj8BeckChanceRemondiSalerno.Views.NoteGroupablePane;
 import proj8BeckChanceRemondiSalerno.Views.NoteRectangle;
+
 import javax.xml.bind.JAXBException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -428,18 +429,19 @@ public class CompositionManager {
 
     /**
      * Plays the sequence of given notes and animates the TempoLine.
-     * @param noteGroupables Notes to play
+     *
+     * @param noteGroupables    Notes to play
      * @param playFromFirstNote Whether to play starting at the left most note
      */
     public void play(Iterable<NoteGroupable> noteGroupables, boolean playFromFirstNote) {
         ArrayList<Note> notes = new ArrayList<>();
-        for(NoteGroupable groupable: noteGroupables) {
-            for (Note note: groupable.getNotes()) {
+        for (NoteGroupable groupable : noteGroupables) {
+            for (Note note : groupable.getNotes()) {
                 notes.add(note);
             }
         }
         double startTime = playFromFirstNote ? calculateStartTime(notes) : 0;
-        compositionPlayer.play(notes, (long)startTime);
+        compositionPlayer.play(notes, (long) startTime);
         this.tempoLineController.setStopTime(calculateStopTime(notes));
         this.tempoLineController.setStartTime(startTime);
         this.tempoLineController.playAnimation();
@@ -777,7 +779,8 @@ public class CompositionManager {
             Optional<Composition> composition = Optional.empty();
             try {
                 composition = compositionFileManager.openComposition();
-            } catch (JAXBException e) { }
+            } catch (JAXBException e) {
+            }
             if (composition.isPresent()) {
                 if (composition.get().getNotes() != null)
                     composition.get().getNotes().forEach(this::addGroupable);
@@ -821,11 +824,12 @@ public class CompositionManager {
 
     /**
      * Changes the channels of notes
-     * @param notes Notes to change the channel of
+     *
+     * @param notes   Notes to change the channel of
      * @param channel new instrument channel
      */
     public void setChannelForNotes(Iterable<NoteGroupable> notes, int channel) {
-        for (NoteGroupable note: notes) {
+        for (NoteGroupable note : notes) {
             note.setChannel(channel);
             NoteGroupablePane noteGroupablePane = getGroupPane(note);
             noteGroupablePane.setNoteFill(getInstrumentColor(channel));

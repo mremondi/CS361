@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 import proj8BeckChanceRemondiSalerno.CompositionManager;
 import proj8BeckChanceRemondiSalerno.Models.Note;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -46,6 +47,7 @@ public class CompositionContextMenuController {
 
     /**
      * Setter for composition managaer
+     *
      * @param compositionManager The new composition manager
      */
     public void setCompositionManager(CompositionManager compositionManager) {
@@ -55,6 +57,7 @@ public class CompositionContextMenuController {
     /**
      * Handles delete clicked
      * Deletes selected notes
+     *
      * @param event
      */
     @FXML
@@ -65,6 +68,7 @@ public class CompositionContextMenuController {
     /**
      * Handles play clicked
      * Plays selected notes
+     *
      * @param event
      */
     @FXML
@@ -80,8 +84,9 @@ public class CompositionContextMenuController {
     @FXML
     public void handleSetInstrument(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Views/InstrumentPane.fxml"));
-            Parent instrumentsRoot =fxmlLoader.load();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource
+                    ("../Views/InstrumentPane.fxml"));
+            Parent instrumentsRoot = fxmlLoader.load();
             Alert alert = new Alert(Alert.AlertType.NONE);
             DialogPane dialogPane = new DialogPane();
             dialogPane.setContent(instrumentsRoot);
@@ -91,9 +96,11 @@ public class CompositionContextMenuController {
                     .CANCEL_CLOSE);
             alert.getButtonTypes().setAll(confirmButton, buttonTypeCancel);
             Optional<ButtonType> result = alert.showAndWait();
-            if(result.isPresent() && result.get() == confirmButton) {
-                int selectedIndex = ((InstrumentPaneController)fxmlLoader.getController()).getCurrentInstrumentIndex();
-                compositionManager.setChannelForNotes(compositionManager.getSelectedNotes(), selectedIndex);
+            if (result.isPresent() && result.get() == confirmButton) {
+                int selectedIndex = ((InstrumentPaneController) fxmlLoader
+                        .getController()).getCurrentInstrumentIndex();
+                compositionManager.setChannelForNotes(compositionManager
+                        .getSelectedNotes(), selectedIndex);
             }
         } catch (IOException e) {
             // Do nothing
@@ -102,17 +109,20 @@ public class CompositionContextMenuController {
 
     /**
      * Handles set volume clicked
+     *
      * @param event
      */
     @FXML
     public void handleSetVolume(ActionEvent event) {
         ArrayList<NoteGroupable> noteGroupables = compositionManager.getSelectedNotes();
-        int currentVolume = noteGroupables.size()==1 && noteGroupables.get(0) instanceof Note ?
-                            ((Note) noteGroupables.get(0)).getVolume() : 100;
+        int currentVolume = noteGroupables.size() == 1 && noteGroupables.get(0)
+                instanceof Note ?
+                ((Note) noteGroupables.get(0)).getVolume() : 100;
 
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Views/Volume.fxml"));
-            Parent instrumentsRoot =fxmlLoader.load();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource
+                    ("../Views/Volume.fxml"));
+            Parent instrumentsRoot = fxmlLoader.load();
             Alert alert = new Alert(Alert.AlertType.NONE);
             DialogPane dialogPane = new DialogPane();
             dialogPane.setContent(instrumentsRoot);
@@ -124,9 +134,10 @@ public class CompositionContextMenuController {
             VolumeController volumeController = fxmlLoader.getController();
             volumeController.setCurrentVolume(currentVolume);
             Optional<ButtonType> result = alert.showAndWait();
-            if(result.isPresent() && result.get() == confirmButton) {
+            if (result.isPresent() && result.get() == confirmButton) {
                 int newVolume = volumeController.getVolume();
-                for(NoteGroupable noteGroupable: compositionManager.getSelectedNotes()) {
+                for (NoteGroupable noteGroupable : compositionManager.getSelectedNotes
+                        ()) {
                     noteGroupable.setVolume(newVolume);
                 }
             }

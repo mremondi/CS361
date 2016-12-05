@@ -36,6 +36,7 @@ public interface NoteView {
 
     /**
      * Sets the note color
+     *
      * @param color
      */
     void setNoteFill(Paint color);

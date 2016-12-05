@@ -11,6 +11,7 @@ package proj8BeckChanceRemondiSalerno.CompositionActions;
 import proj8BeckChanceRemondiSalerno.CompositionManager;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj8BeckChanceRemondiSalerno.NotesClipboardManager;
+
 import java.util.ArrayList;
 
 /**

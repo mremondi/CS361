@@ -72,8 +72,8 @@ public class CompositionFileManager {
      * is none
      *
      * @param composition The composition to save
-     * @throws JAXBException Thrown if saving fails
      * @return a boolean indicating whether the save operation was cancelled or not
+     * @throws JAXBException Thrown if saving fails
      */
     public boolean saveComposition(Composition composition) throws JAXBException {
         if (currentSavePath.isPresent()) {
@@ -89,8 +89,8 @@ public class CompositionFileManager {
      * Saves a composition to a new file of the user's choice
      *
      * @param composition The composition to save
-     * @throws JAXBException Thrown if saving fails
      * @return a boolean indicating whether the save operation was cancelled or not
+     * @throws JAXBException Thrown if saving fails
      */
     public boolean saveCompositionAsNew(Composition composition) throws JAXBException {
         File file = fileChooser.showSaveDialog(Main.getPrimaryStage());
@@ -103,9 +103,8 @@ public class CompositionFileManager {
     /**
      * Loads a composition from a file of the user's choice
      *
-     * @return The loaded composition
-     * @throws JAXBException Thrown if saving fails
      * @return an Optional containing a composition or empty
+     * @throws JAXBException Thrown if saving fails
      */
     public Optional<Composition> openComposition() throws JAXBException {
         File selectedFile = fileChooser.showOpenDialog(Main.getPrimaryStage());

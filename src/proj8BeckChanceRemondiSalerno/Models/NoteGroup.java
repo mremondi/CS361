@@ -50,7 +50,8 @@ public class NoteGroup implements NoteGroupable {
     /**
      * No argument constructor for the compiler
      */
-    public NoteGroup(){}
+    public NoteGroup() {
+    }
 
     /**
      * Gets all notes contained within the group
@@ -243,22 +244,24 @@ public class NoteGroup implements NoteGroupable {
 
     /**
      * Setter for channel
+     *
      * @param channel New channel
      */
     @Override
     public void setChannel(int channel) {
-        for(NoteGroupable noteGroupable: noteGroupables) {
+        for (NoteGroupable noteGroupable : noteGroupables) {
             noteGroupable.setChannel(channel);
         }
     }
 
     /**
      * Setter for channel
+     *
      * @param volume New volume
      */
     @Override
     public void setVolume(int volume) {
-        for (NoteGroupable noteGroupable: noteGroupables) {
+        for (NoteGroupable noteGroupable : noteGroupables) {
             noteGroupable.setVolume(volume);
         }
     }

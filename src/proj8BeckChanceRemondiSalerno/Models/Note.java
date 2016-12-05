@@ -85,7 +85,8 @@ public class Note implements NoteGroupable {
     /**
      * No argument constructor for the compiler
      */
-    public Note(){}
+    public Note() {
+    }
 
     /**
      * Accessor method for pitch
@@ -117,6 +118,7 @@ public class Note implements NoteGroupable {
 
     /**
      * Setter for volume
+     *
      * @param volume New volume
      */
     public void setVolume(int volume) {
@@ -172,6 +174,7 @@ public class Note implements NoteGroupable {
 
     /**
      * Setter for channel
+     *
      * @param channel New channel
      */
     public void setChannel(int channel) {

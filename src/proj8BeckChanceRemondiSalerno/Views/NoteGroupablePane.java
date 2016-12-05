@@ -55,11 +55,12 @@ public class NoteGroupablePane extends Pane implements NoteView {
 
     /**
      * Sets the note color
+     *
      * @param color
      */
     public void setNoteFill(Paint color) {
-        for(Node child: getChildren()) {
-            ((NoteView)child).setNoteFill(color);
+        for (Node child : getChildren()) {
+            ((NoteView) child).setNoteFill(color);
         }
     }
 

@@ -84,6 +84,7 @@ public class TempoLineController {
 
     /**
      * Setter for stop time
+     *
      * @param stopTime New stop time
      */
     public void setStopTime(double stopTime) {
@@ -93,6 +94,7 @@ public class TempoLineController {
 
     /**
      * Setter for start time
+     *
      * @param startTime New start time
      */
     public void setStartTime(double startTime) {

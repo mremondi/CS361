@@ -9,6 +9,7 @@
 package proj8BeckChanceRemondiSalerno.Models;
 
 import proj8BeckChanceRemondiSalerno.XMLAdapters.NoteGroupableAdapter;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
@@ -113,12 +114,14 @@ public interface NoteGroupable extends Cloneable, Serializable {
 
     /**
      * Setter for channel
+     *
      * @param channel New channel
      */
     void setChannel(int channel);
 
     /**
      * Setter for channel
+     *
      * @param volume New volume
      */
     void setVolume(int volume);

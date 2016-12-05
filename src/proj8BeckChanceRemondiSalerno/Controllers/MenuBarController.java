@@ -119,9 +119,11 @@ public class MenuBarController {
 
     /**
      * Setter for the compositionContainerController
+     *
      * @param compositionContainerController the new container controller
      */
-    public void setCompositionContainerController(CompositionContainerController compositionContainerController) {
+    public void setCompositionContainerController(CompositionContainerController
+                                                          compositionContainerController) {
         this.compositionContainerController = compositionContainerController;
     }
 

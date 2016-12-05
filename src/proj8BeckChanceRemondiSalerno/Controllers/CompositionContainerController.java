@@ -78,6 +78,7 @@ public class CompositionContainerController {
 
     /**
      * Getter for the tempo line container pane
+     *
      * @return The tempo line container pane
      */
     public Pane getTempoLineContainerPane() {
@@ -86,6 +87,7 @@ public class CompositionContainerController {
 
     /**
      * Sets the composition manager for the composition controller
+     *
      * @param compositionManager The composition manager to set
      */
     public void setCompositionManager(CompositionManager compositionManager) {
@@ -97,7 +99,7 @@ public class CompositionContainerController {
      * Zooms in on the composition
      */
     public void zoomIn() {
-        if(currentZoomScale == maxZoom) {
+        if (currentZoomScale == maxZoom) {
             return;
         }
         currentZoomScale += zoomScaleIncrements;
@@ -108,7 +110,7 @@ public class CompositionContainerController {
      * Zooms out on the composition
      */
     public void zoomOut() {
-        if(currentZoomScale == zoomScaleIncrements) {
+        if (currentZoomScale == zoomScaleIncrements) {
             return;
         }
         currentZoomScale -= zoomScaleIncrements;
@@ -119,7 +121,7 @@ public class CompositionContainerController {
      * Updates the current transform
      */
     private void updateZoomTransform() {
-        if (zoomScaleTransform!=null)
+        if (zoomScaleTransform != null)
             zoomGroup.getTransforms().remove(zoomScaleTransform);
         zoomScaleTransform = new Scale(currentZoomScale, currentZoomScale, 0, 0);
         zoomGroup.getTransforms().add(zoomScaleTransform);

@@ -76,6 +76,7 @@ public class NoteRectangle extends Rectangle implements NoteView {
 
     /**
      * Sets the note color
+     *
      * @param color
      */
     public void setNoteFill(Paint color) {

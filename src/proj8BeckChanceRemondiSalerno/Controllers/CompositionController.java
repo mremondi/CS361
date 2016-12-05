@@ -21,6 +21,7 @@ import proj8BeckChanceRemondiSalerno.CompositionActions.*;
 import proj8BeckChanceRemondiSalerno.CompositionManager;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj8BeckChanceRemondiSalerno.Views.NoteGroupablePane;
+
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -104,12 +105,13 @@ public class CompositionController {
      */
     public void initialize() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Views/CompositionContextMenu" +
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource
+                    ("../Views/CompositionContextMenu" +
                     ".fxml"));
             contextMenu = fxmlLoader.load();
             noteContextMenuController = fxmlLoader.getController();
             noteContextMenuController.setCompositionManager(this.compositionManager);
-        } catch(IOException e) {
+        } catch (IOException e) {
             // Do nothing
         }
     }
@@ -122,7 +124,7 @@ public class CompositionController {
     @FXML
     public void handleMousePressed(MouseEvent mouseEvent) {
 
-        if(mouseEvent.isSecondaryButtonDown()) {
+        if (mouseEvent.isSecondaryButtonDown()) {
             handleRightClick(mouseEvent.getX(), mouseEvent.getY());
         } else {
             lastDragLocation.x = mouseEvent.getX();
@@ -172,6 +174,7 @@ public class CompositionController {
 
     /**
      * Handles a right mouse click
+     *
      * @param x x location of click
      * @param y y location of click
      */
@@ -334,7 +337,6 @@ public class CompositionController {
         noteGroupablePane.setLayoutX(noteGroupablePane.getLayoutX() + dx);
         noteGroupablePane.setLayoutY(noteGroupablePane.getLayoutY() + dy);
     }
-
 
 
     /**

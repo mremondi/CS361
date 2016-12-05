@@ -52,9 +52,9 @@ public class Controller {
         compositionManager.setTempoLineController(new TempoLineController
                 (compositionContainerController.getTempoLineContainerPane()));
         menuBarController.setCompositionManager(compositionManager);
-        menuBarController.setCompositionContainerController(compositionContainerController);
+        menuBarController.setCompositionContainerController
+                (compositionContainerController);
     }
-
 
 
 }

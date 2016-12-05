@@ -52,6 +52,7 @@ public class MidiPlayer {
 
     /**
      * Sets the current tick position
+     *
      * @param tickPosition New tick position
      */
     public void setTickPosition(long tickPosition) {
