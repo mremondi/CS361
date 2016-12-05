@@ -104,15 +104,20 @@ public class CompositionFileManager {
      * Loads a composition from a file of the user's choice
      *
      * @return an Optional containing a composition or empty
-     * @throws JAXBException Thrown if saving fails
+     * @throws LoadCompositionFileException Thrown if loading fails
      */
-    public Optional<Composition> openComposition() throws JAXBException {
+    public Optional<Composition> openComposition() throws LoadCompositionFileException {
         File selectedFile = fileChooser.showOpenDialog(Main.getPrimaryStage());
-        if (selectedFile != null) {
-            Composition composition = (Composition) unmarshaller.unmarshal(selectedFile);
-            currentSavePath = Optional.of(selectedFile.getAbsolutePath());
-            Main.setPrimaryStageTitle(selectedFile.getName());
-            return Optional.of(composition);
+        try {
+            if (selectedFile != null) {
+                Composition composition = (Composition) unmarshaller.unmarshal(selectedFile);
+                currentSavePath = Optional.of(selectedFile.getAbsolutePath());
+                Main.setPrimaryStageTitle(selectedFile.getName());
+                return Optional.of(composition);
+            }
+        } catch (Exception e) {
+            // catch all exceptions and treat them as a LoadCompositionFileException
+            throw new LoadCompositionFileException();
         }
         return Optional.empty();
     }
@@ -122,5 +127,17 @@ public class CompositionFileManager {
      */
     public void removeCurrentSavePath() {
         currentSavePath = Optional.empty();
+    }
+
+    /**
+     * This class models an exception for failed composition loading
+     */
+    class LoadCompositionFileException extends Exception {
+
+        @Override
+        public String getLocalizedMessage() {
+            return "Failed to load composition. Check that the file format is correct and all elements are of the expected type.";
+        }
+
     }
 }

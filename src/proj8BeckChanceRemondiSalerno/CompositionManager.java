@@ -779,7 +779,12 @@ public class CompositionManager {
             Optional<Composition> composition = Optional.empty();
             try {
                 composition = compositionFileManager.openComposition();
-            } catch (JAXBException e) {
+            } catch (CompositionFileManager.LoadCompositionFileException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error Opening Composition File");
+                alert.setContentText(e.getLocalizedMessage());
+                alert.show();
             }
             if (composition.isPresent()) {
                 if (composition.get().getNotes() != null)
