@@ -9,9 +9,6 @@
 package proj8BeckChanceRemondiSalerno.Controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.shape.Line;
 import proj8BeckChanceRemondiSalerno.CompositionManager;
 
 /**
@@ -38,8 +35,9 @@ public class Controller {
     @FXML
     private InstrumentPaneController instrumentPaneController;
 
-
-
+    /**
+     * The CompositionContainerController loaded by the FXML Loader
+     */
     @FXML
     private CompositionContainerController compositionContainerController;
 

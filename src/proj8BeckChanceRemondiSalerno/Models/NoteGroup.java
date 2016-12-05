@@ -31,10 +31,6 @@ public class NoteGroup implements NoteGroupable {
             @XmlElement(name = "note", type = Note.class),
             @XmlElement(name = "group", type = NoteGroup.class)
     })
-
-    /**
-     * an arraylist of the noteGroupables contained in this NoteGroupable
-     */
     private ArrayList<NoteGroupable> noteGroupables;
 
     /**

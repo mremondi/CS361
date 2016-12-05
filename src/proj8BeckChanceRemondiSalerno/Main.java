@@ -40,6 +40,11 @@ public class Main extends Application {
         Main.primaryStage.setTitle(title);
     }
 
+    /**
+     * Getter method for the PrimaryStage
+     *
+     * @return the primary stage
+     */
     public static Stage getPrimaryStage(){
         return Main.primaryStage;
     }

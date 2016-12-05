@@ -100,9 +100,12 @@ public class MenuBarController {
     /**
      * The composition manager for forwarded menu actions to
      */
-    CompositionManager compositionManager;
+    private CompositionManager compositionManager;
 
-    CompositionContainerController compositionContainerController;
+    /**
+     * The compositon container controller
+     */
+    private CompositionContainerController compositionContainerController;
 
     /**
      * Setter for the composition manager
@@ -114,6 +117,10 @@ public class MenuBarController {
         this.bindWithCompositionManager(compositionManager);
     }
 
+    /**
+     * Setter for the compositionContainerController
+     * @param compositionContainerController the new container controller
+     */
     public void setCompositionContainerController(CompositionContainerController compositionContainerController) {
         this.compositionContainerController = compositionContainerController;
     }
@@ -287,11 +294,21 @@ public class MenuBarController {
         alert.showAndWait();
     }
 
+    /**
+     * Zooms the entire composition in
+     *
+     * @param event
+     */
     @FXML
     protected void handleZoomIn(ActionEvent event) {
         compositionContainerController.zoomIn();
     }
 
+    /**
+     * Zooms the entire composition out
+     *
+     * @param event
+     */
     @FXML
     protected void handleZoomOut(ActionEvent event) {
         compositionContainerController.zoomOut();

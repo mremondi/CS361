@@ -97,10 +97,7 @@ public class CompositionFileManager {
         marshaller.marshal(composition, file);
         currentSavePath = Optional.of(file.getAbsolutePath());
         Main.setPrimaryStageTitle(file.getName());
-        if (currentSavePath.isPresent()){
-            return true;
-        }
-        return false;
+        return currentSavePath.isPresent();
     }
 
     /**

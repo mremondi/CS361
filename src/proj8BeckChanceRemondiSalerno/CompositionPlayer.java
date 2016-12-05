@@ -12,8 +12,6 @@ import proj8BeckChanceRemondiSalerno.Models.MidiPlayer;
 import proj8BeckChanceRemondiSalerno.Models.Note;
 
 import javax.sound.midi.ShortMessage;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 
 /**
@@ -24,7 +22,6 @@ import java.util.Iterator;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
-
 public class CompositionPlayer {
 
     /**
@@ -90,5 +87,4 @@ public class CompositionPlayer {
         midiPlayer.addMidiEvent(ShortMessage.PROGRAM_CHANGE + 6, 40, 0, 0, 0);
         midiPlayer.addMidiEvent(ShortMessage.PROGRAM_CHANGE + 7, 60, 0, 0, 0);
     }
-
 }

@@ -284,6 +284,11 @@ public class Note implements NoteGroupable {
         startTick += dx;
     }
 
+    /**
+     * Returns a cloned version of the Note
+     *
+     * @return the Note or null
+     */
     @Override
     public Note clone() {
         try {

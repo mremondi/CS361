@@ -23,7 +23,6 @@ import javafx.util.Duration;
  * @author Ryan Salerno
  * @author Mike Remondi
  */
-
 public class TempoLineController {
     /**
      * The main pane containing the tempo line.
@@ -83,7 +82,6 @@ public class TempoLineController {
         this.tempoLine.setVisible(true);
     }
 
-
     /**
      * Setter for stop time
      * @param stopTime New stop time
@@ -115,7 +113,6 @@ public class TempoLineController {
     public void stopAnimation() {
         this.tempoAnimation.stop();
     }
-
 
     /**
      * Creates the tempo line and adds it to the container pane.

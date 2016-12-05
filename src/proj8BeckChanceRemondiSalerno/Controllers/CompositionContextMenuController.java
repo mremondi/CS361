@@ -17,7 +17,6 @@ import javafx.scene.control.*;
 import proj8BeckChanceRemondiSalerno.CompositionManager;
 import proj8BeckChanceRemondiSalerno.Models.Note;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -52,7 +51,6 @@ public class CompositionContextMenuController {
     public void setCompositionManager(CompositionManager compositionManager) {
         this.compositionManager = compositionManager;
     }
-
 
     /**
      * Handles delete clicked

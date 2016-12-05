@@ -32,7 +32,6 @@ import proj8BeckChanceRemondiSalerno.Models.NoteGroup;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj8BeckChanceRemondiSalerno.Views.NoteGroupablePane;
 import proj8BeckChanceRemondiSalerno.Views.NoteRectangle;
-
 import javax.xml.bind.JAXBException;
 import java.util.ArrayList;
 import java.util.Collection;

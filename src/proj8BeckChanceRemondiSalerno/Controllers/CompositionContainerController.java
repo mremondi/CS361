@@ -61,14 +61,14 @@ public class CompositionContainerController {
     private double currentZoomScale = 1;
 
     /**
-     *
+     * The amount to increment the zoom factor by
      */
-    private double zoomScaleIncrements = 0.125;
+    private final double zoomScaleIncrements = 0.125;
 
     /**
      * The maximum possible zoom scale
      */
-    private double maxZoom = 3.0;
+    private final double maxZoom = 3.0;
 
 
     public void initialize() {
@@ -137,6 +137,4 @@ public class CompositionContainerController {
             linePane.getChildren().add(staffLine);
         }
     }
-
-
 }

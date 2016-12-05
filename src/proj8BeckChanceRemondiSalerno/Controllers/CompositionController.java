@@ -21,7 +21,6 @@ import proj8BeckChanceRemondiSalerno.CompositionActions.*;
 import proj8BeckChanceRemondiSalerno.CompositionManager;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj8BeckChanceRemondiSalerno.Views.NoteGroupablePane;
-
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,7 +41,6 @@ public class CompositionController {
      */
     @FXML
     private Pane composition;
-
 
     /**
      * The context menu for right clicking on notes
@@ -100,6 +98,10 @@ public class CompositionController {
         noteContextMenuController.setCompositionManager(compositionManager);
     }
 
+    /**
+     * The initialize method called by the FXML loader
+     * Sets up the context menu and context controllers
+     */
     public void initialize() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Views/CompositionContextMenu" +
@@ -129,7 +131,6 @@ public class CompositionController {
             handleDragStartedAtLocation(mouseEvent.getX(), mouseEvent.getY(), mouseEvent
                     .isControlDown());
         }
-
     }
 
     /**
@@ -179,7 +180,8 @@ public class CompositionController {
                 .getGroupableAtPoint(x, y);
 
         if (noteAtClickLocation.isPresent()) {
-            contextMenu.show(compositionManager.getGroupPane(noteAtClickLocation.get()), Side.BOTTOM, 0, 0);
+            contextMenu.show(compositionManager.getGroupPane(noteAtClickLocation.get())
+                    , Side.BOTTOM, 0, 0);
 
             // if it is not selected, select it
             if (!noteAtClickLocation.get().isSelected()) {
@@ -190,7 +192,6 @@ public class CompositionController {
                 compositionManager.actionCompleted(action);
             }
         }
-
     }
 
 

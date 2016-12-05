@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 
-
 /**
  * This class models a controller for the volume view.
  *
@@ -34,6 +33,9 @@ public class VolumeController {
     @FXML
     Slider volumeSlider;
 
+    /**
+     * The default initializer method called by the FXML loader
+     */
     public void initialize() {
         updateVolumeLabel();
         volumeSlider.valueProperty().addListener((arg0, arg1, arg2) -> updateVolumeLabel());
@@ -50,7 +52,8 @@ public class VolumeController {
 
     /**
      * Get current slider value
-     * @return
+     *
+     * @return the int value of the volume slider
      */
     public int getVolume() {
         return (int)Math.round(volumeSlider.getValue());
