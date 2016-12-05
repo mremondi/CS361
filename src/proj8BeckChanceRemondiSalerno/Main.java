@@ -40,6 +40,10 @@ public class Main extends Application {
         Main.primaryStage.setTitle(title);
     }
 
+    public static Stage getPrimaryStage(){
+        return Main.primaryStage;
+    }
+
     /**
      * Sets up the main GUI to play a scale.
      * Player contains a menu bar:

@@ -93,7 +93,7 @@ public class CompositionFileManager {
      * @return a boolean indicating whether the save operation was cancelled or not
      */
     public boolean saveCompositionAsNew(Composition composition) throws JAXBException {
-        File file = fileChooser.showSaveDialog(null);
+        File file = fileChooser.showSaveDialog(Main.getPrimaryStage());
         marshaller.marshal(composition, file);
         currentSavePath = Optional.of(file.getAbsolutePath());
         Main.setPrimaryStageTitle(file.getName());
@@ -110,7 +110,7 @@ public class CompositionFileManager {
      * @throws Exception Thrown if loading fails
      */
     public Optional<Composition> openComposition() throws JAXBException {
-        File selectedFile = fileChooser.showOpenDialog(null);
+        File selectedFile = fileChooser.showOpenDialog(Main.getPrimaryStage());
         if (selectedFile != null) {
             Composition composition = (Composition) unmarshaller.unmarshal(selectedFile);
             currentSavePath = Optional.of(selectedFile.getAbsolutePath());
