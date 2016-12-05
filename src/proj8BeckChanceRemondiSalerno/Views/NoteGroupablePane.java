@@ -2,8 +2,8 @@
  * File: NoteGroupablePane.java
  * Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
  * Class: CS361
- * Project: 8
- * Due Date: November 18, 2016
+ * Project: 9
+ * Due Date: December 7, 2016
  */
 
 package proj8BeckChanceRemondiSalerno.Views;
@@ -11,7 +11,6 @@ package proj8BeckChanceRemondiSalerno.Views;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 /**

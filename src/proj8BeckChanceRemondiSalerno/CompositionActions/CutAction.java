@@ -2,17 +2,15 @@
  * File: CutAction.java
  * Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
  * Class: CS361
- * Project: 8
- * Due Date: November 18, 2016
+ * Project: 9
+ * Due Date: December 7, 2016
  */
-
 
 package proj8BeckChanceRemondiSalerno.CompositionActions;
 
 import proj8BeckChanceRemondiSalerno.CompositionManager;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj8BeckChanceRemondiSalerno.NotesClipboardManager;
-
 import java.util.ArrayList;
 
 /**
