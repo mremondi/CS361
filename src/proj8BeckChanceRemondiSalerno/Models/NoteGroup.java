@@ -234,7 +234,7 @@ public class NoteGroup implements NoteGroupable {
         try {
             clone = (NoteGroup) super.clone();
         } catch (CloneNotSupportedException e) {
-            System.out.println(e);
+            // Do nothing
             return null;
         }
         ArrayList<NoteGroupable> clonedNotes = new ArrayList<>();

@@ -107,7 +107,8 @@ public class CompositionFileManager {
      * Loads a composition from a file of the user's choice
      *
      * @return The loaded composition
-     * @throws Exception Thrown if loading fails
+     * @throws JAXBException Thrown if saving fails
+     * @return an Optional containing a composition or empty
      */
     public Optional<Composition> openComposition() throws JAXBException {
         File selectedFile = fileChooser.showOpenDialog(Main.getPrimaryStage());

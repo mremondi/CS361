@@ -289,7 +289,7 @@ public class Note implements NoteGroupable {
         try {
             return (Note) super.clone();
         } catch (CloneNotSupportedException e) {
-            System.out.println(e);
+            // Do nothing
             return null;
         }
     }

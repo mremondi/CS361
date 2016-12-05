@@ -13,15 +13,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import proj8BeckChanceRemondiSalerno.CompositionManager;
 import proj8BeckChanceRemondiSalerno.Models.Note;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -102,7 +98,7 @@ public class CompositionContextMenuController {
                 compositionManager.setChannelForNotes(compositionManager.getSelectedNotes(), selectedIndex);
             }
         } catch (IOException e) {
-            System.out.println(e);
+            // Do nothing
         }
     }
 
@@ -137,7 +133,7 @@ public class CompositionContextMenuController {
                 }
             }
         } catch (IOException e) {
-            System.out.println(e);
+            // Do nothing
         }
 
     }

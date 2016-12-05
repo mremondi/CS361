@@ -108,7 +108,7 @@ public class CompositionController {
             noteContextMenuController = fxmlLoader.getController();
             noteContextMenuController.setCompositionManager(this.compositionManager);
         } catch(IOException e) {
-            System.out.println(e);
+            // Do nothing
         }
     }
 

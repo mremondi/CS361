@@ -33,6 +33,7 @@ import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
 import proj8BeckChanceRemondiSalerno.Views.NoteGroupablePane;
 import proj8BeckChanceRemondiSalerno.Views.NoteRectangle;
 
+import javax.xml.bind.JAXBException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -750,7 +751,7 @@ public class CompositionManager {
                 .keySet()));
         try {
             changeSinceLastSave = compositionFileManager.saveComposition(composition);
-        } catch (Exception e) {
+        } catch (JAXBException e) {
             // Catch the potential Exception
         }
     }
@@ -764,7 +765,7 @@ public class CompositionManager {
                 .keySet()));
         try {
             compositionFileManager.saveCompositionAsNew(composition);
-        } catch (Exception e) {
+        } catch (JAXBException e) {
             // Catch the potential Exception
         }
     }
@@ -778,7 +779,7 @@ public class CompositionManager {
             Optional<Composition> composition = Optional.empty();
             try {
                 composition = compositionFileManager.openComposition();
-            } catch (Exception e) { }
+            } catch (JAXBException e) { }
             if (composition.isPresent()) {
                 if (composition.get().getNotes() != null)
                     composition.get().getNotes().forEach(this::addGroupable);
