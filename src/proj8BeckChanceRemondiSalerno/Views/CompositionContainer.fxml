@@ -20,8 +20,6 @@
                 <Pane fx:id="tempoLineContainerPane" disable="true" StackPane.alignment="TOP_LEFT"/>
             </StackPane>
         </Group>
-
     </Group>
-
 </ScrollPane>
 

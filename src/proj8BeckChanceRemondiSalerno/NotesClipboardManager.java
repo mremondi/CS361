@@ -15,7 +15,6 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
 import proj8BeckChanceRemondiSalerno.CompositionActions.PasteAction;
 import proj8BeckChanceRemondiSalerno.Models.NoteGroupable;
-
 import java.util.ArrayList;
 
 /**

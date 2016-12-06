@@ -53,7 +53,7 @@ public class CompositionContainerController {
     /**
      * The currently applied zoom transform
      */
-    Scale zoomScaleTransform;
+    private Scale zoomScaleTransform;
 
     /**
      * The current zoom scale
@@ -110,7 +110,8 @@ public class CompositionContainerController {
      * Zooms out on the composition
      */
     public void zoomOut() {
-        if (currentZoomScale == zoomScaleIncrements) {
+
+        if (currentZoomScale == zoomScaleIncrements ) {
             return;
         }
         currentZoomScale -= zoomScaleIncrements;

@@ -6,7 +6,6 @@
     Project: 9
     Date: December 7, 2016-->
 
-
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.Pane?>

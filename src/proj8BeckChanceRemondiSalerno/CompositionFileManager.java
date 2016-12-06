@@ -116,6 +116,7 @@ public class CompositionFileManager {
                 return Optional.of(composition);
             }
         } catch (Exception e) {
+            // Opening a malformed file could throw several different exceptions
             // catch all exceptions and treat them as a LoadCompositionFileException
             throw new LoadCompositionFileException();
         }

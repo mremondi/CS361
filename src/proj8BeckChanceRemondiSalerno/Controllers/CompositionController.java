@@ -106,8 +106,7 @@ public class CompositionController {
     public void initialize() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource
-                    ("../Views/CompositionContextMenu" +
-                    ".fxml"));
+                    ("../Views/CompositionContextMenu" + ".fxml"));
             contextMenu = fxmlLoader.load();
             noteContextMenuController = fxmlLoader.getController();
             noteContextMenuController.setCompositionManager(this.compositionManager);

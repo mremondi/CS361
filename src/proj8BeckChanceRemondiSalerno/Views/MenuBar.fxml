@@ -28,8 +28,8 @@
         <MenuItem accelerator="Shortcut+X" onAction="#handleCut" text="Cut" fx:id="cutItem"/>
         <MenuItem accelerator="Shortcut+V" onAction="#handlePaste" text="Paste" fx:id="pasteItem"/>
         <SeparatorMenuItem/>
-        <MenuItem accelerator="Shortcut+I" onAction="#handleZoomIn" text="Zoom In"/>
-        <MenuItem accelerator="Shortcut+O" onAction="#handleZoomOut" text="Zoom Out"/>
+        <MenuItem accelerator="Shortcut+PLUS" onAction="#handleZoomIn" text="Zoom In"/>
+        <MenuItem accelerator="Shortcut+MINUS" onAction="#handleZoomOut" text="Zoom Out"/>
 
     </Menu>
     <Menu text="Actions">
