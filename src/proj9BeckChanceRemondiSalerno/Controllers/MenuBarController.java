@@ -96,6 +96,18 @@ public class MenuBarController {
     @FXML
     private MenuItem saveAsItem;
 
+    /**
+     * The zoom in menu item
+     */
+    @FXML
+    private MenuItem zoomInItem;
+
+    /**
+     * The zoom out menu item
+     */
+    @FXML
+    private MenuItem zoomOutItem;
+
 
     /**
      * The composition manager for forwarded menu actions to
@@ -125,6 +137,8 @@ public class MenuBarController {
     public void setCompositionContainerController(CompositionContainerController
                                                           compositionContainerController) {
         this.compositionContainerController = compositionContainerController;
+        zoomInItem.disableProperty().bind(compositionContainerController.canZoomInProperty().not());
+        zoomOutItem.disableProperty().bind(compositionContainerController.canZoomOutProperty().not());
     }
 
     /**

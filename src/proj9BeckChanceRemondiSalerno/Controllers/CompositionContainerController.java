@@ -9,6 +9,8 @@
 
 package proj9BeckChanceRemondiSalerno.Controllers;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
@@ -70,6 +72,16 @@ public class CompositionContainerController {
      */
     private final double maxZoom = 3.0;
 
+    /**
+     * Property for whether another zoom in is possible
+     */
+    private SimpleBooleanProperty canZoomIn = new SimpleBooleanProperty(true);
+
+    /**
+     * Property for whether another zoom out is possible
+     */
+    private SimpleBooleanProperty canZoomOut = new SimpleBooleanProperty(true);
+
 
     public void initialize() {
         createLinePane();
@@ -104,6 +116,7 @@ public class CompositionContainerController {
         }
         currentZoomScale += zoomScaleIncrements;
         updateZoomTransform();
+        updateCanZoomProperties();
     }
 
     /**
@@ -116,6 +129,33 @@ public class CompositionContainerController {
         }
         currentZoomScale -= zoomScaleIncrements;
         updateZoomTransform();
+        updateCanZoomProperties();
+    }
+
+
+
+    /**
+     * Getter for can zoom in property
+     * @return canZoomInProperty
+     */
+    public SimpleBooleanProperty canZoomInProperty() {
+        return canZoomIn;
+    }
+
+    /**
+     * Getter for can zoom out property
+     * @return canZoomOutProperty
+     */
+    public SimpleBooleanProperty canZoomOutProperty() {
+        return canZoomOut;
+    }
+
+    /**
+     * Updates the can zoom in and can zoom out properties
+     */
+    private void updateCanZoomProperties() {
+        canZoomOut.set(currentZoomScale != zoomScaleIncrements);
+        canZoomIn.set(currentZoomScale != maxZoom);
     }
 
     /**
