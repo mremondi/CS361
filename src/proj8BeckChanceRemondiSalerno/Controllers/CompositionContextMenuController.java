@@ -136,8 +136,7 @@ public class CompositionContextMenuController {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == confirmButton) {
                 int newVolume = volumeController.getVolume();
-                for (NoteGroupable noteGroupable : compositionManager.getSelectedNotes
-                        ()) {
+                for (NoteGroupable noteGroupable : noteGroupables) {
                     noteGroupable.setVolume(newVolume);
                 }
             }
