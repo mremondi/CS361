@@ -842,12 +842,15 @@ public class CompositionManager {
 
     public void loadLSystem(String filename){
         this.lSystem = new LSystem(filename);
+        // TODO: Create Dialog window to choose iterations, etc
         int iterations = 3;
+        int distance = 100;
+        int startPitch = 500;
         this.lSystem.read();
         String resultString = this.lSystem.buildString(iterations);
         System.out.println("RESULT STRING: "+ resultString);
         this.musicalInterpreter = new MusicalInterpreter(this);
-        this.musicalInterpreter.stringToNotes(resultString, 100, 500);
+        this.musicalInterpreter.stringToNotes(resultString, distance, startPitch);
 
     }
 
