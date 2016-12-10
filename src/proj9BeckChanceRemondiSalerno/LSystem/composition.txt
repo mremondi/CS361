@@ -1,0 +1,3 @@
+base [pF]-gF
+rule p pF_-F_
+rule g g_F_+F

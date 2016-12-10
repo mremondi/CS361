@@ -1,2 +1,2 @@
 base pF
-rule F F_hF_+pF
+rule F (300)F(200)-F(400)+F

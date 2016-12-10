@@ -13,13 +13,13 @@ public class MusicalInterpreter {
         this.compositionManager = compositionManager;
     }
 
-    public void stringToNotes(String dstring, int distance, int pitch){
+    public void stringToNotes(String dstring, int distance, int startingPitch){
         String modString = "";
         int modVal = -1;
         boolean modGrab = false;
         // stateStack holds an x pos and angle?
         Stack<Point> stateStack = new Stack<>();
-        Point currentPosition = new Point(0,pitch);
+        Point currentPosition = new Point(0, startingPitch);
 
         Stack<Integer> instrumentStack = new Stack<>();
         Integer currentInstrument = 0;
@@ -40,37 +40,70 @@ public class MusicalInterpreter {
 
             if (c == 'F'){
                 if (modVal == -1){
-                    // NEW NOTE
                     this.compositionManager.addGroupable(new Note(currentPosition.x,
                             currentPosition.y, distance, currentInstrument));
                     currentPosition.x += distance;
+                    if (currentPosition.x > 1900){
+                        currentPosition.x = 1900;
+                    }
                 }
                 else{
-                    // NEW NOTE
-                    // duration = modVal
+                    this.compositionManager.addGroupable(new Note(currentPosition.x,
+                            currentPosition.y,
+                            modVal,
+                            currentInstrument));
                 }
             }
             else if (c == '['){
-                stateStack.push(currentPosition);
+                stateStack.push((Point)currentPosition.clone());
+                System.out.println(stateStack.peek().x);
             }
             else if (c == ']'){
                 currentPosition = stateStack.pop();
-            }
-            else if (c == '+'){
-                currentPosition.y += pitch;
-                if (currentPosition.y > 127){
-                    currentPosition.y = 127;
-                }
+                System.out.println(currentPosition.x);
+
             }
             else if (c == '-'){
-                currentPosition.y -= pitch;
-                if (currentPosition.y < 0){
-                    currentPosition.y = 0;
+                if (modVal == -1) {
+                    currentPosition.y += 10;
+                    if (currentPosition.y > 1260) {
+                        currentPosition.y = 1260;
+                    }
+                }
+                else{
+                    currentPosition.y += modVal;
+                    if (currentPosition.y > 1260) {
+                        currentPosition.y = 1260;
+                    }
+                }
+            }
+            else if (c == '+'){
+                if (modVal == -1) {
+                    currentPosition.y -= 10;
+                    if (currentPosition.y < 0) {
+                        currentPosition.y = 0;
+                    }
+                }
+                else{
+                    currentPosition.y -= modVal;
+                    if (currentPosition.y > 0) {
+                        currentPosition.y = 0;
+                    }
                 }
             }
             else if (c == '_'){
-                // basically a rest... just create distance between notes
-                currentPosition.x += distance;
+                if (modVal == -1) {
+                    currentPosition.y += distance;
+                    if (currentPosition.y > 1900) {
+                        currentPosition.y = 1900;
+                    }
+                }
+                else{
+                    currentPosition.y += modVal;
+                    if (currentPosition.y > 1900) {
+                        currentPosition.y = 1900;
+                    }
+                }
             }
             else if (c == '<'){
                 instrumentStack.push(currentInstrument);
@@ -102,6 +135,7 @@ public class MusicalInterpreter {
             else if (c == 'f'){
                 currentInstrument = 7;
             }
+            modVal = -1;
         }
     }
 }
