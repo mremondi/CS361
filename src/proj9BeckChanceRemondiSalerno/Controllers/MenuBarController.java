@@ -295,6 +295,12 @@ public class MenuBarController {
         compositionManager.createNewComposition();
     }
 
+    @FXML
+    protected void handleLoadLSystem(ActionEvent event){
+        // Allow users to select a file
+        compositionManager.selectLSystem();
+    }
+
     /**
      * Shows the about dialog
      *

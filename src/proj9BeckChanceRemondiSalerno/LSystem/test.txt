@@ -1,0 +1,2 @@
+base pF
+rule F (300)F(200)-F(400)+F

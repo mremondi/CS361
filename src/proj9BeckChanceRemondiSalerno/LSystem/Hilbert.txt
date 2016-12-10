@@ -1,0 +1,6 @@
+base -X
+rule X -YF+XFX+FY-
+rule Y +XF-YFY-FX+
+rule F F
+rule + +
+rule - -
