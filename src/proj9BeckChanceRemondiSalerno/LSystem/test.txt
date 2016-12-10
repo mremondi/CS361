@@ -1,0 +1,2 @@
+base pF
+rule F FF_+F

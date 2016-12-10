@@ -19,7 +19,7 @@ public class MusicalInterpreter {
         boolean modGrab = false;
         // stateStack holds an x pos and angle?
         Stack<Point> stateStack = new Stack<>();
-        Point currentPosition = new Point(0,0);
+        Point currentPosition = new Point(0,pitch);
 
         Stack<Integer> instrumentStack = new Stack<>();
         Integer currentInstrument = 0;

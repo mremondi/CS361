@@ -18,8 +18,8 @@ public class LSystem{
         this.base = newBase;
     }
 
-    public void addRule(String newRule){
-        this.rules.put(newRule.substring(0,1), newRule.substring(1));
+    public void addRule(String ruleKey, String newRule){
+        this.rules.put(ruleKey, newRule);
     }
 
     public void read(){
@@ -34,20 +34,17 @@ public class LSystem{
                     setBase(sArray[1]);
                 }
                 else if(sArray[0].equals("rule")){
-                    addRule(sArray[2]);
+                    addRule(sArray[1], sArray[2]);
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("here");
         } catch (IOException e) {
-            System.out.println("here1");
         } finally {
             try {
                 if (reader != null) {
                     reader.close();
                 }
             } catch (IOException e) {
-                System.out.println("here2");
             }
         }
     }

@@ -297,7 +297,8 @@ public class MenuBarController {
 
     @FXML
     protected void handleLoadLSystem(ActionEvent event){
-        String filename = "systemH.txt";
+        // Allow users to select a file
+        String filename = "/Users/mremondi/Desktop/GIT/CS361/src/proj9BeckChanceRemondiSalerno/LSystem/test.txt";
         compositionManager.loadLSystem(filename);
     }
 

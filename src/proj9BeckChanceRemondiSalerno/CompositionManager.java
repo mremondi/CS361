@@ -835,10 +835,10 @@ public class CompositionManager {
 
     public void loadLSystem(String filename){
         this.lSystem = new LSystem(filename);
-        int iterations = 3;
+        int iterations = 1;
         this.lSystem.read();
         String resultString = this.lSystem.buildString(iterations);
-
+        System.out.println("RESULT STRING: "+ resultString);
         this.musicalInterpreter = new MusicalInterpreter(this);
         // starting string, distance, pitch
         this.musicalInterpreter.stringToNotes(resultString, 100, 50);
