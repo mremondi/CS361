@@ -26,6 +26,7 @@ import proj9BeckChanceRemondiSalerno.Controllers.CompositionController;
 import proj9BeckChanceRemondiSalerno.Controllers.InstrumentPaneController;
 import proj9BeckChanceRemondiSalerno.Controllers.TempoLineController;
 import proj9BeckChanceRemondiSalerno.LSystem.LSystem;
+import proj9BeckChanceRemondiSalerno.LSystem.LSystemFileManager;
 import proj9BeckChanceRemondiSalerno.LSystem.MusicalInterpreter;
 import proj9BeckChanceRemondiSalerno.Models.Composition;
 import proj9BeckChanceRemondiSalerno.Models.Note;
@@ -69,6 +70,8 @@ public class CompositionManager {
     private CompositionController compositionController;
 
     private LSystem lSystem;
+
+    private LSystemFileManager lSystemFileManager = new LSystemFileManager();
 
     private MusicalInterpreter musicalInterpreter;
 
@@ -831,6 +834,10 @@ public class CompositionManager {
         } else {
             return true;
         }
+    }
+
+    public void selectLSystem(){
+        loadLSystem(this.lSystemFileManager.selectFile());
     }
 
     public void loadLSystem(String filename){
