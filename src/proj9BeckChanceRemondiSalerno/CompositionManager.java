@@ -842,7 +842,7 @@ public class CompositionManager {
 
     public void loadLSystem(String filename){
         this.lSystem = new LSystem(filename);
-        int iterations = 1;
+        int iterations = 3;
         this.lSystem.read();
         String resultString = this.lSystem.buildString(iterations);
         System.out.println("RESULT STRING: "+ resultString);

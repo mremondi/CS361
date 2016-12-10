@@ -43,6 +43,7 @@ public class MusicalInterpreter {
                     // NEW NOTE
                     this.compositionManager.addGroupable(new Note(currentPosition.x,
                             currentPosition.y, distance, currentInstrument));
+                    currentPosition.x += distance;
                 }
                 else{
                     // NEW NOTE

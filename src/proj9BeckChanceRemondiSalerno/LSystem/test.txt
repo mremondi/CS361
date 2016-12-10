@@ -1,2 +1,2 @@
 base pF
-rule F FF_+F
+rule F F_hF_+pF
