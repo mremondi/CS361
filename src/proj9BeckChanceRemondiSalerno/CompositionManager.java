@@ -25,6 +25,8 @@ import proj9BeckChanceRemondiSalerno.CompositionActions.*;
 import proj9BeckChanceRemondiSalerno.Controllers.CompositionController;
 import proj9BeckChanceRemondiSalerno.Controllers.InstrumentPaneController;
 import proj9BeckChanceRemondiSalerno.Controllers.TempoLineController;
+import proj9BeckChanceRemondiSalerno.LSystem.LSystem;
+import proj9BeckChanceRemondiSalerno.LSystem.MusicalInterpreter;
 import proj9BeckChanceRemondiSalerno.Models.Composition;
 import proj9BeckChanceRemondiSalerno.Models.Note;
 import proj9BeckChanceRemondiSalerno.Models.NoteGroup;
@@ -65,6 +67,10 @@ public class CompositionManager {
      * The controller for the Composition Pane
      */
     private CompositionController compositionController;
+
+    private LSystem lSystem;
+
+    private MusicalInterpreter musicalInterpreter;
 
     /**
      * Source for getting the current instrument.
@@ -825,6 +831,18 @@ public class CompositionManager {
         } else {
             return true;
         }
+    }
+
+    public void loadLSystem(String filename){
+        this.lSystem = new LSystem(filename);
+        int iterations = 3;
+        this.lSystem.read();
+        String resultString = this.lSystem.buildString(iterations);
+
+        this.musicalInterpreter = new MusicalInterpreter(this);
+        // starting string, distance, pitch
+        this.musicalInterpreter.stringToNotes(resultString, 100, 50);
+
     }
 
     /**

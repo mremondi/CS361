@@ -1,0 +1,2 @@
+base F
+rule F F[+F<rP>]F[-F<gL>]F F[+F<rP>]F F[-F]F

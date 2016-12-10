@@ -295,6 +295,12 @@ public class MenuBarController {
         compositionManager.createNewComposition();
     }
 
+    @FXML
+    protected void handleLoadLSystem(ActionEvent event){
+        String filename = "systemH.txt";
+        compositionManager.loadLSystem(filename);
+    }
+
     /**
      * Shows the about dialog
      *
