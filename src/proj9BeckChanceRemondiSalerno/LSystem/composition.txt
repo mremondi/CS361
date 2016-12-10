@@ -1,3 +1,4 @@
-base [pF]-gF
+base [pF]-[gF](80)-oF
 rule p pF_-F_
-rule g g_F_+F
+rule g g_(50)F_+(25)F
+rule o o_(50)F_+(25)F

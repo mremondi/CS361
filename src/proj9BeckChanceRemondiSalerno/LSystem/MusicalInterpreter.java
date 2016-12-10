@@ -93,15 +93,15 @@ public class MusicalInterpreter {
             }
             else if (c == '_'){
                 if (modVal == -1) {
-                    currentPosition.y += distance;
-                    if (currentPosition.y > 1900) {
-                        currentPosition.y = 1900;
+                    currentPosition.x += distance;
+                    if (currentPosition.x > 1900) {
+                        currentPosition.x = 1900;
                     }
                 }
                 else{
-                    currentPosition.y += modVal;
-                    if (currentPosition.y > 1900) {
-                        currentPosition.y = 1900;
+                    currentPosition.x += distance;
+                    if (currentPosition.x > 1900) {
+                        currentPosition.x = 1900;
                     }
                 }
             }
