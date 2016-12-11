@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--File: LSystemOptions.fxml
+    Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
+    Class: CS361
+    Project: 10
+    Date: December 19, 2016-->
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.Button?>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="110.0"
+      prefWidth="298.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="proj9BeckChanceRemondiSalerno.Controllers.LSystemOptionsController">
+
+    <Label text="Number of Iterations:"/>
+    <TextField/>
+    <Label text="Default Note Duration:"/>
+    <TextField/>
+    <Label text="Starting Pitch:"/>
+    <TextField/>
+
+    <Button text="OK"
+        onAction="#handleOK"/>
+    <Button text="CANCEL"
+        onAction="#handleCancel"/>
+
+</Pane>

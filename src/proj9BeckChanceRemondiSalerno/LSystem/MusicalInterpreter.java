@@ -75,11 +75,9 @@ public class MusicalInterpreter {
             }
             else if (c == '['){
                 stateStack.push((Point)currentPosition.clone());
-                System.out.println(stateStack.peek().x);
             }
             else if (c == ']'){
                 currentPosition = stateStack.pop();
-                System.out.println(currentPosition.x);
 
             }
             else if (c == '-'){

@@ -143,7 +143,6 @@ public class CompositionContextMenuController {
         } catch (IOException e) {
             // Do nothing
         }
-
     }
 
 }

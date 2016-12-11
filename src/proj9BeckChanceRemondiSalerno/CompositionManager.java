@@ -15,10 +15,13 @@ import javafx.beans.property.SimpleMapProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableMap;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import proj9BeckChanceRemondiSalerno.CompositionActions.*;
@@ -36,6 +39,7 @@ import proj9BeckChanceRemondiSalerno.Views.NoteGroupablePane;
 import proj9BeckChanceRemondiSalerno.Views.NoteRectangle;
 
 import javax.xml.bind.JAXBException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -854,6 +858,21 @@ public class CompositionManager {
         loadLSystem(this.lSystemFileManager.selectFile());
     }
 
+    public int getLSystemParametersFromUser(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(
+                    getClass().getResource("../Views/LSystemOptions.fxml"));
+            Parent instrumentsRoot = fxmlLoader.load();
+            Alert alert = new Alert(Alert.AlertType.NONE);
+            DialogPane dialogPane = new DialogPane();
+            dialogPane.setContent(instrumentsRoot);
+            alert.setDialogPane(dialogPane);
+        } catch (IOException e) {
+            // Do nothing
+        }
+        return 0;
+    }
+
     /**
      * creates a new lSystem with the given filename, reads the file
      * and builds the string. Then it creates a MusicalInterpreter
@@ -864,6 +883,10 @@ public class CompositionManager {
     public void loadLSystem(String filename){
         this.lSystem = new LSystem(filename);
         // TODO: Create Dialog window to choose iterations, etc
+
+        getLSystemParametersFromUser();
+
+
         int iterations = 3;
         int distance = 100;
         int startPitch = 500;
