@@ -2,14 +2,13 @@
  * File: CompositionContainerController.java
  * Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
  * Class: CS361
- * Project: 9
- * Due Date: December 7, 2016
+ * Project: 10
+ * Due Date: December 19, 2016
  */
 
 
 package proj9BeckChanceRemondiSalerno.Controllers;
 
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
