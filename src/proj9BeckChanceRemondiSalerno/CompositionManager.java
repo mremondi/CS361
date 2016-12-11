@@ -25,9 +25,7 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import proj9BeckChanceRemondiSalerno.CompositionActions.*;
-import proj9BeckChanceRemondiSalerno.Controllers.CompositionController;
-import proj9BeckChanceRemondiSalerno.Controllers.InstrumentPaneController;
-import proj9BeckChanceRemondiSalerno.Controllers.TempoLineController;
+import proj9BeckChanceRemondiSalerno.Controllers.*;
 import proj9BeckChanceRemondiSalerno.LSystem.LSystem;
 import proj9BeckChanceRemondiSalerno.LSystem.LSystemFileManager;
 import proj9BeckChanceRemondiSalerno.LSystem.MusicalInterpreter;
@@ -858,19 +856,33 @@ public class CompositionManager {
         loadLSystem(this.lSystemFileManager.selectFile());
     }
 
-    public int getLSystemParametersFromUser(){
+    public Optional<int[]> getLSystemParametersFromUser(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(
-                    getClass().getResource("../Views/LSystemOptions.fxml"));
+                    getClass().getResource("./Views/LSystemOptions.fxml"));
             Parent instrumentsRoot = fxmlLoader.load();
             Alert alert = new Alert(Alert.AlertType.NONE);
             DialogPane dialogPane = new DialogPane();
             dialogPane.setContent(instrumentsRoot);
             alert.setDialogPane(dialogPane);
+            ButtonType confirmButton = new ButtonType("OK", ButtonBar.ButtonData.APPLY);
+            ButtonType buttonTypeCancel = new ButtonType("CANCEL",
+                    ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(confirmButton, buttonTypeCancel);
+            LSystemOptionsController lSystemOptionsController = fxmlLoader.getController();
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == confirmButton) {
+                int iterations = lSystemOptionsController.getIterations();
+                int duration = lSystemOptionsController.getDuration();
+                int startPitch = lSystemOptionsController.getStartPitch();
+                int[] options = {iterations, duration, startPitch};
+                return Optional.of(options);
+            }
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             // Do nothing
         }
-        return 0;
+        return Optional.empty();
     }
 
     /**
@@ -884,12 +896,24 @@ public class CompositionManager {
         this.lSystem = new LSystem(filename);
         // TODO: Create Dialog window to choose iterations, etc
 
-        getLSystemParametersFromUser();
+        int iterations;
+        int distance;
+        int startPitch;
+        Optional<int[]> options = getLSystemParametersFromUser();
+        if (!options.isPresent()){
+            System.out.println("here");
+            iterations = 3;
+            distance = 100;
+            startPitch = 500;
+        }
+        else{
+            System.out.println("here1");
+            iterations = options.get()[0];
+            distance = options.get()[1];
+            startPitch = options.get()[2];
+        }
 
 
-        int iterations = 3;
-        int distance = 100;
-        int startPitch = 500;
         this.lSystem.read();
         String resultString = this.lSystem.buildString(iterations);
         System.out.println("RESULT STRING: "+ resultString);
