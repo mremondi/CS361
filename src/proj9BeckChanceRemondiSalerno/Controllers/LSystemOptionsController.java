@@ -4,14 +4,26 @@ package proj9BeckChanceRemondiSalerno.Controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
+/**
+ * This class models a controller for the LSystemOptions view
+ */
 public class LSystemOptionsController {
 
+    /**
+     * Input text field for the number of iterations
+     */
     @FXML
     TextField iterations;
 
+    /**
+     * Input text field for the default duration
+     */
     @FXML
     TextField duration;
 
+    /**
+     * Input text field for the starting pitch
+     */
     @FXML
     TextField startPitch;
 
@@ -22,14 +34,29 @@ public class LSystemOptionsController {
 
     }
 
+    /**
+     * Getter method for the number of iterations
+     *
+     * @return the number of iterations
+     */
     public int getIterations() {
         return Integer.valueOf(iterations.getText());
     }
 
+    /**
+     * Getter method for the default duration
+     *
+     * @return the default duration
+     */
     public int getDuration() {
         return Integer.valueOf(duration.getText());
     }
 
+    /**
+     * Getter method for the starting pitch
+     *
+     * @return the starting pitch
+     */
     public int getStartPitch() {
         return Integer.valueOf(startPitch.getText());
     }

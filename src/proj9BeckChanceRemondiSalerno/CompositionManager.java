@@ -856,6 +856,11 @@ public class CompositionManager {
         loadLSystem(this.lSystemFileManager.selectFile());
     }
 
+    /**
+     * Creates a dialog window and asks the user for the LSystem Parameters
+     *
+     * @return an Optional containing values corresponding to the LSystem parameters
+     */
     public Optional<int[]> getLSystemParametersFromUser(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(
@@ -879,7 +884,6 @@ public class CompositionManager {
                 return Optional.of(options);
             }
         } catch (IOException e) {
-            System.out.println(e.getMessage());
             // Do nothing
         }
         return Optional.empty();
@@ -894,7 +898,6 @@ public class CompositionManager {
      */
     public void loadLSystem(String filename){
         this.lSystem = new LSystem(filename);
-        // TODO: Create Dialog window to choose iterations, etc
 
         int iterations;
         int distance;
@@ -906,20 +909,16 @@ public class CompositionManager {
             distance = 100;
             startPitch = 500;
         }
-        else{
-            System.out.println("here1");
+        else {
             iterations = options.get()[0];
             distance = options.get()[1];
             startPitch = options.get()[2];
         }
 
-
         this.lSystem.read();
         String resultString = this.lSystem.buildString(iterations);
-        System.out.println("RESULT STRING: "+ resultString);
         this.musicalInterpreter = new MusicalInterpreter(this);
         this.musicalInterpreter.stringToNotes(resultString, distance, startPitch);
-
     }
 
     /**
