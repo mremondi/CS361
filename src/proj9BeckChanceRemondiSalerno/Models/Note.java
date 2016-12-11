@@ -266,7 +266,6 @@ public class Note implements NoteGroupable {
         return pitch;
     }
 
-
     /**
      * Changes the pitch of the note
      *

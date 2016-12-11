@@ -2,8 +2,8 @@
  * File: CompositionContextMenuController.java
  * Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
  * Class: CS361
- * Project: 10
- * Due Date: December 19, 2016
+ * Project: 9
+ * Due Date: December 7, 2016
  */
 
 
@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import proj9BeckChanceRemondiSalerno.CompositionActions.VolumeAction;
 import proj9BeckChanceRemondiSalerno.CompositionManager;
 import proj9BeckChanceRemondiSalerno.Models.Note;
 import proj9BeckChanceRemondiSalerno.Models.NoteGroupable;
@@ -137,6 +138,9 @@ public class CompositionContextMenuController {
             if (result.isPresent() && result.get() == confirmButton) {
                 int newVolume = volumeController.getVolume();
                 for (NoteGroupable noteGroupable : noteGroupables) {
+                    VolumeAction volumeAction = new VolumeAction(noteGroupable,
+                            noteGroupable.getVolume(), newVolume);
+                    compositionManager.actionCompleted(volumeAction);
                     noteGroupable.setVolume(newVolume);
                 }
             }

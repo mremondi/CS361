@@ -66,5 +66,4 @@ public class AddNoteAction extends CompositionAction {
         }
         compositionManager.deleteGroupable(note);
     }
-
 }

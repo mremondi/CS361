@@ -39,6 +39,11 @@ public class NoteGroup implements NoteGroupable {
     private boolean isSelected = false;
 
     /**
+     * Volume of the NoteGroupable
+     */
+    private int volume;
+
+    /**
      * Constructor
      *
      * @param noteGroupables groupables
@@ -255,14 +260,24 @@ public class NoteGroup implements NoteGroupable {
     }
 
     /**
-     * Setter for channel
+     * Setter for volume
      *
      * @param volume New volume
      */
     @Override
     public void setVolume(int volume) {
+        this.volume = volume;
         for (NoteGroupable noteGroupable : noteGroupables) {
             noteGroupable.setVolume(volume);
         }
+    }
+
+    /**
+     * Getter for the volume
+     *
+     * @return the volume of the group
+     */
+    public int getVolume(){
+        return this.volume;
     }
 }

@@ -120,10 +120,17 @@ public interface NoteGroupable extends Cloneable, Serializable {
     void setChannel(int channel);
 
     /**
-     * Setter for channel
+     * Setter for volume
      *
      * @param volume New volume
      */
     void setVolume(int volume);
+
+    /**
+     * Getter for volume
+     *
+     * @return the volume
+     */
+    int getVolume();
 
 }
