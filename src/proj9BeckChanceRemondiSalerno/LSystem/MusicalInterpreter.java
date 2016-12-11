@@ -37,7 +37,6 @@ public class MusicalInterpreter {
         String modString = "";
         int modVal = -1;
         boolean modGrab = false;
-        // stateStack holds an x pos and angle?
         Stack<Point> stateStack = new Stack<>();
         Point currentPosition = new Point(0, startingPitch);
 

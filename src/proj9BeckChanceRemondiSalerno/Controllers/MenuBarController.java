@@ -295,9 +295,12 @@ public class MenuBarController {
         compositionManager.createNewComposition();
     }
 
+    /**
+     * Allows the user to select a LSystem file to load
+     * @param event
+     */
     @FXML
     protected void handleLoadLSystem(ActionEvent event){
-        // Allow users to select a file
         compositionManager.selectLSystem();
     }
 
