@@ -6,14 +6,34 @@ import proj9BeckChanceRemondiSalerno.Models.Note;
 import java.awt.*;
 import java.util.Stack;
 
+/**
+ * A class that essentially translates between the LSystem string and the
+ * actual notes that are dictated by it
+ */
 public class MusicalInterpreter {
 
+    /**
+     * The composition manger to be used to allow notes to be added to the composition
+     */
     private CompositionManager compositionManager;
+
+    /**
+     * Constructor
+     *
+     * @param compositionManager the composition manager
+     */
     public MusicalInterpreter(CompositionManager compositionManager){
         this.compositionManager = compositionManager;
     }
 
-    public void stringToNotes(String dstring, int distance, int startingPitch){
+    /**
+     * Converts a given string to notes to place on the composition
+     *
+     * @param dstring the LSystem string
+     * @param duration the standard note duration
+     * @param startingPitch the starting pitch
+     */
+    public void stringToNotes(String dstring, int duration, int startingPitch){
         String modString = "";
         int modVal = -1;
         boolean modGrab = false;
@@ -41,8 +61,8 @@ public class MusicalInterpreter {
             if (c == 'F'){
                 if (modVal == -1){
                     this.compositionManager.addGroupable(new Note(currentPosition.x,
-                            currentPosition.y, distance, currentInstrument));
-                    currentPosition.x += distance;
+                            currentPosition.y, duration, currentInstrument));
+                    currentPosition.x += duration;
                     if (currentPosition.x > 1900){
                         currentPosition.x = 1900;
                     }
@@ -93,13 +113,13 @@ public class MusicalInterpreter {
             }
             else if (c == '_'){
                 if (modVal == -1) {
-                    currentPosition.x += distance;
+                    currentPosition.x += duration;
                     if (currentPosition.x > 1900) {
                         currentPosition.x = 1900;
                     }
                 }
                 else{
-                    currentPosition.x += distance;
+                    currentPosition.x += duration;
                     if (currentPosition.x > 1900) {
                         currentPosition.x = 1900;
                     }

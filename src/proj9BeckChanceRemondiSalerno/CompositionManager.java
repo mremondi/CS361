@@ -69,10 +69,20 @@ public class CompositionManager {
      */
     private CompositionController compositionController;
 
+    /**
+     * The LSystem that takes in a base string and outputs one with the
+     * rules applied
+     */
     private LSystem lSystem;
 
+    /**
+     * The manager to open LSystem files
+     */
     private LSystemFileManager lSystemFileManager = new LSystemFileManager();
 
+    /**
+     * Translater between the LSystem result string and the notes
+     */
     private MusicalInterpreter musicalInterpreter;
 
     /**
@@ -836,10 +846,21 @@ public class CompositionManager {
         }
     }
 
+    /**
+     * Delegates the file selection to the lsystem file manager and passes the selected
+     * path to the loadLsystem method.
+     */
     public void selectLSystem(){
         loadLSystem(this.lSystemFileManager.selectFile());
     }
 
+    /**
+     * creates a new lSystem with the given filename, reads the file
+     * and builds the string. Then it creates a MusicalInterpreter
+     * to convert the string to notes.
+     *
+     * @param filename the path to the selected file
+     */
     public void loadLSystem(String filename){
         this.lSystem = new LSystem(filename);
         // TODO: Create Dialog window to choose iterations, etc
