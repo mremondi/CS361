@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--File: Volume.fxml
+    Names: Graham Chance, Charlie Beck, Ryan Salerno, Mike Remondi
+    Class: CS361
+    Project: 10
+    Date: December 19, 2016-->
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.Pane?>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="110.0"
+      prefWidth="298.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="proj10BeckChanceRemondiSalerno.Controllers.VolumeController">
+    <children>
+        <Slider fx:id="volumeSlider" layoutX="79.0" layoutY="47.0" max="127.0" value="100.0"/>
+        <Label fx:id="volumeLabel" contentDisplay="CENTER" layoutX="132.0" layoutY="62.0" text="Label"
+               textAlignment="CENTER"/>
+    </children>
+</Pane>
