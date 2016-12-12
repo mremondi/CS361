@@ -14,7 +14,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import proj9BeckChanceRemondiSalerno.CompositionActions.VolumeAction;
+import proj9BeckChanceRemondiSalerno.CompositionActions.ChangeInstrumentAction;
+import proj9BeckChanceRemondiSalerno.CompositionActions.ChangeVolumeAction;
 import proj9BeckChanceRemondiSalerno.CompositionManager;
 import proj9BeckChanceRemondiSalerno.Models.Note;
 import proj9BeckChanceRemondiSalerno.Models.NoteGroupable;
@@ -100,8 +101,13 @@ public class CompositionContextMenuController {
             if (result.isPresent() && result.get() == confirmButton) {
                 int selectedIndex = ((InstrumentPaneController) fxmlLoader
                         .getController()).getCurrentInstrumentIndex();
-                compositionManager.setChannelForNotes(compositionManager
-                        .getSelectedNotes(), selectedIndex);
+                ArrayList<NoteGroupable> notes = compositionManager
+                        .getSelectedNotes();
+                // action must be created before changing channels so it can save original channels
+                ChangeInstrumentAction changeInstrumentAction = new ChangeInstrumentAction(notes, selectedIndex, compositionManager);
+                compositionManager.actionCompleted(changeInstrumentAction);
+                compositionManager.setChannelForNotes(notes, selectedIndex);
+
             }
         } catch (IOException e) {
             // Do nothing
@@ -137,10 +143,10 @@ public class CompositionContextMenuController {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == confirmButton) {
                 int newVolume = volumeController.getVolume();
+                // action must be made before actually changing volume so original volumes can be saved
+                ChangeVolumeAction volumeAction = new ChangeVolumeAction(noteGroupables, newVolume, compositionManager);
+                compositionManager.actionCompleted(volumeAction);
                 for (NoteGroupable noteGroupable : noteGroupables) {
-                    VolumeAction volumeAction = new VolumeAction(noteGroupable,
-                            noteGroupable.getVolume(), newVolume);
-                    compositionManager.actionCompleted(volumeAction);
                     noteGroupable.setVolume(newVolume);
                 }
             }

@@ -930,10 +930,19 @@ public class CompositionManager {
      */
     public void setChannelForNotes(Iterable<NoteGroupable> notes, int channel) {
         for (NoteGroupable note : notes) {
-            note.setChannel(channel);
-            NoteGroupablePane noteGroupablePane = getGroupPane(note);
-            noteGroupablePane.setNoteFill(getInstrumentColor(channel));
+            setChannelForNote(note, channel);
         }
+    }
+
+    /**
+     * Changes the channels of a note
+     * @param note Note to set channel of
+     * @param channel new channel
+     */
+    public void setChannelForNote(NoteGroupable note, int channel) {
+        note.setChannel(channel);
+        NoteGroupablePane noteGroupablePane = getGroupPane(note);
+        noteGroupablePane.setNoteFill(getInstrumentColor(channel));
     }
 
     /**
