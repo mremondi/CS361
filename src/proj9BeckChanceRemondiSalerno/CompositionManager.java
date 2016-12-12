@@ -646,6 +646,7 @@ public class CompositionManager {
         if (noteGroupable instanceof Note) {
             Note note = (Note) noteGroupable;
             NoteRectangle noteBox = new NoteRectangle(noteGroupable.getDuration(), 0, 0);
+            note.addObserver(noteBox);
             noteBox.setFill(getInstrumentColor(note.getChannel()));
             groupablePane.getChildren().add(noteBox);
             groupablePane.setContainsSingleNote(true);

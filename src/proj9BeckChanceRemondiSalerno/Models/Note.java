@@ -8,6 +8,8 @@
 
 package proj9BeckChanceRemondiSalerno.Models;
 
+import proj9BeckChanceRemondiSalerno.Views.NoteRectangle;
+
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 
@@ -22,6 +24,8 @@ import java.util.ArrayList;
 @XmlRootElement(name = "note")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Note implements NoteGroupable {
+
+    private NoteRectangle observer;
 
     /**
      * The minimum width a note can be.
@@ -123,6 +127,8 @@ public class Note implements NoteGroupable {
      */
     public void setVolume(int volume) {
         this.volume = volume;
+        float alpha = ((float)volume)/127;
+        this.observer.setAlpha(alpha);
     }
 
     /**
@@ -299,5 +305,9 @@ public class Note implements NoteGroupable {
             // Do nothing
             return null;
         }
+    }
+
+    public void addObserver(NoteRectangle noteRectangle){
+        this.observer = noteRectangle;
     }
 }

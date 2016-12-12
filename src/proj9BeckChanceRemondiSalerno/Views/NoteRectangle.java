@@ -82,4 +82,10 @@ public class NoteRectangle extends Rectangle implements NoteView {
     public void setNoteFill(Paint color) {
         setFill(color);
     }
+
+    public void setAlpha(float alpha){
+        Color c = (Color) getFill();
+        Color newColor = new Color(c.getRed(), c.getGreen(), c.getBlue(), alpha);
+        setFill(newColor);
+    }
 }
