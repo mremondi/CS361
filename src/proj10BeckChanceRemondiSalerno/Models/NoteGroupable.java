@@ -125,12 +125,4 @@ public interface NoteGroupable extends Cloneable, Serializable {
      * @param volume New volume
      */
     void setVolume(int volume);
-
-    /**
-     * Getter for volume
-     *
-     * @return the volume
-     */
-    int getVolume();
-
 }
