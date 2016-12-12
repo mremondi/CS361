@@ -142,7 +142,6 @@ public class CompositionContextMenuController {
                             noteGroupable.getVolume(), newVolume);
                     compositionManager.actionCompleted(volumeAction);
                     noteGroupable.setVolume(newVolume);
-                    // TODO: NEED TO CHANGE THE INTENSITY OF THE RECTANGLE
                 }
             }
         } catch (IOException e) {

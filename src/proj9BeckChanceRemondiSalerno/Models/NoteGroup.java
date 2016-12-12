@@ -280,4 +280,5 @@ public class NoteGroup implements NoteGroupable {
     public int getVolume(){
         return this.volume;
     }
+
 }
