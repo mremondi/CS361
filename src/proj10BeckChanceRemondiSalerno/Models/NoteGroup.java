@@ -9,6 +9,8 @@
 
 package proj10BeckChanceRemondiSalerno.Models;
 
+import proj10BeckChanceRemondiSalerno.NoteGroupableComparator;
+
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 
@@ -45,12 +47,14 @@ public class NoteGroup implements NoteGroupable {
      */
     public NoteGroup(ArrayList<NoteGroupable> noteGroupables) {
         this.noteGroupables = noteGroupables;
+        this.noteGroupables.sort(new NoteGroupableComparator());
     }
 
     /**
      * No argument constructor for the compiler
      */
     public NoteGroup() {
+
     }
 
     /**
@@ -266,5 +270,8 @@ public class NoteGroup implements NoteGroupable {
         }
     }
 
-
+    @Override
+    public void sortNotes() {
+        noteGroupables.sort(new NoteGroupableComparator());
+    }
 }

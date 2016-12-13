@@ -320,4 +320,8 @@ public class Note implements NoteGroupable {
         }
     }
 
+    @Override
+    public void sortNotes() {
+        // nothing to do
+    }
 }
