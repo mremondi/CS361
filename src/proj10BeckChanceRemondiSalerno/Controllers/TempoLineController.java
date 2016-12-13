@@ -77,7 +77,11 @@ public class TempoLineController {
     private void updateAnimation() {
         this.tempoAnimation.stop();
         this.tempoLine.setTranslateX(startTime);
-        this.tempoAnimation.setDuration(new Duration(stopTime * 10 - startTime * 10));
+        double duration = stopTime * 10 - startTime * 10;
+        if (duration<0) {
+            duration = 0;
+        }
+        this.tempoAnimation.setDuration(new Duration(duration));
         this.tempoAnimation.setToX(stopTime);
         this.tempoLine.setVisible(true);
     }
