@@ -12,7 +12,7 @@ import proj10BeckChanceRemondiSalerno.Models.NoteGroupable;
 import java.util.Comparator;
 
 /**
- * This class models a manager for cutting, copying, and pasting notes
+ * This class models a comparator for comparing notes
  *
  * @author Graham Chance
  * @author Charlie Beck
