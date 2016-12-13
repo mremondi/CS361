@@ -8,9 +8,11 @@
 
 package proj10BeckChanceRemondiSalerno.Models;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import proj10BeckChanceRemondiSalerno.Views.NoteRectangle;
 
 import javax.xml.bind.annotation.*;
+import java.beans.Transient;
 import java.util.ArrayList;
 
 /**
@@ -25,7 +27,6 @@ import java.util.ArrayList;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Note implements NoteGroupable {
 
-    private NoteRectangle observer;
 
     /**
      * The minimum width a note can be.
@@ -36,6 +37,12 @@ public class Note implements NoteGroupable {
      * The audio volume of the note.
      */
     private int volume = 100;
+
+    /**
+     * Separate from primitive volume so Note can be serializable
+     */
+    private transient SimpleIntegerProperty volumeProperty;
+
 
     /**
      * The instrument for the note.
@@ -84,6 +91,7 @@ public class Note implements NoteGroupable {
         this.duration = duration;
         this.channel = channel;
         this.trackIndex = 0;
+        volumeProperty = new SimpleIntegerProperty(volume);
     }
 
     /**
@@ -119,6 +127,12 @@ public class Note implements NoteGroupable {
         return volume;
     }
 
+    public SimpleIntegerProperty volumeProperty() {
+        if (volumeProperty==null) {
+            volumeProperty = new SimpleIntegerProperty(volume);
+        }
+        return volumeProperty;
+    }
 
     /**
      * Setter for volume
@@ -127,8 +141,7 @@ public class Note implements NoteGroupable {
      */
     public void setVolume(int volume) {
         this.volume = volume;
-        float alpha = ((float)volume)/127;
-        this.observer.setAlpha(alpha);
+        this.volumeProperty.setValue(volume);
     }
 
     /**
@@ -307,7 +320,4 @@ public class Note implements NoteGroupable {
         }
     }
 
-    public void addObserver(NoteRectangle noteRectangle){
-        this.observer = noteRectangle;
-    }
 }

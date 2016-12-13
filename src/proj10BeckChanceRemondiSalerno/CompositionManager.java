@@ -12,6 +12,8 @@ import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleMapProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableMap;
@@ -646,9 +648,16 @@ public class CompositionManager {
         if (noteGroupable instanceof Note) {
             Note note = (Note) noteGroupable;
             NoteRectangle noteBox = new NoteRectangle(noteGroupable.getDuration(), 0, 0);
-            note.addObserver(noteBox);
+            note.volumeProperty().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                    float alpha = ((float)note.getVolume())/127;
+                    noteBox.setAlpha(alpha);
+                }
+            });
             noteBox.setFill(getInstrumentColor(note.getChannel()));
             groupablePane.getChildren().add(noteBox);
+            noteBox.setAlpha(((float)note.getVolume())/127);
             groupablePane.setContainsSingleNote(true);
             return groupablePane;
         } else {
