@@ -10,6 +10,7 @@ package proj10BeckChanceRemondiSalerno.Models;
 
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
 /**
@@ -40,6 +41,7 @@ public class Composition {
      */
     public Composition(ArrayList<NoteGroupable> notes) {
         this.notes = notes;
+        this.notes.sort(new NoteComparator());
     }
 
     /**
@@ -55,5 +57,12 @@ public class Composition {
      */
     public ArrayList<NoteGroupable> getNotes() {
         return notes;
+    }
+
+    class NoteComparator implements Comparator<NoteGroupable> {
+        @Override
+        public int compare(NoteGroupable o1, NoteGroupable o2) {
+            return o1.getStartTick() - o2.getStartTick();
+        }
     }
 }
