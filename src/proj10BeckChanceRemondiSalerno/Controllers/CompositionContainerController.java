@@ -170,13 +170,24 @@ public class CompositionContainerController {
     /**
      * Creates a visual representation of a composition panel
      * similar to a staff lined workbook
+     * Also adds a vertical line every second
      */
     private void createLinePane() {
+
+        // horizontal lines for staff
         Line staffLine;
         for (int i = 0; i < 127; i++) {
             staffLine = new Line(0, i * 10, 2000, i * 10);
             staffLine.getStyleClass().add("staffLine");
             linePane.getChildren().add(staffLine);
+        }
+
+        // vertical line every second
+        Line secondLine;
+        for (int i = 0; i < 20; i++) {
+            secondLine = new Line(100*i, 0, 100*i, 1270);
+            secondLine.getStyleClass().add("staffLine");
+            linePane.getChildren().add(secondLine);
         }
     }
 }

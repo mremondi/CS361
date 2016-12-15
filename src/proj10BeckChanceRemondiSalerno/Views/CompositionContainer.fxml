@@ -14,7 +14,7 @@
             fx:controller="proj10BeckChanceRemondiSalerno.Controllers.CompositionContainerController">
     <Group>
         <Group fx:id="zoomGroup">
-            <StackPane BorderPane.alignment="CENTER" maxHeight="1270" maxWidth="4000">
+            <StackPane BorderPane.alignment="CENTER" maxHeight="1270" maxWidth="2000">
                 <Pane fx:id="linePane"/>
                 <fx:include fx:id="composition" source="CompositionPane.fxml"/>
                 <Pane fx:id="tempoLineContainerPane" disable="true" StackPane.alignment="TOP_LEFT"/>
