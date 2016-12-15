@@ -273,5 +273,8 @@ public class NoteGroup implements NoteGroupable {
     @Override
     public void sortNotes() {
         noteGroupables.sort(new NoteGroupableComparator());
+        for(NoteGroupable noteGroupable: noteGroupables) {
+            noteGroupable.sortNotes();
+        }
     }
 }
