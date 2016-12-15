@@ -16,6 +16,7 @@
         <MenuItem accelerator="Shift+Shortcut+S" onAction="#handleSaveAs" text="Save As" fx:id="saveAsItem"/>
         <MenuItem accelerator="Shortcut+O" onAction="#handleOpen" text="Open"/>
         <MenuItem accelerator="Shortcut+L" onAction="#handleLoadLSystem" text="Load LSystem"/>
+        <MenuItem accelerator="Shortcut+E" onAction="#handleExportAsMidiFile" text="Export As Midi"/>
         <SeparatorMenuItem/>
         <MenuItem accelerator="Shortcut+Q" onAction="#handleExit" text="Exit"/>
     </Menu>

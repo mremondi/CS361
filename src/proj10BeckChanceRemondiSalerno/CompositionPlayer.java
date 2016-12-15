@@ -10,7 +10,9 @@ package proj10BeckChanceRemondiSalerno;
 
 import proj10BeckChanceRemondiSalerno.Models.MidiPlayer;
 import proj10BeckChanceRemondiSalerno.Models.Note;
+import proj10BeckChanceRemondiSalerno.Models.NoteGroupable;
 
+import javax.sound.midi.Sequence;
 import javax.sound.midi.ShortMessage;
 
 
@@ -56,6 +58,7 @@ public class CompositionPlayer {
     public void stop() {
         midiPlayer.stop();
     }
+
 
     /**
      * Builds a song with given notes and adds them to the midiplayer.

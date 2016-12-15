@@ -9,12 +9,14 @@
 package proj10BeckChanceRemondiSalerno;
 
 import javafx.stage.FileChooser;
-import proj10BeckChanceRemondiSalerno.Models.Composition;
-import proj10BeckChanceRemondiSalerno.Models.Note;
-import proj10BeckChanceRemondiSalerno.Models.NoteGroup;
+import proj10BeckChanceRemondiSalerno.Models.*;
 
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.Sequence;
 import javax.xml.bind.*;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Optional;
 
 /**
@@ -27,10 +29,16 @@ import java.util.Optional;
  */
 public class CompositionFileManager {
 
+
     /**
-     * The file chooser for opening files
+     * The file chooser for opening xml files
      */
-    private final FileChooser fileChooser = new FileChooser();
+    private final FileChooser xmlFileChooser = new FileChooser();
+
+    /**
+     * The file chooser for saving midi files
+     */
+    private final FileChooser midiFileChooser = new FileChooser();
 
     /**
      * The current save path of the current file. Empty if there is none.
@@ -51,9 +59,10 @@ public class CompositionFileManager {
      * Constructor
      */
     public CompositionFileManager() {
-        FileChooser.ExtensionFilter fileExtensions = new FileChooser.ExtensionFilter
-                ("XML Files (.xml)", "*.xml");
-        fileChooser.getExtensionFilters().add(fileExtensions);
+        xmlFileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter
+                ("XML Files (.xml)", "*.xml"));
+        midiFileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter
+                ("Midi Files (.mid)", "*.mid"));
         try {
             JAXBContext context = JAXBContext.newInstance(Note.class, NoteGroup.class,
                     Composition.class);
@@ -93,12 +102,27 @@ public class CompositionFileManager {
      * @throws JAXBException Thrown if saving fails
      */
     public boolean saveCompositionAsNew(Composition composition) throws JAXBException {
-        File file = fileChooser.showSaveDialog(Main.getPrimaryStage());
+        File file = xmlFileChooser.showSaveDialog(Main.getPrimaryStage());
         marshaller.marshal(composition, file);
         currentSavePath = Optional.of(file.getAbsolutePath());
         Main.setPrimaryStageTitle(file.getName());
         return currentSavePath.isPresent();
     }
+
+    /**
+     * Exports a composition as a midi file
+     * @param composition Composition to export
+     * @throws IOException
+     */
+    public void exportCompositionAsMidiFile(Composition composition) throws IOException {
+        File file = midiFileChooser.showSaveDialog(Main.getPrimaryStage());
+        Sequence sequence = createSequence(composition.getNotes());
+        int[] writers = MidiSystem.getMidiFileTypes(sequence);
+        if (writers.length == 0) return;
+        MidiSystem.write(sequence, writers[0], new FileOutputStream(file));
+        return;
+    }
+
 
     /**
      * Loads a composition from a file of the user's choice
@@ -107,7 +131,7 @@ public class CompositionFileManager {
      * @throws LoadCompositionFileException Thrown if loading fails
      */
     public Optional<Composition> openComposition() throws LoadCompositionFileException {
-        File selectedFile = fileChooser.showOpenDialog(Main.getPrimaryStage());
+        File selectedFile = xmlFileChooser.showOpenDialog(Main.getPrimaryStage());
         try {
             if (selectedFile != null) {
                 Composition composition = (Composition) unmarshaller.unmarshal(selectedFile);
@@ -128,6 +152,23 @@ public class CompositionFileManager {
      */
     public void removeCurrentSavePath() {
         currentSavePath = Optional.empty();
+    }
+
+    /**
+     * Creates a Sequence given notes
+     * @param noteGroupables Notes to use in Sequence creation
+     * @return  The sequence
+     */
+    private Sequence createSequence(Iterable<NoteGroupable> noteGroupables) {
+        MidiPlayer player = new MidiPlayer(100,60);
+        for (NoteGroupable noteGroupable : noteGroupables) {
+            for(Note note: noteGroupable.getNotes()) {
+                player.addNote(note.getPitch(), note.getVolume(), note.getStartTick(),
+                        note.getDuration(),
+                        note.getChannel(), note.getTrackIndex());
+            }
+        }
+        return player.getSequence();
     }
 
     /**

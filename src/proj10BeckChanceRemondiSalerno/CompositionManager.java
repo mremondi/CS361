@@ -973,4 +973,17 @@ public class CompositionManager {
         changeSinceLastSave = false;
         compositionActionManager.clearActions();
     }
+
+    /**
+     * Exports current composition as a midi file
+     */
+    public void exportAsMidiFile() {
+        Composition composition = new Composition(new ArrayList<>(notesMapProperty
+                .keySet()));
+        try {
+            compositionFileManager.exportCompositionAsMidiFile(composition);
+        } catch (IOException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+    }
 }

@@ -51,6 +51,14 @@ public class MidiPlayer {
     }
 
     /**
+     * Getter for current sequence
+     * @return The sequence of the sequencer
+     */
+    public Sequence getSequence() {
+        return sequencer.getSequence();
+    }
+
+    /**
      * Sets the current tick position
      *
      * @param tickPosition New tick position

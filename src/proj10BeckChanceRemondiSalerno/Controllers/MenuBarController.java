@@ -305,6 +305,16 @@ public class MenuBarController {
     }
 
     /**
+     * Exports the current composition as a midi file
+     * @param event
+     */
+    @FXML
+    protected void handleExportAsMidiFile(ActionEvent event){
+        compositionManager.exportAsMidiFile();
+    }
+
+
+    /**
      * Shows the about dialog
      *
      * @param event
