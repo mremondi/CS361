@@ -47,16 +47,16 @@ public class LSystem{
      *
      * @param newBase a string to be set to the base field
      */
-    public void setBase(String newBase){
+    private void setBase(String newBase){
         this.base = newBase;
     }
 
     /**
      * Adds a character and a corresponding rule to the rules map.
-     * @param ruleKey
-     * @param newRule
+     * @param ruleKey the key for the corresponding rule
+     * @param newRule the rule to be applied
      */
-    public void addRule(String ruleKey, String newRule){
+    private void addRule(String ruleKey, String newRule){
         this.rules.put(ruleKey, newRule);
     }
 
@@ -97,7 +97,7 @@ public class LSystem{
      *
      * @return the result String that has been changed according to the rules map.
      */
-    public String applyRules(String input){
+    private String applyRules(String input){
         String resultString = "";
         for (int i=0; i<input.length(); i++){
             String c = input.substring(i,i+1);
@@ -112,7 +112,7 @@ public class LSystem{
     }
 
     /**
-     * Builds the final string by applying the rules over several iterations
+     * Builds the fina l string by applying the rules over several iterations
      *
      * @param iterations The number of times to apply all the rules
      * @return the resulting string

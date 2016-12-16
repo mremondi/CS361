@@ -74,20 +74,9 @@ public class CompositionManager {
     private CompositionController compositionController;
 
     /**
-     * The LSystem that takes in a base string and outputs one with the
-     * rules applied
-     */
-    private LSystem lSystem;
-
-    /**
      * The manager to open LSystem files
      */
     private LSystemFileManager lSystemFileManager = new LSystemFileManager();
-
-    /**
-     * Translater between the LSystem result string and the notes
-     */
-    private MusicalInterpreter musicalInterpreter;
 
     /**
      * Source for getting the current instrument.
@@ -871,7 +860,7 @@ public class CompositionManager {
      *
      * @return an Optional containing values corresponding to the LSystem parameters
      */
-    public Optional<int[]> getLSystemParametersFromUser(){
+    private Optional<int[]> getLSystemParametersFromUser(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(
                     getClass().getResource("./Views/LSystemOptions.fxml"));
@@ -906,8 +895,8 @@ public class CompositionManager {
      *
      * @param filename the path to the selected file
      */
-    public void loadLSystem(String filename){
-        this.lSystem = new LSystem(filename);
+    private void loadLSystem(String filename){
+        LSystem lSystem = new LSystem(filename);
 
         int iterations;
         int distance;
@@ -924,10 +913,10 @@ public class CompositionManager {
             startPitch = options.get()[2]*10;
         }
 
-        this.lSystem.read();
-        String resultString = this.lSystem.buildString(iterations);
-        this.musicalInterpreter = new MusicalInterpreter(this);
-        this.musicalInterpreter.stringToNotes(resultString, distance, startPitch);
+        lSystem.read();
+        String resultString = lSystem.buildString(iterations);
+        MusicalInterpreter musicalInterpreter = new MusicalInterpreter(this);
+        musicalInterpreter.stringToNotes(resultString, distance, startPitch);
     }
 
     /**
