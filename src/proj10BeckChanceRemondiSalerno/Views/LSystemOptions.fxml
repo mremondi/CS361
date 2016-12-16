@@ -42,7 +42,7 @@
                         <Insets left="20.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label text="Starting Pitch:" GridPane.rowIndex="2">
+                  <Label text="Starting Pitch (0-127):" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="20.0" />
                      </GridPane.margin>
@@ -57,7 +57,7 @@
                         <Insets left="20.0" right="20.0" />
                      </GridPane.margin>
                   </TextField>
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="startPitch" text="500">
+                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="startPitch" text="50">
                      <GridPane.margin>
                         <Insets left="20.0" right="20.0" />
                      </GridPane.margin>

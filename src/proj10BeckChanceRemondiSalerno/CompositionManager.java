@@ -914,7 +914,6 @@ public class CompositionManager {
         int startPitch;
         Optional<int[]> options = getLSystemParametersFromUser();
         if (!options.isPresent()){
-            System.out.println("here");
             iterations = 3;
             distance = 100;
             startPitch = 500;
@@ -922,7 +921,7 @@ public class CompositionManager {
         else {
             iterations = options.get()[0];
             distance = options.get()[1];
-            startPitch = options.get()[2];
+            startPitch = options.get()[2]*10;
         }
 
         this.lSystem.read();
