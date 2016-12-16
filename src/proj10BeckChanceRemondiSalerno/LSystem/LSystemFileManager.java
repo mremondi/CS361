@@ -12,6 +12,7 @@ import javafx.stage.FileChooser;
 import proj10BeckChanceRemondiSalerno.Main;
 
 import java.io.File;
+import java.util.Optional;
 
 /**
  * Class to allow the user to select a file
@@ -32,8 +33,11 @@ public class LSystemFileManager {
      * Allows the user to open a file
      * @return the path to the selected file
      */
-    public String selectFile(){
+    public Optional<String> selectFile(){
         File selectedFile = this.fileChooser.showOpenDialog(Main.getPrimaryStage());
-        return selectedFile.getAbsolutePath();
+        if (selectedFile != null) {
+            return Optional.of(selectedFile.getAbsolutePath());
+        }
+        return Optional.empty();
     }
 }

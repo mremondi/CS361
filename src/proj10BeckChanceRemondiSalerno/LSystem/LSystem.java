@@ -10,6 +10,7 @@ package proj10BeckChanceRemondiSalerno.LSystem;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.Optional;
 
 /**
  * This class models an L-System where it takes a file and applies rules
@@ -36,8 +37,8 @@ public class LSystem{
      *
      * @param filename the file path to be opened
      */
-    public LSystem(String filename){
-        this.filename = filename;
+    public LSystem(Optional<String> filename){
+        this.filename = filename.get();
         this.base = "";
         this.rules = new HashMap<>();
     }
@@ -133,7 +134,7 @@ public class LSystem{
     public static void main(String args[]){
         String filename = "systemH.txt";
         int iterations = 3;
-        LSystem lsys = new LSystem(filename);
+        LSystem lsys = new LSystem(Optional.of(filename));
         lsys.read();
         String test = lsys.buildString(iterations);
         System.out.println(test);

@@ -882,6 +882,9 @@ public class CompositionManager {
                 int[] options = {iterations, duration, startPitch};
                 return Optional.of(options);
             }
+            else if( result.get() == buttonTypeCancel){
+                return Optional.empty();
+            }
         } catch (IOException e) {
             // Do nothing
         }
@@ -895,9 +898,11 @@ public class CompositionManager {
      *
      * @param filename the path to the selected file
      */
-    private void loadLSystem(String filename){
+    private void loadLSystem(Optional<String> filename){
+        if (!filename.isPresent()){
+            return;
+        }
         LSystem lSystem = new LSystem(filename);
-
         int iterations;
         int distance;
         int startPitch;
