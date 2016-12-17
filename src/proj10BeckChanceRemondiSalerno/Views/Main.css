@@ -10,6 +10,11 @@
     -fx-stroke: gray;
 }
 
+.secondLine {
+    -fx-stroke: gray;
+    -fx-stroke-dash-array: 2 5 2 5;
+}
+
 .note {
     -fx-opacity: 0.5;
     -fx-stroke-type: INSIDE;

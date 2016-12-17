@@ -186,7 +186,7 @@ public class CompositionContainerController {
         Line secondLine;
         for (int i = 0; i < 20; i++) {
             secondLine = new Line(100*i, 0, 100*i, 1270);
-            secondLine.getStyleClass().add("staffLine");
+            secondLine.getStyleClass().add("secondLine");
             linePane.getChildren().add(secondLine);
         }
     }
