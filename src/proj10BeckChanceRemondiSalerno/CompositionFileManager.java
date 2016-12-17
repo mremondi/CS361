@@ -103,9 +103,12 @@ public class CompositionFileManager {
      */
     public boolean saveCompositionAsNew(Composition composition) throws JAXBException {
         File file = xmlFileChooser.showSaveDialog(Main.getPrimaryStage());
-        marshaller.marshal(composition, file);
-        currentSavePath = Optional.of(file.getAbsolutePath());
-        Main.setPrimaryStageTitle(file.getName());
+        if(file != null) {
+            marshaller.marshal(composition, file);
+            currentSavePath = Optional.of(file.getAbsolutePath());
+            Main.setPrimaryStageTitle(file.getName());
+            return currentSavePath.isPresent();
+        }
         return currentSavePath.isPresent();
     }
 
@@ -120,7 +123,6 @@ public class CompositionFileManager {
         int[] writers = MidiSystem.getMidiFileTypes(sequence);
         if (writers.length == 0) return;
         MidiSystem.write(sequence, writers[0], new FileOutputStream(file));
-        return;
     }
 
 
